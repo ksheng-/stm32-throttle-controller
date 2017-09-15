@@ -1,0 +1,177 @@
+%% $RCSfile: GPIO_Read.tlc,v $
+%% $Revision: 1.0 $
+%% $Date: 2014/04/30 $
+%%
+%% Abstract: GPIO Read 
+%%    STM32 GPIO Read input bit value from selected GPIOx port.
+%%
+%% Copyright 1990-2009 The MathWorks, Inc.
+
+%implements GPIO_Read "C"
+
+%%warning "---------->Start GPIO_READ"
+
+%if !EXISTS(::CreateGPIO_Read)
+    %assign ::CreateGPIO_Read  = TLC_TRUE
+%endif
+
+%if !EXISTS(::InsertInitHeader)
+    %assign ::InsertInitHeader  = TLC_TRUE
+%endif
+
+    %assign ::CreateGPIO_Read  = TLC_TRUE
+
+%trace CreateGPIO_Read  %<CreateGPIO_Read>
+
+
+%% Create function for GPIO Read:
+%if EXISTS(CreateGPIO_Read) && (CreateGPIO_Read == TLC_TRUE)
+
+    %%assign ::CreateGPIO_Read = TLC_FALSE
+
+%% Code for GPIO configuration call:
+    %function BlockInstanceSetup(block, system) void
+%%warning "---------->Start GPIO_READ"	
+       %assign SrcBaseName = LibGetMdlSrcBaseName()
+%%        %assign SrcBaseName = "GPIO_Read"
+        %assign modelH      = LibCreateSourceFile("Header", "Simulink", SrcBaseName)
+        %assign modelC      = LibCreateSourceFile("Source", "Simulink", SrcBaseName)
+
+    %endfunction
+%else
+%% ERROR GPIO INIT MUST BE CALLED ONCE ONLY 
+   %trace ERROR GPIO INIT MUST BE CALLED ONCE ONLY 
+%endif 
+
+%% Function: Outputs ==========================================
+%% Abstract:
+%% GPIO_Read input value depending on pin config
+%%
+	%function Outputs(block, system) Output
+ 	/* %<Type> Block: %<Name> */  
+        %assign Port_name =  SFcnParamSettings.Port_name
+        %assign Pin_0 =  SFcnParamSettings.Pin_0
+        %assign Pin_1 =  SFcnParamSettings.Pin_1
+        %assign Pin_2 =  SFcnParamSettings.Pin_2
+        %assign Pin_3 =  SFcnParamSettings.Pin_3
+        %assign Pin_4 =  SFcnParamSettings.Pin_4
+        %assign Pin_5 =  SFcnParamSettings.Pin_5
+        %assign Pin_6 =  SFcnParamSettings.Pin_6
+        %assign Pin_7 =  SFcnParamSettings.Pin_7
+        %assign Pin_8 =  SFcnParamSettings.Pin_8
+        %assign Pin_9 =  SFcnParamSettings.Pin_9
+        %assign Pin_10 =  SFcnParamSettings.Pin_10
+        %assign Pin_11 =  SFcnParamSettings.Pin_11
+        %assign Pin_12 =  SFcnParamSettings.Pin_12
+        %assign Pin_13 =  SFcnParamSettings.Pin_13
+        %assign Pin_14 =  SFcnParamSettings.Pin_14
+        %assign Pin_15 =  SFcnParamSettings.Pin_15
+ 	    %assign OutputNum = 0
+
+ %%		%openfile GPIO_Buf
+		%if (ISEQUAL(Pin_0, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_0);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_1, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_1);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_2, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_2);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_3, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_3);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_4, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_4);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_5, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_5);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_6, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_6);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_7, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_7);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_8, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_8);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_9, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_9);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_10, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_10);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_11, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_11);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_12, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_12);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_13, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_13);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_14, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_14);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+		
+		%if (ISEQUAL(Pin_15, "on"))
+		%assign pinVal = LibBlockOutputSignal(OutputNum, "", "", 0) 
+		%<pinVal> = (boolean_T)HAL_GPIO_ReadPin(%<Port_name>, GPIO_PIN_15);
+ 	    %assign  OutputNum = %<OutputNum> + 1 	
+		%endif
+%%		%closefile GPIO_Buf
+%%        %<LibSystemOutputCustomCode(system,GPIO_Buf,"execution")>		
+   %endfunction
+
+%% [EOF] GPIO_Read.tlc
+
+
+
+
+
+

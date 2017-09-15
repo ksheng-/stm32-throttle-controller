@@ -1,0 +1,177 @@
+%% $RCSfile: DAC_Write.tlc,v $
+%% $Revision: 1.0 $
+%% $Date: 2014/04/30 $
+%%
+%% Abstract: DAC Write 
+%%    STM32 DAC Write input pin value to selected DACx port.
+%%
+%% Copyright 1990-2009 The MathWorks, Inc.
+%assign CodeFormat = "Embedded-C"
+%implements DAC_Write "C"
+
+%%warning "---------->Start DAC_WRITE"
+
+%if !EXISTS(::InsertIncludesToDAC)
+    %assign ::InsertIncludesToDAC  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertIncludesFromDAC)
+    %assign ::InsertIncludesFromDAC  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertDAC)
+    %assign ::InsertDAC  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::CreateDAC_Write)
+    %assign ::CreateDAC_Write  = TLC_TRUE
+%endif
+
+%if !EXISTS(::InsertInitHeader)
+    %assign ::InsertInitHeader  = TLC_TRUE
+%endif
+%if !EXISTS(::InsertIncludes)
+    %assign ::InsertIncludes  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::Initialization_DAC)
+    %assign ::Initialization_DAC  = TLC_TRUE
+%endif 
+
+
+    %assign ::CreateDAC_Write  = TLC_TRUE
+
+%trace CreateDAC_Write  %<CreateDAC_Write>
+
+
+%% Create function for DAC Write:
+%if EXISTS(CreateDAC_Write) && (CreateDAC_Write == TLC_TRUE)
+
+    %%assign ::CreateDAC_Write = TLC_FALSE
+	
+%% Code for system initialization:
+    %function Start(block,system) Output
+		%if !EXISTS(::Initialization_DAC) || (::Initialization_DAC == TLC_TRUE)
+			%assign ::Initialization_DAC    = TLC_FALSE		
+			%assign Pin0 =  SFcnParamSettings.Pin0
+			%assign Pin1 =  SFcnParamSettings.Pin1
+
+			%openfile DAC_Buf
+			/* DAC initialization and configuration */
+			hDAC.Instance = DAC;
+			HAL_DAC_Init(&hDAC);
+
+			sConfig.DAC_Trigger = DAC_TRIGGER_SOFTWARE;
+			sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
+			
+			%if (ISEQUAL(Pin0, "on"))
+			HAL_DAC_ConfigChannel(&hDAC, &sConfig, DAC_CHANNEL_1);
+			%endif
+
+			%if (ISEQUAL(Pin1, "on"))
+			HAL_DAC_ConfigChannel(&hDAC, &sConfig, DAC_CHANNEL_2);
+			%endif
+			%closefile DAC_Buf
+			%<LibMdlStartCustomCode(DAC_Buf,"execution")>;
+		%endif
+    %endfunction
+	
+	
+%% Code for DAC configuration call:
+    %function BlockInstanceSetup(block, system) void
+        %%model.c and model.h files
+        %assign SrcBaseName = LibGetMdlSrcBaseName()
+        %assign modelH      = LibCreateSourceFile("Header", "Simulink", SrcBaseName)
+        %assign modelC      = LibCreateSourceFile("Source", "Simulink", SrcBaseName)
+        %%model_DAC.h and model_DAC.c files
+        %assign SrcBaseName_DAC = "%<SrcBaseName>_DAC"
+        %assign modelH_DAC      = LibCreateSourceFile("Header", "Simulink", SrcBaseName_DAC)
+        %assign modelC_DAC      = LibCreateSourceFile("Source", "Simulink", SrcBaseName_DAC)
+%%Include model.h to model_DAC.c 
+        %if EXISTS(::InsertIncludesToDAC) && (::InsertIncludesToDAC == TLC_TRUE)
+            %assign ::InsertIncludesToDAC    = TLC_FALSE		
+            %openfile DAC_Buf
+				#include "%<SrcBaseName>.h"
+				#include "%<SrcBaseName_DAC>.h"
+            %closefile DAC_Buf
+            %<LibSetSourceFileSection(modelC_DAC,"Includes",DAC_Buf)>
+        %endif
+%%AND Include model_DAC.h to model.c
+        %if EXISTS(::InsertIncludesFromDAC) && (::InsertIncludesFromDAC == TLC_TRUE)
+            %assign ::InsertIncludesFromDAC    = TLC_FALSE		
+            %openfile DAC_Buf
+				#include "%<SrcBaseName_DAC>.h"
+            %closefile DAC_Buf
+            %<LibSetSourceFileSection(modelH,"Includes",DAC_Buf)>
+            
+			%openfile DAC_Buf
+				#include "STM32_Config.h"
+            %closefile DAC_Buf
+            %<LibSetSourceFileSection(modelH_DAC,"Includes",DAC_Buf)>						
+        %endif
+
+		%if EXISTS(::InsertDAC) && (::InsertDAC == TLC_TRUE)
+            %assign ::InsertDAC    = TLC_FALSE		
+            %openfile DAC_Buf
+			/* DAC Parameters definition */
+			extern DAC_HandleTypeDef  hDAC;
+			extern DAC_ChannelConfTypeDef sConfig;
+			extern uint32_t uData;			
+            %closefile DAC_Buf
+            %<LibSetSourceFileSection(modelH_DAC,"Defines",DAC_Buf)>
+           
+  		    %openfile DAC_Buf
+			/* DAC Parameters definition */
+			DAC_HandleTypeDef  hDAC;
+			DAC_ChannelConfTypeDef sConfig;
+			uint32_t uData;			
+            %closefile DAC_Buf
+            %<LibSetSourceFileSection(modelC_DAC,"Defines",DAC_Buf)>
+		%endif	
+    %endfunction
+%else
+%% ERROR DAC INIT MUST BE CALLED ONCE ONLY 
+   %trace ERROR DAC INIT MUST BE CALLED ONCE ONLY 
+%endif 
+
+%% Function: Outputs ==========================================
+%% Abstract:
+%% DAC_Write input value depending on pin config
+%%
+    %function Outputs(block, system) Output
+/* %<Type> Block: %<Name> */  
+%%warning "---------->Start DAC_WRITE Outputs"
+        %assign SrcBaseName = LibGetMdlSrcBaseName()
+        %assign modelH      = LibCreateSourceFile("Header", "Simulink", SrcBaseName)
+        %assign modelC      = LibCreateSourceFile("Source", "Simulink", SrcBaseName)
+		%assign Pin0 =  SFcnParamSettings.Pin0
+		%assign Pin1 =  SFcnParamSettings.Pin1
+ 	    %assign InputNum = 0
+		
+%%	    %openfile DAC_Buf
+		%if (ISEQUAL(Pin0, "on"))
+		%assign pinVal = LibBlockInputSignal(InputNum, "", "", 0) 
+ 	    %assign  InputNum = %<InputNum> + 1
+		uData = (int)((%<pinVal>/3.3)*4095);
+		HAL_DAC_SetValue(&hDAC, DAC_CHANNEL_1, DAC_ALIGN_12B_R, uData);
+		HAL_DAC_Start(&hDAC, DAC_CHANNEL_1);
+		%endif
+
+ 		%if (ISEQUAL(Pin1, "on"))
+		%assign pinVal = LibBlockInputSignal(InputNum, "", "", 0) 
+		uData = (int)((%<pinVal>/3.3)*4095);
+		HAL_DAC_SetValue(&hDAC, DAC_CHANNEL_2, DAC_ALIGN_12B_R, uData);
+		HAL_DAC_Start(&hDAC, DAC_CHANNEL_2);
+		%endif
+%%        %closefile DAC_Buf
+%%		%<LibSystemOutputCustomCode(system, DAC_Buf, "execution")>
+		
+   %endfunction
+   
+%% [EOF] DAC_Write.tlc
+
+
+
+
+
+

@@ -1,0 +1,199 @@
+%% $RCSfile: CAN_Send.tlc,v $
+%% $Revision: 2.1 $
+%% $Date: 2014/05/26 $
+%%
+%% Abstract: CAN Send 
+%%    State Send of selected CANx
+%%    Generated code is based on STM32 HAL Library files.
+%%
+%% Copyright 1990-2009 The MathWorks, Inc.
+%assign CodeFormat = "Embedded-C"
+%implements CAN_Send "C"
+
+
+%%warning "---------->Start CAN_Send"
+
+%if !EXISTS(::CreateCAN_Send)
+    %assign ::CreateCAN_Send  = TLC_TRUE
+%endif
+
+%if !EXISTS(::InsertIncludesToCAN)
+    %assign ::InsertIncludesToCAN  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertIncludesFromCAN)
+    %assign ::InsertIncludesFromCAN  = TLC_TRUE
+%endif 
+
+
+%assign CAN_name =  SFcnParamSettings.CAN_name
+%if !EXISTS(::VarDef_%<CAN_name>)
+    %assign ::VarDef_%<CAN_name>  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::TxMessage_%<CAN_name>)
+	%assign ::TxMessage_%<CAN_name>  = TLC_TRUE
+%endif
+
+
+%assign ::CreateCAN_Send  = TLC_TRUE
+
+%trace CreateCAN_Send  %<CreateCAN_Send>
+
+
+%% Create function for CAN Read:
+%if EXISTS(CreateCAN_Send) && (CreateCAN_Send == TLC_TRUE)
+
+    %%assign ::CreateCAN_Send = TLC_FALSE
+
+%% Code for system initialization:
+    %function Start(block,system) Output
+        %assign CAN_name =  SFcnParamSettings.CAN_name
+		%if (ISEQUAL(CAN_name, "CAN"))
+			%assign CANNum = ""
+		%else
+			%assign CANNum = IDNUM("%<CAN_name>")[1]
+		%endif
+		/* Set %<CAN_name> Transmit message buffer */
+		hcan%<CANNum>.pTxMsg = &TxMessage_%<CAN_name>;
+    %endfunction
+
+	
+
+%% Code for CAN configuration call:
+    %function BlockInstanceSetup(block, system) void
+        %%model.c and model.h files
+        %assign SrcBaseName = LibGetMdlSrcBaseName()
+        %assign modelH      = LibCreateSourceFile("Header", "Simulink", SrcBaseName)
+        %assign modelC      = LibCreateSourceFile("Source", "Simulink", SrcBaseName)
+        %%model_CAN.h and model_CAN.c files
+        %assign SrcBaseName_CAN = "%<SrcBaseName>_CAN"
+        %assign modelH_CAN      = LibCreateSourceFile("Header", "Simulink", SrcBaseName_CAN)
+        %assign modelC_CAN      = LibCreateSourceFile("Source", "Simulink", SrcBaseName_CAN)
+%%Include model.h to model_CAN.c 
+        %if EXISTS(::InsertIncludesToCAN) && (::InsertIncludesToCAN == TLC_TRUE)
+            %assign ::InsertIncludesToCAN    = TLC_FALSE		
+            %openfile CAN_Buf
+				#include "%<SrcBaseName>.h"
+				#include "%<SrcBaseName_CAN>.h"
+            %closefile CAN_Buf
+            %<LibSetSourceFileSection(modelC_CAN,"Includes",CAN_Buf)>
+        %endif
+%%AND Include model_CAN.h to model.c
+        %if EXISTS(::InsertIncludesFromCAN) && (::InsertIncludesFromCAN == TLC_TRUE)
+            %assign ::InsertIncludesFromCAN    = TLC_FALSE		
+            %openfile CAN_Buf
+				#include "%<SrcBaseName_CAN>.h"
+            %closefile CAN_Buf
+            %<LibSetSourceFileSection(modelH,"Includes",CAN_Buf)>
+            
+			%openfile CAN_Buf
+				//RP MODIF #include "%<SrcBaseName>_STM32.h"
+				#include "STM32_Config.h"
+            %closefile CAN_Buf
+            %<LibSetSourceFileSection(modelH_CAN,"Includes",CAN_Buf)>						
+        %endif
+
+%%Then build model_CAN.h and model_CAN.c
+        %assign CAN_name =  SFcnParamSettings.CAN_name
+		%assign CAN_It =  SFcnParamSettings.CAN_It
+        %assign nbCAN =  SFcnParamSettings.nbCAN
+		
+%%warning "---------->CAN_name: %<CAN_name> nbCAN:%<nbCAN>"
+		
+%% Code for required CAN external definition: in model_CAN.c file
+    %if (ISEQUAL(CAN_name, "CAN"))
+		%assign CANNum = ""
+    %else
+		%assign CANNum = IDNUM("%<CAN_name>")[1]
+    %endif
+
+    %if EXISTS(::VarDef_%<CAN_name>) && (::VarDef_%<CAN_name> == TLC_TRUE)
+        %assign ::VarDef_%<CAN_name>    = TLC_FALSE		
+        %openfile CAN_Buf
+            /* %<CAN_name> handler */
+            extern CAN_HandleTypeDef hcan%<CANNum>;
+        %closefile CAN_Buf
+        %<LibSetSourceFileSection(modelH_CAN,"Defines",CAN_Buf)>
+	%endif		
+	
+    %if EXISTS(::TxMessage_%<CAN_name>) && (::TxMessage_%<CAN_name> == TLC_TRUE)
+		%assign ::TxMessage_%<CAN_name>  = TLC_FALSE		
+        %openfile CAN_Buf
+		/* %<CAN_name> Send Message definition*/	
+		CanTxMsgTypeDef	TxMessage_%<CAN_name>;
+        %closefile CAN_Buf
+        %<LibSetSourceFileSection(modelC_CAN,"Defines",CAN_Buf)>
+        %openfile CAN_Buf
+		/* %<CAN_name> Send Message*/	
+		extern CanTxMsgTypeDef	TxMessage_%<CAN_name>;
+        %closefile CAN_Buf
+        %<LibSetSourceFileSection(modelH_CAN,"Defines",CAN_Buf)>				
+	%endif 	
+	
+    %endfunction
+%else
+%% ERROR CAN INIT MUST BE CALLED ONCE ONLY 
+   %trace ERROR CAN INIT MUST BE CALLED ONCE ONLY 
+%endif 
+
+%% Function: Outputs ==========================================
+%% Abstract:
+%% CAN_Send input value depending on pin config
+%%
+   %function Outputs(block, system) Output
+	/* %<Type> Block: %<Name> */  
+        %%model_CAN.h and model_CAN.c files
+        %assign SrcBaseName = LibGetMdlSrcBaseName()
+        %assign SrcBaseName_CAN = "%<SrcBaseName>_CAN"
+        %assign modelH_CAN      = LibCreateSourceFile("Header", "Simulink", SrcBaseName_CAN)
+        %assign modelC_CAN      = LibCreateSourceFile("Source", "Simulink", SrcBaseName_CAN)
+
+        %assign CAN_name =  SFcnParamSettings.CAN_name
+		%assign CAN_It =  SFcnParamSettings.CAN_It
+		%assign CAN_Send_TimeOut =  SFcnParamSettings.CAN_Send_TimeOut
+        %assign nbCAN =  SFcnParamSettings.nbCAN
+		
+		%if (ISEQUAL(CAN_name, "CAN"))
+			%assign CANNum = ""
+		%else
+			%assign CANNum = IDNUM("%<CAN_name>")[1]
+		%endif
+		
+		%assign stand_ext = LibBlockInputSignal(0, "", "", 0) 		
+		%assign ideBit = LibBlockInputSignal(1, "", "", 0) 		
+		%assign dataRequest = LibBlockInputSignal(2, "", "", 0) 		
+		%assign nbData = LibBlockInputSignal(3, "", "", 0) 		
+		%assign data = LibBlockInputSignal(4, "", "", 0) 		
+        /* Build frame to send */
+		if(%<stand_ext> == CAN_ID_STD) {
+			hcan%<CANNum>.pRxMsg->StdId = (uint32_t)%<ideBit>;
+			hcan%<CANNum>.pRxMsg->ExtId = (uint32_t)0;
+			hcan%<CANNum>.pRxMsg->IDE = CAN_ID_STD;
+		} else {
+			hcan%<CANNum>.pRxMsg->StdId = (uint32_t)0;
+			hcan%<CANNum>.pRxMsg->ExtId = (uint32_t)%<ideBit>;
+			hcan%<CANNum>.pRxMsg->IDE = CAN_ID_EXT;
+		}
+		hcan%<CANNum>.pRxMsg->RTR = (uint32_t)%<dataRequest>;
+		hcan%<CANNum>.pRxMsg->DLC = (uint32_t)%<nbData>;
+		strncpy((char*)hcan%<CANNum>.pRxMsg->Data, (char const*)&%<data>,(uint32_t)%<nbData>);
+ 	
+		
+		%if (ISEQUAL(CAN_It, "on"))
+			/* Send interrupt mode frame */
+			HAL_CAN_Transmit_IT(&hcan%<CANNum>);
+		%else
+			/* Send pooling mode frame */
+			HAL_CAN_Transmit(&hcan%<CANNum>, %<CAN_Send_TimeOut>);		
+		%endif
+		
+   %endfunction
+
+%% [EOF] CAN_Reset.tlc
+
+
+
+
+
+

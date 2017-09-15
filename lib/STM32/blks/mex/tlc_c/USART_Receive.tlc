@@ -1,0 +1,438 @@
+%% $RCSfile: USART_Receive.tlc,v $
+%% $Revision: 2.0 $
+%% $Date: 2014/06/06 $
+%%
+%% Abstract: USART Receive
+%%    STM32 Receive string from selected USART
+%%    Generated code is based on STM32 HAL Library files.
+%%
+%% Copyright 1990-2009 The MathWorks, Inc.
+%assign CodeFormat = "Embedded-C"
+%implements USART_Receive "C"
+
+
+%if !EXISTS(::CreateUSART_Receive)
+    %assign ::CreateUSART_Receive  = TLC_TRUE
+%endif
+
+%if !EXISTS(::InsertInitHeader)
+    %assign ::InsertInitHeader  = TLC_TRUE
+%endif
+%if !EXISTS(::InsertIncludes)
+    %assign ::InsertIncludes  = TLC_TRUE
+%endif 
+%if !EXISTS(::InsertRxUSART)
+    %assign ::InsertRxUSART  = TLC_TRUE
+%endif 
+%if !EXISTS(::InsertIncludesToUSART)
+    %assign ::InsertIncludesToUSART  = TLC_TRUE
+%endif 
+%if !EXISTS(::InsertIncludesFromUSART)
+    %assign ::InsertIncludesFromUSART  = TLC_TRUE
+%endif 
+
+    %assign ::CreateUSART_Receive  = TLC_TRUE
+
+%trace CreateUSART_Receive  %<CreateUSART_Receive>
+
+%% Create function for USART Receive:
+%if EXISTS(CreateUSART_Receive) && (CreateUSART_Receive == TLC_TRUE)
+
+    %%assign ::CreateUSART_Receive = TLC_FALSE
+
+%% Code for system initialization:
+    %function Start(block,system) Output
+        %assign USART_name =  SFcnParamSettings.USART_name
+		%% Initialization is called once only per USART
+		%if !EXISTS(::%<USART_name>_RX_START)
+			%assign ::%<USART_name>_RX_START  = TLC_TRUE		
+        %openfile USART_Buf
+        /* %<USART_name> initialization for receive*/
+        %<USART_name>_Rx_Initialization();
+        %closefile USART_Buf
+		%<LibMdlStartCustomCode(USART_Buf,"execution")>;
+		%endif
+    %endfunction	
+	
+%% Code for USART RECEIVE configuration call:
+    %function BlockInstanceSetup(block, system) void
+        %assign SrcBaseName = LibGetMdlSrcBaseName()
+        %assign modelH      = LibCreateSourceFile("Header", "Simulink", SrcBaseName)
+        %assign modelC      = LibCreateSourceFile("Source", "Simulink", SrcBaseName)		
+        %%model_USART.h and model_USART.c files
+        %assign SrcBaseName_USART = "%<SrcBaseName>_USART"
+        %assign modelH_USART      = LibCreateSourceFile("Header", "Simulink", SrcBaseName_USART)
+        %assign modelC_USART      = LibCreateSourceFile("Source", "Simulink", SrcBaseName_USART)
+%%Include model.h to model_USART.c 
+        %if EXISTS(::InsertIncludesToUSART) && (::InsertIncludesToUSART == TLC_TRUE)
+            %assign ::InsertIncludesToUSART    = TLC_FALSE		
+            %openfile USART_Buf
+				#include "%<SrcBaseName>.h"
+				#include "%<SrcBaseName_USART>.h"
+            %closefile USART_Buf
+            %<LibSetSourceFileSection(modelC_USART,"Includes",USART_Buf)>
+        %endif
+%%AND Include model_USART.h to model.c
+        %if EXISTS(::InsertIncludesFromUSART) && (::InsertIncludesFromUSART == TLC_TRUE)
+            %assign ::InsertIncludesFromUSART    = TLC_FALSE		
+            %openfile USART_Buf
+				#include "%<SrcBaseName_USART>.h"
+            %closefile USART_Buf
+            %<LibSetSourceFileSection(modelH,"Includes",USART_Buf)>			
+			
+            %openfile USART_Buf
+				//RP MODIF #include "%<SrcBaseName>_STM32.h"
+				#include "STM32_Config.h"
+            %closefile USART_Buf
+            %<LibSetSourceFileSection(modelH_USART,"Includes",USART_Buf)>			
+        %endif		
+        %assign USART_name =  SFcnParamSettings.USART_name		
+		%assign Buff_size = SFcnParamSettings.Buff_size
+		%assign nbUsart = SFcnParamSettings.nbUsart
+		%assign Soft_it = SFcnParamSettings.Soft_it
+		%assign Soft_num = SFcnParamSettings.Soft_num
+        %assign usartMode =  SFcnParamSettings.usartMode		
+        %assign usartDma_Rx =  SFcnParamSettings.usartDma_Rx		
+        %assign usartDma_Tx =  SFcnParamSettings.usartDma_Tx		
+        %assign usartIt =  SFcnParamSettings.usartIt
+		%assign usartNum = IDNUM("%<USART_name>")[1]
+%%warning "---------->usartNum: %<usartNum>"		
+
+        %if EXISTS(::InsertRxUSART) && (::InsertRxUSART == TLC_TRUE)
+            %assign ::InsertRxUSART    = TLC_FALSE		
+            %openfile USART_Buf
+			/** 
+			* @brief USART Rx State structures definition  
+			*/ 
+			typedef enum
+			{
+			USART_RX_ON             = 0x00,    /*!< Rx usart communication start   */
+			USART_RX_OK             = 0x01,    /*!< Rx usart communication terminated. Data available */
+			USART_RX_OFF            = 0x02     /*!< Rx usart communication stop */      
+			}USART_RxStatusTypeDef;
+			/** 
+			* @brief  USART data information
+			*/ 
+			typedef struct 	{
+			 uint8_t*                ptRcv;         /*!< Point to receive data value buffer*/
+			 __IO USART_RxStatusTypeDef   rxStatus;	    /*!< Usart receive communication status.*/
+			}USART_RxDataLinkTypeDef;
+            %closefile USART_Buf
+            %<LibSetSourceFileSection(modelH_USART,"Typedefs",USART_Buf)>
+           
+  		    %openfile USART_Buf
+ 			%if (%<nbUsart> > 1)
+			uint16_t               G_NbUsartRxConf = 0; /* Number of USART/UART configured for receive*/
+            /* Array of USART/UART receive data information */
+            USART_RxDataLinkTypeDef*   G_Usart_RxData[%<nbUsart>];
+			void*     G_Usart_RxHandler[%<nbUsart>];
+			%else
+            USART_RxDataLinkTypeDef*   G_Usart_RxData;      /* Pointer to USART/UART receive data information*/
+			void*     G_Usart_RxHandler;   /* Pointer to USART/UART handler configured for receive*/
+			%endif
+            %closefile USART_Buf
+            %<LibSetSourceFileSection(modelC_USART,"Declarations",USART_Buf)>	
+
+			
+  		    %openfile USART_Buf
+			%if (ISEQUAL(usartMode, "Synchronous") == TLC_FALSE)
+            /*******************************************************************************
+            * Function Name  : HAL_UART_RxCpltCallback
+            * Description    : Rx Transfer completed callbacks. 
+            * Input          : UART handle
+            *******************************************************************************/
+            void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+            {
+			%if(%<nbUsart> > 1)				
+				uint16_t L_UsartHandleIdx = 0;/* Index to retreive UART data information */
+    			USART_RxDataLinkTypeDef*   pL_UART_RxData = G_Usart_RxData[0]; /* Pt to the list of UART Rx data information */
+				UART_HandleTypeDef*     pL_UART_Handler = (UART_HandleTypeDef*)G_Usart_RxHandler[0]; /* Pt to the list of UART Rx handler */
+				for(L_UsartHandleIdx = 0;L_UsartHandleIdx < %<nbUsart>;L_UsartHandleIdx++) {
+					pL_UART_Handler = (UART_HandleTypeDef*)G_Usart_RxHandler[L_UsartHandleIdx];
+					if(pL_UART_Handler == huart) {
+						pL_UART_RxData = G_Usart_RxData[L_UsartHandleIdx];
+						break;
+					}
+				}
+			%else
+    			USART_RxDataLinkTypeDef*   pL_UART_RxData = G_Usart_RxData; /* Pt to UART data information */
+				UART_HandleTypeDef*     pL_UART_Handler = (UART_HandleTypeDef*)G_Usart_RxHandler; /* Pt to UART handler */
+			%endif
+				if(pL_UART_Handler == huart) {
+					pL_UART_RxData->rxStatus = USART_RX_OK;
+				}
+			}
+            %else
+            /*******************************************************************************
+            * Function Name  : HAL_USART_RxCpltCallback
+            * Description    : Rx Transfer completed callbacks. 
+            * Input          : USART handle
+            *******************************************************************************/
+            void HAL_USART_RxCpltCallback(USART_HandleTypeDef *husart)
+            {
+			%if(%<nbUsart> > 1)				
+				uint16_t L_UsartHandleIdx = 0;/* Index to retreive USART data information */
+    			USART_RxDataLinkTypeDef*   pL_USART_RxData = G_Usart_RxData[0]; /* Pt to the list of USART Rx data information */
+				USART_HandleTypeDef*     pL_USART_Handler = (USART_HandleTypeDef*)G_Usart_RxHandler[0]; /* Pt to the list of USART Rx handler */
+				for(L_UsartHandleIdx = 0;L_UsartHandleIdx < %<nbUsart>;L_UsartHandleIdx++) {
+					pL_USART_Handler = (USART_HandleTypeDef*)G_Usart_RxHandler[L_UsartHandleIdx];
+					if(pL_USART_Handler == husart) {
+						pL_USART_RxData = G_Usart_RxData[L_UsartHandleIdx];
+						break;
+					}
+				}
+			%else
+    			USART_RxDataLinkTypeDef*   pL_USART_RxData = G_Usart_RxData; /* Pt to USART data information */
+				USART_HandleTypeDef*     pL_USART_Handler = (USART_HandleTypeDef*)G_Usart_RxHandler; /* Pt to USART handler */
+			%endif
+				if(pL_USART_Handler == husart) {
+					pL_USART_RxData->rxStatus = USART_RX_OK;
+				}
+			}	
+            %endif
+            %closefile USART_Buf
+			%<LibSetSourceFileSection(modelC_USART,"Functions",USART_Buf)>
+			
+		%endif
+
+		%if !EXISTS(::%<USART_name>_RX_BUFF_SIZE)
+			%assign ::%<USART_name>_RX_BUFF_SIZE  = %<Buff_size>	
+		%openfile USART_Buf
+        #define %<USART_name>_RX_BUFF_SIZE %<Buff_size>
+		%closefile USART_Buf
+        %<LibSetSourceFileSection(modelH_USART,"Defines",USART_Buf)>	
+        %else
+        %if (%<Buff_size> > ::%<USART_name>_RX_BUFF_SIZE)
+            %assign ::%<USART_name>_RX_BUFF_SIZE  = %<Buff_size>
+		%openfile USART_Buf
+        #undef %<USART_name>_RX_BUFF_SIZE
+        #define %<USART_name>_RX_BUFF_SIZE %<Buff_size>
+		%closefile USART_Buf
+        %<LibSetSourceFileSection(modelH_USART,"Defines",USART_Buf)>	
+        %endif
+        %endif
+
+
+		%if !EXISTS(::%<USART_name>_RX_BUFF_DEF)
+			%assign ::%<USART_name>_RX_BUFF_DEF  = TLC_TRUE	
+        %%Usart global info defined once only
+		%openfile USART_Buf
+        %if (ISEQUAL(usartIt, "on") == TLC_FALSE && ISEQUAL(usartDma_Rx, "on") == TLC_FALSE )
+		/* %<USART_name> Rx polling timeout value. Number of Solver loop. (can be changed)*/
+		uint32_t G_%<USART_name>_RxPollTimeOut = 10;
+		%endif				
+		%closefile USART_Buf
+        %<LibSetSourceFileSection(modelC_USART,"Declarations",USART_Buf)>	
+
+		%openfile USART_Buf
+        %if (ISEQUAL(usartIt, "on") == TLC_FALSE && ISEQUAL(usartDma_Rx, "on") == TLC_FALSE )
+		/* %<USART_name> Rx polling timeout value. Number of Solver loop. (can be changed)*/
+		extern uint32_t G_%<USART_name>_RxPollTimeOut;
+		%endif				
+		%closefile USART_Buf
+        %<LibSetSourceFileSection(modelH_USART,"Declarations",USART_Buf)>	
+
+
+		%openfile USART_Buf
+		/* %<USART_name> Receive data buffer*/
+		uint8_t G_%<USART_name>_RxDataBuffer[%<USART_name>_RX_BUFF_SIZE];	
+    	/* %<USART_name> receive data structure information*/
+        USART_RxDataLinkTypeDef   %<USART_name>_RxDataLink;		
+		%closefile USART_Buf
+        %<LibSetSourceFileSection(modelC_USART,"Declarations",USART_Buf)>	
+		
+%% Code for required USART external definition: in model_USART.c file
+        %openfile USART_Buf
+            /* %<USART_name> handler */
+			%if (ISEQUAL(usartMode, "Synchronous"))
+            extern USART_HandleTypeDef husart%<usartNum>;
+            %%test for DMA handler
+            %if (ISEQUAL(usartDma_Rx, "on"))
+            extern DMA_HandleTypeDef hdma_usart%<usartNum>_rx;
+            %endif
+            %if (ISEQUAL(usartDma_Tx, "on"))
+            extern DMA_HandleTypeDef hdma_usart%<usartNum>_tx;
+            %endif
+			%else
+            extern UART_HandleTypeDef huart%<usartNum>;
+            %%test for DMA handler
+            %if (ISEQUAL(usartDma_Rx, "on"))
+            extern DMA_HandleTypeDef hdma_uart%<usartNum>_rx;
+            %endif
+            %if (ISEQUAL(usartDma_Tx, "on"))
+            extern DMA_HandleTypeDef hdma_uart%<usartNum>_tx;
+            %endif
+			%endif
+			/* %<USART_name> Receive data buffer*/
+			extern uint8_t G_%<USART_name>_RxDataBuffer[];	
+			/* %<USART_name> receive data structure information*/
+			extern USART_RxDataLinkTypeDef   %<USART_name>_RxDataLink;								
+        %closefile USART_Buf
+        %<LibSetSourceFileSection(modelH_USART,"Declarations",USART_Buf)>
+
+        %%endif ::%<USART_name>_RX_BUFF_DEF not defined
+		%endif	
+
+		%% Initialization is defined once only per USART
+		%if !EXISTS(::%<USART_name>_RX_INIT)
+			%assign ::%<USART_name>_RX_INIT  = TLC_TRUE				
+        %openfile USART_Buf
+        /* %<USART_name>_Rx_Initialization prototyping */
+        void %<USART_name>_Rx_Initialization(void);
+        %closefile USART_Buf
+        %<LibSetSourceFileSection(modelH_USART,"Definitions",USART_Buf)>
+
+        %openfile USART_Buf
+        /*******************************************************************************
+        * Function Name  : %<USART_name>_Rx_Initialization
+        * Description    : Receive Initialization of %<USART_name>
+        * Input          : -
+        *******************************************************************************/
+        void %<USART_name>_Rx_Initialization(void)
+        {
+		%if(%<nbUsart> > 1)						
+			/*Store %<USART_name> receive data information and its handler */ 
+			G_Usart_RxData[G_NbUsartRxConf] = &%<USART_name>_RxDataLink;
+			%if (ISEQUAL(usartMode, "Synchronous"))
+			G_Usart_RxHandler[G_NbUsartRxConf] = (void*)&husart%<usartNum>;
+			%else
+			G_Usart_RxHandler[G_NbUsartRxConf] = (void*)&huart%<usartNum>;
+			%endif
+			G_NbUsartRxConf++; /*Inc number of configured USART for receive*/
+        %else
+			/*Store %<USART_name> receive data information and its handler */ 
+			G_Usart_RxData = &%<USART_name>_RxDataLink;
+			%if (ISEQUAL(usartMode, "Synchronous"))
+			G_Usart_RxHandler = (void*)&husart%<usartNum>;
+			%else
+			G_Usart_RxHandler = (void*)&huart%<usartNum>;
+			%endif
+        %endif
+			%<USART_name>_RxDataLink.ptRcv =  G_%<USART_name>_RxDataBuffer;
+			%<USART_name>_RxDataLink.rxStatus =  USART_RX_OFF;					
+		%if (ISEQUAL(Soft_it, "on"))		
+			/* Enable Software Interrupt request*/
+			EXTI->IMR |= 1 << (uint16_t)%<Soft_num>;
+		%endif		
+        }  		
+        %closefile USART_Buf
+        %<LibSetSourceFileSection(modelC_USART,"Functions",USART_Buf)>
+		%endif
+    %endfunction
+%else
+%% ERROR USART RCV INIT MUST BE CALLED ONCE ONLY 
+   %trace ERROR USART INIT MUST BE CALLED ONCE ONLY 
+%endif 
+
+%% Function: Outputs ==========================================
+%% Abstract:
+%% USART_Receive input value depending on pin config
+%%
+    %function Outputs(block, system) Output
+        %assign SrcBaseName = LibGetMdlSrcBaseName()
+        %assign modelH      = LibCreateSourceFile("Header", "Simulink", SrcBaseName)
+        %assign modelC      = LibCreateSourceFile("Source", "Simulink", SrcBaseName)		
+        %%model_USART.h and model_USART.c files
+        %assign SrcBaseName_USART = "%<SrcBaseName>_USART"
+        %assign modelH_USART      = LibCreateSourceFile("Header", "Simulink", SrcBaseName_USART)
+        %assign modelC_USART      = LibCreateSourceFile("Source", "Simulink", SrcBaseName_USART)
+		/* %<Type> Block: %<Name> */  
+        %assign USART_name =  SFcnParamSettings.USART_name		
+		%assign Buff_size = SFcnParamSettings.Buff_size
+		%assign Soft_it = SFcnParamSettings.Soft_it
+		%assign Soft_num = SFcnParamSettings.Soft_num
+		%assign nbUsart = SFcnParamSettings.nbUsart
+        %assign usartMode =  SFcnParamSettings.usartMode		
+        %assign usartDma_Rx =  SFcnParamSettings.usartDma_Rx		
+        %assign usartDma_Tx =  SFcnParamSettings.usartDma_Tx		
+        %assign usartIt =  SFcnParamSettings.usartIt		
+		%assign usartNum = IDNUM("%<USART_name>")[1]
+		%%block Output 
+		%assign NbRcv = LibBlockOutputSignal(0, "", "", 0)
+		%assign Nb2Rcv = LibBlockInputSignal(0, "", "", 0)
+		%assign uAddr = LibBlockOutputSignal(1, "", "", 0)
+		%assign dataRcv = LibBlockOutputSignalAddr(2, "", "", 0)
+
+		%if !EXISTS(::InsertIdxUSART)
+			%assign ::InsertIdxUSART  = TLC_TRUE		
+		%openfile USART_Buf
+        /* %<USART_name> Receive data buffer index*/
+        extern uint16_t G_%<USART_name>_Rx_idx;
+		%closefile USART_Buf
+        %<LibSetSourceFileSection(modelH_USART,"Declarations",USART_Buf)>	
+		%openfile USART_Buf
+        /* %<USART_name> Receive data buffer index*/
+        uint16_t G_%<USART_name>_Rx_idx;
+		%closefile USART_Buf
+        %<LibSetSourceFileSection(modelC_USART,"Declarations",USART_Buf)>	
+%%        %<LibSystemOutputCustomCode(system,USART_Buf,"declaration")>		
+        %endif
+
+%%RP 		%openfile USART_Buf
+		%if (ISEQUAL(usartMode, "Synchronous"))
+		if(%<USART_name>_RxDataLink.rxStatus == USART_RX_OFF)
+		{
+			%<USART_name>_RxDataLink.ptRcv =  G_%<USART_name>_RxDataBuffer;
+			%<NbRcv> = 0;
+			%if (ISEQUAL(usartDma_Rx, "on"))
+			%<USART_name>_RxDataLink.rxStatus = USART_RX_ON;
+			/* %<USART_name> DMA receive mode*/
+			HAL_USART_Receive_DMA(&husart%<usartNum>, G_%<USART_name>_RxDataBuffer, %<Nb2Rcv>);				
+			%elseif (ISEQUAL(usartIt, "on"))
+			%<USART_name>_RxDataLink.rxStatus = USART_RX_ON;
+			/* %<USART_name> interrupt receive mode*/
+			HAL_USART_Receive_IT(&husart%<usartNum>, G_%<USART_name>_RxDataBuffer, %<Nb2Rcv>);
+			%else 
+			/* %<USART_name> pooling receive mode*/
+			HAL_USART_Receive(&husart%<usartNum>, G_%<USART_name>_RxDataBuffer, %<Nb2Rcv>, G_%<USART_name>_RxPollTimeOut);
+			%<USART_name>_RxDataLink.rxStatus = USART_RX_OK;
+			%endif
+		}
+		%else
+		if(%<USART_name>_RxDataLink.rxStatus == USART_RX_OFF)
+		{
+			%<USART_name>_RxDataLink.ptRcv =  G_%<USART_name>_RxDataBuffer;
+			%<NbRcv> = 0;
+			%if (ISEQUAL(usartDma_Rx, "on"))
+			%<USART_name>_RxDataLink.rxStatus = USART_RX_ON;
+			/* %<USART_name> DMA receive mode*/
+			HAL_UART_Receive_DMA(&huart%<usartNum>, G_%<USART_name>_RxDataBuffer, %<Nb2Rcv>);				
+			%elseif (ISEQUAL(usartIt, "on"))
+			%<USART_name>_RxDataLink.rxStatus = USART_RX_ON;
+			/* %<USART_name> interrupt receive mode*/
+			HAL_UART_Receive_IT(&huart%<usartNum>, G_%<USART_name>_RxDataBuffer, %<Nb2Rcv>);
+			%else 
+			/* %<USART_name> pooling receive mode*/
+			HAL_UART_Receive(&huart%<usartNum>, G_%<USART_name>_RxDataBuffer, %<Nb2Rcv>, G_%<USART_name>_RxPollTimeOut);
+			%<USART_name>_RxDataLink.rxStatus = USART_RX_OK;
+			%endif
+		}
+		%endif	
+
+		if(%<USART_name>_RxDataLink.rxStatus == USART_RX_OK){
+	 		%<NbRcv> = %<Nb2Rcv>;
+			%<uAddr> =  (uint32_T)G_%<USART_name>_RxDataBuffer;
+            for(G_%<USART_name>_Rx_idx=0; G_%<USART_name>_Rx_idx<%<Nb2Rcv>; G_%<USART_name>_Rx_idx++) {
+                *(char*)(%<dataRcv>+G_%<USART_name>_Rx_idx) = *(char*)%<USART_name>_RxDataLink.ptRcv++;
+            }
+            G_%<USART_name>_RxDataBuffer[G_%<USART_name>_Rx_idx] = 0;
+        	%if (ISEQUAL(Soft_it, "on") == TLC_FALSE)		
+			%<USART_name>_RxDataLink.rxStatus = USART_RX_OFF;	
+            %endif
+		}
+%%RP		%closefile USART_Buf
+%%RP        %<LibSystemOutputCustomCode(system,USART_Buf,"execution")>	
+
+ 		%openfile USART_Buf
+		%if (ISEQUAL(Soft_it, "on"))		
+		if(%<USART_name>_RxDataLink.rxStatus == USART_RX_OK){
+			%<USART_name>_RxDataLink.rxStatus = USART_RX_OFF;	
+			/* Soft IT request*/
+			EXTI->SWIER |= 1 << (uint16_t)%<Soft_num>;
+		}
+		%endif
+		%closefile USART_Buf
+        %<LibSystemOutputCustomCode(system,USART_Buf,"trailer")>	
+
+	
+   %endfunction

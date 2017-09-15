@@ -1,0 +1,141 @@
+%% SYSTLC: stm32 (Embedded Target) TMF: stm32.tmf MAKE: make_rtw \
+%%    EXTMODE: ext_comm
+
+%selectfile NULL_FILE
+
+%%
+%% System Target File for stm32
+%%
+%% $ stm32.tlc 2009-05-14 dlange $
+%%
+
+%assign CodeFormat = "Embedded-C"
+%assign TargetType = "RT"
+%assign Language   = "C"
+
+%include "codegenentry.tlc"
+
+/%
+  BEGIN_RTW_OPTIONS
+
+  oIdx = 1;
+
+  rtwoptions(oIdx).prompt        = 'STM32 Options';
+  rtwoptions(oIdx).type          = 'Category';
+  rtwoptions(oIdx).enable        = 'on';  
+  rtwoptions(oIdx).default       = 8;
+  rtwoptions(oIdx).popupstrings  = '';
+  rtwoptions(oIdx).tlcvariable   = '';
+  rtwoptions(oIdx).tooltip       = '';
+  rtwoptions(oIdx).callback      = '';
+  rtwoptions(oIdx).makevariable  = '';
+
+  
+   oIdx = oIdx + 1;
+
+  rtwoptions(oIdx).prompt         = 'Download Application';
+  rtwoptions(oIdx).type           = 'Checkbox';
+  rtwoptions(oIdx).default        = 'on';
+  rtwoptions(oIdx).tlcvariable    = 'DownloadApplication';
+  rtwoptions(oIdx).makevariable   = 'DOWNLOADAPPLICATION';
+  rtwoptions(oIdx).tooltip        = ...
+    ['Select to open STM32 generated project.'];
+  rtwoptions(oIdx).callback      = '';
+
+  oIdx = oIdx + 1;
+
+  rtwoptions(oIdx).prompt         = 'STM32CubeMx Path update';
+  rtwoptions(oIdx).type           = 'Checkbox';
+  rtwoptions(oIdx).default        = 'off';
+  rtwoptions(oIdx).tlcvariable    = 'STM32CubeMxPathUpdate';
+  rtwoptions(oIdx).makevariable   = 'STM32CUBEMXPATHUPDATE';
+  rtwoptions(oIdx).tooltip        = ...
+    ['Get STM32CubeMx path from registry. Uncheck to modify path manually.'];
+  rtwoptions(oIdx).callback       = 'stm32cubemxpath_callback(hDlg, hSrc, ''STM32CubeMxPathUpdate'')';
+   
+  oIdx = oIdx + 1;
+   
+  rtwoptions(oIdx).prompt         = 'STM32CubeMx installation path';
+  rtwoptions(oIdx).type           = 'Edit';
+  rtwoptions(oIdx).default        = '';
+  rtwoptions(oIdx).tlcvariable    = 'STM32CubeMxPath';
+  rtwoptions(oIdx).makevariable   = 'STM32CUBEMXPATH';
+  rtwoptions(oIdx).enable         = 'on';
+  rtwoptions(oIdx).tooltip        = ...
+    ['installation path for STM32CubeMx'];
+  rtwoptions(oIdx).callback      = 'stm32cubemxpath_callback(hDlg, hSrc, ''STM32CubeMxPath'')';
+ 
+  oIdx = oIdx + 1;
+
+  rtwoptions(oIdx).prompt         = 'Installed Path';
+  rtwoptions(oIdx).type           = 'NonUI';
+  rtwoptions(oIdx).default        = '';
+  rtwoptions(oIdx).tlcvariable    = 'Target_Inst_path';
+  rtwoptions(oIdx).makevariable   = 'TARGET_INST_PATH';
+  rtwoptions(oIdx).enable         = 'off';
+  rtwoptions(oIdx).tooltip        = '';
+  rtwoptions(oIdx).callback      = ''; 
+  
+  oIdx = oIdx + 1;
+
+  rtwoptions(oIdx).prompt         = 'Installed Full Path';
+  rtwoptions(oIdx).type           = 'Edit';
+  rtwoptions(oIdx).default        = '';
+  rtwoptions(oIdx).tlcvariable    = 'Target_Inst_Fullpath';
+  rtwoptions(oIdx).makevariable   = 'TARGET_INST_FULLPATH';
+  rtwoptions(oIdx).enable         = 'off';
+  rtwoptions(oIdx).tooltip        = ...
+    ['Path to package added with pathtool command.'];
+  rtwoptions(oIdx).callback      = ''; 
+ 
+  oIdx = oIdx + 1;
+
+  rtwoptions(oIdx).prompt         = 'Update installed path';
+  rtwoptions(oIdx).type           = 'Pushbutton';
+  rtwoptions(oIdx).default        = '';
+  rtwoptions(oIdx).tlcvariable    = 'UpdateInstalledPath';
+  rtwoptions(oIdx).makevariable   = 'UPDATEINSTALLEDPATH';
+  rtwoptions(oIdx).tooltip        = ...
+    ['Click to automatically update package installation path.'];
+  rtwoptions(oIdx).callback       = 'stm32updatepath_callback(hDlg, hSrc)';
+ 
+   oIdx = oIdx + 1;
+
+  rtwoptions(oIdx).prompt         = 'Model configuration (ioc) Full Path';
+  rtwoptions(oIdx).type           = 'Edit';
+  rtwoptions(oIdx).default        = '';
+  rtwoptions(oIdx).tlcvariable    = 'Ioc_Fullpath';
+  rtwoptions(oIdx).makevariable   = 'IOC_FULLPATH';
+  rtwoptions(oIdx).enable         = '';
+  rtwoptions(oIdx).tooltip        = ...
+    ['Path to ioc configuration file.'];
+  rtwoptions(oIdx).callback      = ''; 
+ 
+   oIdx = oIdx + 1;
+
+  rtwoptions(oIdx).prompt         = 'Interrupt Handler Optimization';
+  rtwoptions(oIdx).type           = 'Checkbox';
+  rtwoptions(oIdx).default        = 'on';
+  rtwoptions(oIdx).tlcvariable    = 'IT_Handler_Optim';
+  rtwoptions(oIdx).makevariable   = 'IT_HANDLER_OPTIM';
+  rtwoptions(oIdx).tooltip        = ...
+    ['HAL IRQ Handler not generated from STM32CubeMX. Code is not generated in HAL callback function but directly in IRQ Handler. '];
+  rtwoptions(oIdx).callback      = '';
+
+  
+  %----------------------------------------%
+  % Configure RTW code generation settings %
+  %----------------------------------------%
+    
+  rtwgensettings.DerivedFrom = 'ert.tlc';
+  rtwgensettings.BuildDirSuffix = '_stm32';
+  rtwgensettings.Version = '1';
+  rtwgensettings.SelectCallback = ['stm32_SelectCallback(hDlg, hSrc)'];
+  %rtwgensettings.ActivateCallback = ['stm32_ActivateCallback(hDlg, hSrc)'];
+  rtwgensettings.PostApplyCallback = ['stm32_PostApplyCallback(hDlg, hSrc)'];
+ 
+
+  END_RTW_OPTIONS 
+ %/
+
+%% [EOF]: stm32.tlc

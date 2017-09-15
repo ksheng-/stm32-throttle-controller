@@ -1,0 +1,2269 @@
+Model {
+  Name			  "STM32_Timers"
+  Version		  8.4
+  MdlSubVersion		  0
+  SavedCharacterEncoding  "windows-1252"
+  GraphicalInterface {
+    NumRootInports	    0
+    NumRootOutports	    0
+    ParameterArgumentNames  ""
+    ComputedModelVersion    "1.365"
+    NumModelReferences	    0
+    NumTestPointedSignals   0
+  }
+  ScopeRefreshTime	  0.035000
+  OverrideScopeRefreshTime on
+  DisableAllScopes	  off
+  DataTypeOverride	  "UseLocalSettings"
+  DataTypeOverrideAppliesTo "AllNumericTypes"
+  MinMaxOverflowLogging	  "UseLocalSettings"
+  MinMaxOverflowArchiveMode "Overwrite"
+  FPTRunName		  "Run 1"
+  MaxMDLFileLineLength	  120
+  Object {
+    $PropName		    "BdWindowsInfo"
+    $ObjectID		    1
+    $ClassName		    "Simulink.BDWindowsInfo"
+    Object {
+      $PropName		      "WindowsInfo"
+      $ObjectID		      2
+      $ClassName	      "Simulink.WindowInfo"
+      IsActive		      [1]
+      Location		      [34.0, 283.0, 595.0, 471.0]
+      Object {
+	$PropName		"ModelBrowserInfo"
+	$ObjectID		3
+	$ClassName		"Simulink.ModelBrowserInfo"
+	Visible			[0]
+	DockPosition		"Left"
+	Width			[50]
+	Height			[50]
+	Filter			[9]
+      }
+      Object {
+	$PropName		"ExplorerBarInfo"
+	$ObjectID		4
+	$ClassName		"Simulink.ExplorerBarInfo"
+	Visible			[1]
+      }
+      Object {
+	$PropName		"EditorsInfo"
+	$ObjectID		5
+	$ClassName		"Simulink.EditorInfo"
+	IsActive		[1]
+	ViewObjType		"SimulinkTopLevel"
+	LoadSaveID		"0"
+	Extents			[545.0, 297.0]
+	ZoomFactor		[1.0]
+	Offset			[0.0, 0.0]
+      }
+    }
+  }
+  Created		  "Wed Jan 04 18:03:16 2012"
+  Creator		  "reynaudp"
+  UpdateHistory		  "UpdateHistoryNever"
+  ModifiedByFormat	  "%<Auto>"
+  LastModifiedBy	  "reynaudp"
+  ModifiedDateFormat	  "%<Auto>"
+  LastModifiedDate	  "Tue Sep 15 15:59:26 2015"
+  RTWModifiedTimeStamp	  364233560
+  ModelVersionFormat	  "1.%<AutoIncrement:365>"
+  ConfigurationManager	  "none"
+  SampleTimeColors	  off
+  SampleTimeAnnotations	  off
+  LibraryLinkDisplay	  "disabled"
+  WideLines		  off
+  ShowLineDimensions	  off
+  ShowPortDataTypes	  on
+  ShowDesignRanges	  off
+  ShowLoopsOnError	  on
+  IgnoreBidirectionalLines off
+  ShowStorageClass	  off
+  ShowTestPointIcons	  on
+  ShowSignalResolutionIcons on
+  ShowViewerIcons	  on
+  SortedOrder		  off
+  ExecutionContextIcon	  off
+  ShowLinearizationAnnotations on
+  ShowMarkup		  on
+  BlockNameDataTip	  off
+  BlockParametersDataTip  on
+  BlockDescriptionStringDataTip	off
+  ToolBar		  on
+  StatusBar		  on
+  BrowserShowLibraryLinks off
+  BrowserLookUnderMasks	  off
+  SimulationMode	  "external"
+  PauseTimes		  "5"
+  NumberOfSteps		  1
+  SnapshotBufferSize	  10
+  SnapshotInterval	  10
+  NumberOfLastSnapshots	  0
+  LinearizationMsg	  "none"
+  Profile		  off
+  ParamWorkspaceSource	  "MATLABWorkspace"
+  AccelSystemTargetFile	  "accel.tlc"
+  AccelTemplateMakefile	  "accel_default_tmf"
+  AccelMakeCommand	  "make_rtw"
+  TryForcingSFcnDF	  off
+  Object {
+    $PropName		    "DataLoggingOverride"
+    $ObjectID		    6
+    $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
+    model_		    "STM32_Timers"
+    overrideMode_	    [0.0]
+    Array {
+      Type		      "Cell"
+      Dimension		      1
+      Cell		      "STM32_Timers"
+      PropName		      "logAsSpecifiedByModels_"
+    }
+    Array {
+      Type		      "Cell"
+      Dimension		      1
+      Cell		      []
+      PropName		      "logAsSpecifiedByModelsSSIDs_"
+    }
+  }
+  RecordCoverage	  off
+  CovPath		  "/"
+  CovSaveName		  "covdata"
+  CovMetricSettings	  "dw"
+  CovNameIncrementing	  off
+  CovHtmlReporting	  on
+  CovForceBlockReductionOff on
+  CovEnableCumulative	  on
+  covSaveCumulativeToWorkspaceVar on
+  CovSaveSingleToWorkspaceVar on
+  CovCumulativeVarName	  "covCumulativeData"
+  CovCumulativeReport	  off
+  CovReportOnPause	  on
+  CovModelRefEnable	  "Off"
+  CovExternalEMLEnable	  off
+  CovSFcnEnable		  off
+  CovBoundaryAbsTol	  0.000010
+  CovBoundaryRelTol	  0.010000
+  CovUseTimeInterval	  off
+  CovStartTime		  0
+  CovStopTime		  0
+  ExtModeBatchMode	  off
+  ExtModeEnableFloating	  on
+  ExtModeTrigType	  "manual"
+  ExtModeTrigMode	  "normal"
+  ExtModeTrigPort	  "1"
+  ExtModeTrigElement	  "any"
+  ExtModeTrigDuration	  1000
+  ExtModeTrigDurationFloating "auto"
+  ExtModeTrigHoldOff	  0
+  ExtModeTrigDelay	  0
+  ExtModeTrigDirection	  "rising"
+  ExtModeTrigLevel	  0
+  ExtModeArchiveMode	  "off"
+  ExtModeAutoIncOneShot	  off
+  ExtModeIncDirWhenArm	  off
+  ExtModeAddSuffixToVar	  off
+  ExtModeWriteAllDataToWs off
+  ExtModeArmWhenConnect	  on
+  ExtModeSkipDownloadWhenConnect off
+  ExtModeLogAll		  on
+  ExtModeAutoUpdateStatusClock on
+  BufferReuse		  on
+  ShowModelReferenceBlockVersion off
+  ShowModelReferenceBlockIO on
+  Array {
+    Type		    "Handle"
+    Dimension		    1
+    Simulink.ConfigSet {
+      $ObjectID		      7
+      Version		      "1.14.3"
+      Array {
+	Type			"Handle"
+	Dimension		8
+	Simulink.SolverCC {
+	  $ObjectID		  8
+	  Version		  "1.14.3"
+	  StartTime		  "0.0"
+	  StopTime		  "10.0"
+	  AbsTol		  "auto"
+	  FixedStep		  "auto"
+	  InitialStep		  "auto"
+	  MaxNumMinSteps	  "-1"
+	  MaxOrder		  5
+	  ZcThreshold		  "auto"
+	  ConsecutiveZCsStepRelTol "10*128*eps"
+	  MaxConsecutiveZCs	  "1000"
+	  ExtrapolationOrder	  4
+	  NumberNewtonIterations  1
+	  MaxStep		  "auto"
+	  MinStep		  "auto"
+	  MaxConsecutiveMinStep	  "1"
+	  RelTol		  "1e-3"
+	  SolverMode		  "Auto"
+	  EnableConcurrentExecution off
+	  ConcurrentTasks	  off
+	  Solver		  "FixedStepDiscrete"
+	  SolverName		  "FixedStepDiscrete"
+	  SolverJacobianMethodControl "auto"
+	  ShapePreserveControl	  "DisableAll"
+	  ZeroCrossControl	  "UseLocalSettings"
+	  ZeroCrossAlgorithm	  "Nonadaptive"
+	  AlgebraicLoopSolver	  "TrustRegion"
+	  SolverResetMethod	  "Fast"
+	  PositivePriorityOrder	  off
+	  AutoInsertRateTranBlk	  off
+	  SampleTimeConstraint	  "Unconstrained"
+	  InsertRTBMode		  "Whenever possible"
+	}
+	Simulink.DataIOCC {
+	  $ObjectID		  9
+	  Version		  "1.14.3"
+	  Decimation		  "1"
+	  ExternalInput		  "[t, u]"
+	  FinalStateName	  "xFinal"
+	  InitialState		  "xInitial"
+	  LimitDataPoints	  on
+	  MaxDataPoints		  "1000"
+	  LoadExternalInput	  off
+	  LoadInitialState	  off
+	  SaveFinalState	  off
+	  SaveCompleteFinalSimState off
+	  SaveFormat		  "Array"
+	  SignalLoggingSaveFormat "ModelDataLogs"
+	  SaveOutput		  on
+	  SaveState		  off
+	  SignalLogging		  on
+	  DSMLogging		  on
+	  InspectSignalLogs	  off
+	  VisualizeSimOutput	  on
+	  SaveTime		  on
+	  ReturnWorkspaceOutputs  off
+	  StateSaveName		  "xout"
+	  TimeSaveName		  "tout"
+	  OutputSaveName	  "yout"
+	  SignalLoggingName	  "logsout"
+	  DSMLoggingName	  "dsmout"
+	  OutputOption		  "RefineOutputTimes"
+	  OutputTimes		  "[]"
+	  ReturnWorkspaceOutputsName "out"
+	  Refine		  "1"
+	}
+	Simulink.OptimizationCC {
+	  $ObjectID		  10
+	  Version		  "1.14.3"
+	  BlockReduction	  on
+	  BooleanDataType	  on
+	  ConditionallyExecuteInputs on
+	  InlineParams		  off
+	  UseDivisionForNetSlopeComputation "Off"
+	  UseFloatMulNetSlope	  off
+	  DefaultUnderspecifiedDataType	"double"
+	  UseSpecifiedMinMax	  off
+	  InlineInvariantSignals  off
+	  OptimizeBlockIOStorage  on
+	  BufferReuse		  on
+	  EnhancedBackFolding	  off
+	  CachingGlobalReferences off
+	  GlobalBufferReuse	  on
+	  StrengthReduction	  off
+	  ExpressionFolding	  on
+	  BooleansAsBitfields	  off
+	  BitfieldContainerType	  "uint_T"
+	  EnableMemcpy		  on
+	  MemcpyThreshold	  64
+	  PassReuseOutputArgsAs	  "Structure reference"
+	  ExpressionDepthLimit	  2147483647
+	  FoldNonRolledExpr	  on
+	  LocalBlockOutputs	  on
+	  RollThreshold		  5
+	  SystemCodeInlineAuto	  off
+	  StateBitsets		  off
+	  DataBitsets		  off
+	  ActiveStateOutputEnumStorageType "Native Integer"
+	  UseTempVars		  off
+	  ZeroExternalMemoryAtStartup on
+	  ZeroInternalMemoryAtStartup on
+	  InitFltsAndDblsToZero	  off
+	  NoFixptDivByZeroProtection off
+	  EfficientFloat2IntCast  off
+	  EfficientMapNaN2IntZero on
+	  OptimizeModelRefInitCode on
+	  LifeSpan		  "1"
+	  MaxStackSize		  "Inherit from target"
+	  BufferReusableBoundary  on
+	  SimCompilerOptimization "Off"
+	  AccelVerboseBuild	  off
+	  ParallelExecutionInRapidAccelerator on
+	}
+	Simulink.DebuggingCC {
+	  $ObjectID		  11
+	  Version		  "1.14.3"
+	  RTPrefix		  "error"
+	  ConsistencyChecking	  "none"
+	  ArrayBoundsChecking	  "none"
+	  SignalInfNanChecking	  "none"
+	  SignalRangeChecking	  "none"
+	  ReadBeforeWriteMsg	  "UseLocalSettings"
+	  WriteAfterWriteMsg	  "UseLocalSettings"
+	  WriteAfterReadMsg	  "UseLocalSettings"
+	  AlgebraicLoopMsg	  "warning"
+	  ArtificialAlgebraicLoopMsg "warning"
+	  SaveWithDisabledLinksMsg "warning"
+	  SaveWithParameterizedLinksMsg	"warning"
+	  CheckSSInitialOutputMsg on
+	  UnderspecifiedInitializationDetection	"Classic"
+	  MergeDetectMultiDrivingBlocksExec "none"
+	  CheckExecutionContextPreStartOutputMsg off
+	  CheckExecutionContextRuntimeOutputMsg	off
+	  SignalResolutionControl "UseLocalSettings"
+	  BlockPriorityViolationMsg "warning"
+	  MinStepSizeMsg	  "warning"
+	  TimeAdjustmentMsg	  "none"
+	  MaxConsecutiveZCsMsg	  "error"
+	  MaskedZcDiagnostic	  "warning"
+	  IgnoredZcDiagnostic	  "warning"
+	  SolverPrmCheckMsg	  "warning"
+	  InheritedTsInSrcMsg	  "warning"
+	  DiscreteInheritContinuousMsg "warning"
+	  MultiTaskDSMMsg	  "error"
+	  MultiTaskCondExecSysMsg "error"
+	  MultiTaskRateTransMsg	  "error"
+	  SingleTaskRateTransMsg  "none"
+	  TasksWithSamePriorityMsg "warning"
+	  SigSpecEnsureSampleTimeMsg "warning"
+	  CheckMatrixSingularityMsg "none"
+	  IntegerOverflowMsg	  "warning"
+	  Int32ToFloatConvMsg	  "warning"
+	  ParameterDowncastMsg	  "error"
+	  ParameterOverflowMsg	  "error"
+	  ParameterUnderflowMsg	  "none"
+	  ParameterPrecisionLossMsg "warning"
+	  ParameterTunabilityLossMsg "warning"
+	  FixptConstUnderflowMsg  "none"
+	  FixptConstOverflowMsg	  "none"
+	  FixptConstPrecisionLossMsg "none"
+	  UnderSpecifiedDataTypeMsg "none"
+	  UnnecessaryDatatypeConvMsg "none"
+	  VectorMatrixConversionMsg "none"
+	  InvalidFcnCallConnMsg	  "error"
+	  FcnCallInpInsideContextMsg "EnableAllAsWarning"
+	  SignalLabelMismatchMsg  "none"
+	  UnconnectedInputMsg	  "warning"
+	  UnconnectedOutputMsg	  "warning"
+	  UnconnectedLineMsg	  "warning"
+	  SFcnCompatibilityMsg	  "none"
+	  FrameProcessingCompatibilityMsg "warning"
+	  UniqueDataStoreMsg	  "none"
+	  BusObjectLabelMismatch  "warning"
+	  RootOutportRequireBusObject "warning"
+	  AssertControl		  "UseLocalSettings"
+	  EnableOverflowDetection off
+	  ModelReferenceIOMsg	  "none"
+	  ModelReferenceMultiInstanceNormalModeStructChecksumCheck "error"
+	  ModelReferenceVersionMismatchMessage "none"
+	  ModelReferenceIOMismatchMessage "none"
+	  ModelReferenceCSMismatchMessage "none"
+	  UnknownTsInhSupMsg	  "warning"
+	  ModelReferenceDataLoggingMessage "warning"
+	  ModelReferenceSymbolNameMessage "warning"
+	  ModelReferenceExtraNoncontSigs "error"
+	  StateNameClashWarn	  "warning"
+	  SimStateInterfaceChecksumMismatchMsg "warning"
+	  SimStateOlderReleaseMsg "error"
+	  InitInArrayFormatMsg	  "warning"
+	  StrictBusMsg		  "ErrorOnBusTreatedAsVector"
+	  BusNameAdapt		  "WarnAndRepair"
+	  NonBusSignalsTreatedAsBus "none"
+	  LoggingUnavailableSignals "error"
+	  BlockIODiagnostic	  "none"
+	  SFUnusedDataAndEventsDiag "warning"
+	  SFUnexpectedBacktrackingDiag "warning"
+	  SFInvalidInputDataAccessInChartInitDiag "warning"
+	  SFNoUnconditionalDefaultTransitionDiag "warning"
+	  SFTransitionOutsideNaturalParentDiag "warning"
+	  SFUnconditionalTransitionShadowingDiag "warning"
+	  SFUndirectedBroadcastEventsDiag "warning"
+	  SFTransitionActionBeforeConditionDiag	"warning"
+	  IntegerSaturationMsg	  "warning"
+	}
+	Simulink.HardwareCC {
+	  $ObjectID		  12
+	  Version		  "1.14.3"
+	  ProdBitPerChar	  8
+	  ProdBitPerShort	  16
+	  ProdBitPerInt		  32
+	  ProdBitPerLong	  32
+	  ProdBitPerLongLong	  64
+	  ProdBitPerFloat	  32
+	  ProdBitPerDouble	  64
+	  ProdBitPerPointer	  32
+	  ProdLargestAtomicInteger "Integer"
+	  ProdLargestAtomicFloat  "Float"
+	  ProdIntDivRoundTo	  "Zero"
+	  ProdEndianess		  "LittleEndian"
+	  ProdWordSize		  32
+	  ProdShiftRightIntArith  on
+	  ProdLongLongMode	  off
+	  ProdHWDeviceType	  "STMicroelectronics->STM32 32-bit Cortex-M"
+	  TargetBitPerChar	  8
+	  TargetBitPerShort	  16
+	  TargetBitPerInt	  32
+	  TargetBitPerLong	  32
+	  TargetBitPerLongLong	  64
+	  TargetBitPerFloat	  32
+	  TargetBitPerDouble	  64
+	  TargetBitPerPointer	  32
+	  TargetLargestAtomicInteger "Char"
+	  TargetLargestAtomicFloat "None"
+	  TargetShiftRightIntArith on
+	  TargetLongLongMode	  off
+	  TargetIntDivRoundTo	  "Undefined"
+	  TargetEndianess	  "Unspecified"
+	  TargetWordSize	  32
+	  TargetTypeEmulationWarnSuppressLevel 0
+	  TargetPreprocMaxBitsSint 32
+	  TargetPreprocMaxBitsUint 32
+	  TargetHWDeviceType	  "Specified"
+	  TargetUnknown		  off
+	  ProdEqTarget		  on
+	}
+	Simulink.ModelReferenceCC {
+	  $ObjectID		  13
+	  Version		  "1.14.3"
+	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
+	  CheckModelReferenceTargetMessage "error"
+	  EnableParallelModelReferenceBuilds off
+	  ParallelModelReferenceErrorOnInvalidPool on
+	  ParallelModelReferenceMATLABWorkerInit "None"
+	  ModelReferenceNumInstancesAllowed "Multi"
+	  PropagateVarSize	  "Infer from blocks in model"
+	  ModelReferencePassRootInputsByReference on
+	  ModelReferenceMinAlgLoopOccurrences off
+	  PropagateSignalLabelsOutOfModel off
+	  SupportModelReferenceSimTargetCustomCode off
+	}
+	Simulink.SFSimCC {
+	  $ObjectID		  14
+	  Version		  "1.14.3"
+	  SFSimEnableDebug	  on
+	  SFSimOverflowDetection  on
+	  SFSimEcho		  on
+	  SimBlas		  on
+	  SimCtrlC		  on
+	  SimExtrinsic		  on
+	  SimIntegrity		  on
+	  SimUseLocalCustomCode	  off
+	  SimParseCustomCode	  on
+	  SimBuildMode		  "sf_incremental_build"
+	  SimGenImportedTypeDefs  off
+	}
+	Simulink.RTWCC {
+	  $BackupClass		  "Simulink.RTWCC"
+	  $ObjectID		  15
+	  Version		  "1.14.3"
+	  Array {
+	    Type		    "Cell"
+	    Dimension		    2
+	    Cell		    "GenerateMakefile"
+	    Cell		    "MakeCommand"
+	    PropName		    "DisabledProps"
+	  }
+	  SystemTargetFile	  "stm32.tlc"
+	  TLCOptions		  ""
+	  GenCodeOnly		  off
+	  MakeCommand		  "make_rtw"
+	  GenerateMakefile	  on
+	  PackageGeneratedCodeAndArtifacts off
+	  PackageName		  ""
+	  TemplateMakefile	  "stm32.tmf"
+	  PostCodeGenCommand	  ""
+	  Description		  "stm32 (Embedded Target)"
+	  GenerateReport	  on
+	  SaveLog		  off
+	  RTWVerbose		  on
+	  RetainRTWFile		  off
+	  ProfileTLC		  off
+	  TLCDebug		  off
+	  TLCCoverage		  off
+	  TLCAssert		  off
+	  ProcessScriptMode	  "Default"
+	  ConfigurationMode	  "Optimized"
+	  ProcessScript		  "stm32_make_rtw_hook"
+	  ConfigurationScript	  ""
+	  ConfigAtBuild		  off
+	  RTWUseLocalCustomCode	  off
+	  RTWUseSimCustomCode	  off
+	  CustomSourceCode	  ""
+	  CustomHeaderCode	  ""
+	  CustomInclude		  ""
+	  CustomSource		  ""
+	  CustomLibrary		  ""
+	  CustomInitializer	  ""
+	  CustomTerminator	  ""
+	  Toolchain		  "Automatically locate an installed toolchain"
+	  BuildConfiguration	  "Faster Builds"
+	  IncludeHyperlinkInReport off
+	  LaunchReport		  on
+	  PortableWordSizes	  off
+	  CreateSILPILBlock	  "PIL"
+	  CodeExecutionProfiling  off
+	  CodeExecutionProfileVariable "executionProfile"
+	  CodeProfilingSaveOptions "SummaryOnly"
+	  CodeProfilingInstrumentation off
+	  SILDebugging		  off
+	  TargetLang		  "C"
+	  IncludeBusHierarchyInRTWFileBlockHierarchyMap	off
+	  IncludeERTFirstTime	  off
+	  GenerateTraceInfo	  off
+	  GenerateTraceReport	  off
+	  GenerateTraceReportSl	  off
+	  GenerateTraceReportSf	  off
+	  GenerateTraceReportEml  off
+	  GenerateCodeInfo	  off
+	  GenerateWebview	  off
+	  GenerateCodeMetricsReport off
+	  GenerateCodeReplacementReport	off
+	  RTWCompilerOptimization "Off"
+	  RTWCustomCompilerOptimizations ""
+	  CheckMdlBeforeBuild	  "Off"
+	  CustomRebuildMode	  "OnUpdate"
+	  DataInitializer	  ""
+	  SharedConstantsCachingThreshold 1024
+	  Array {
+	    Type		    "Handle"
+	    Dimension		    2
+	    Simulink.CodeAppCC {
+	      $ObjectID		      16
+	      Version		      "1.14.3"
+	      ForceParamTrailComments off
+	      GenerateComments	      on
+	      CommentStyle	      "Auto"
+	      IgnoreCustomStorageClasses off
+	      IgnoreTestpoints	      off
+	      IncHierarchyInIds	      off
+	      MaxIdLength	      64
+	      PreserveName	      off
+	      PreserveNameWithParent  off
+	      ShowEliminatedStatement off
+	      OperatorAnnotations     off
+	      IncAutoGenComments      off
+	      SimulinkDataObjDesc     off
+	      SFDataObjDesc	      off
+	      MATLABFcnDesc	      off
+	      IncDataTypeInIds	      off
+	      MangleLength	      1
+	      CustomSymbolStrGlobalVar "$R$N$M"
+	      CustomSymbolStrType     "$N$R$M"
+	      CustomSymbolStrField    "$N$M"
+	      CustomSymbolStrFcn      "$R$N$M$F"
+	      CustomSymbolStrFcnArg   "rt$I$N$M"
+	      CustomSymbolStrBlkIO    "rtb_$N$M"
+	      CustomSymbolStrTmpVar   "$N$M"
+	      CustomSymbolStrMacro    "$R$N$M"
+	      CustomSymbolStrUtil     "$N$C"
+	      DefineNamingRule	      "None"
+	      ParamNamingRule	      "None"
+	      SignalNamingRule	      "None"
+	      InsertBlockDesc	      off
+	      InsertPolySpaceComments off
+	      SimulinkBlockComments   off
+	      MATLABSourceComments    off
+	      EnableCustomComments    off
+	      InternalIdentifier      "Classic"
+	      InlinedPrmAccess	      "Literals"
+	      ReqsInCode	      off
+	      UseSimReservedNames     off
+	    }
+	    Simulink.STFCustomTargetCC {
+	      $BackupClass	      "Simulink.TargetCC"
+	      $ObjectID		      17
+	      Version		      "1.14.3"
+	      Array {
+		Type			"Cell"
+		Dimension		5
+		Cell			"Target_Inst_path"
+		Cell			"Target_Inst_Fullpath"
+		Cell			"Ioc_Fullpath"
+		Cell			"ModelReferenceCompliant"
+		Cell			"ParMdlRefBuildCompliant"
+		PropName		"DisabledProps"
+	      }
+	      TargetFcnLib	      "ansi_tfl_table_tmw.mat"
+	      TargetLibSuffix	      ""
+	      TargetPreCompLibLocation ""
+	      GenFloatMathFcnCalls    "NOT IN USE"
+	      TargetLangStandard      "C89/C90 (ANSI)"
+	      CodeReplacementLibrary  "None"
+	      UtilityFuncGeneration   "Auto"
+	      ERTMultiwordTypeDef     "System defined"
+	      ERTMultiwordLength      256
+	      MultiwordLength	      2048
+	      GenerateFullHeader      on
+	      GenerateSampleERTMain   off
+	      GenerateTestInterfaces  off
+	      ModelReferenceCompliant on
+	      ParMdlRefBuildCompliant on
+	      CompOptLevelCompliant   off
+	      ConcurrentExecutionCompliant off
+	      IncludeMdlTerminateFcn  off
+	      GeneratePreprocessorConditionals "Use local settings"
+	      CombineOutputUpdateFcns on
+	      CombineSignalStateStructs	off
+	      SuppressErrorStatus     off
+	      ERTFirstTimeCompliant   off
+	      IncludeFileDelimiter    "Auto"
+	      ERTCustomFileBanners    on
+	      SupportAbsoluteTime     on
+	      LogVarNameModifier      "rt_"
+	      MatFileLogging	      off
+	      MultiInstanceERTCode    off
+	      CodeInterfacePackaging  "Nonreusable function"
+	      SupportNonFinite	      on
+	      SupportComplex	      on
+	      PurelyIntegerCode	      off
+	      SupportContinuousTime   off
+	      SupportNonInlinedSFcns  off
+	      SupportVariableSizeSignals off
+	      EnableShiftOperators    on
+	      ParenthesesLevel	      "Nominal"
+	      CastingMode	      "Nominal"
+	      MATLABClassNameForMDSCustomization "Simulink.SoftwareTarget.ERTCustomization"
+	      ModelStepFunctionPrototypeControlCompliant off
+	      CPPClassGenCompliant    off
+	      AutosarCompliant	      off
+	      GRTInterface	      off
+	      GenerateAllocFcn	      off
+	      GenerateSharedConstants on
+	      SystemTargetFile	      "stm32.tlc"
+	      DialogCategory	      0
+	      Array {
+		Type			"Handle"
+		Dimension		1
+		Simulink.ERTTargetCC {
+		  $BackupClass		  "Simulink.TargetCC"
+		  $ObjectID		  18
+		  Version		  "1.14.3"
+		  Array {
+		    Type		    "Cell"
+		    Dimension		    2
+		    Cell		    "ModelReferenceCompliant"
+		    Cell		    "ParMdlRefBuildCompliant"
+		    PropName		    "DisabledProps"
+		  }
+		  TargetFcnLib		  "ansi_tfl_table_tmw.mat"
+		  TargetLibSuffix	  ""
+		  TargetPreCompLibLocation ""
+		  GenFloatMathFcnCalls	  "NOT IN USE"
+		  TargetLangStandard	  "C89/C90 (ANSI)"
+		  CodeReplacementLibrary  "None"
+		  UtilityFuncGeneration	  "Auto"
+		  ERTMultiwordTypeDef	  "System defined"
+		  ERTMultiwordLength	  256
+		  MultiwordLength	  2048
+		  GenerateFullHeader	  on
+		  GenerateSampleERTMain	  off
+		  GenerateTestInterfaces  off
+		  ModelReferenceCompliant on
+		  ParMdlRefBuildCompliant on
+		  CompOptLevelCompliant	  off
+		  ConcurrentExecutionCompliant off
+		  IncludeMdlTerminateFcn  off
+		  GeneratePreprocessorConditionals "Use local settings"
+		  CombineOutputUpdateFcns on
+		  CombineSignalStateStructs off
+		  SuppressErrorStatus	  off
+		  ERTFirstTimeCompliant	  off
+		  IncludeFileDelimiter	  "Auto"
+		  ERTCustomFileBanners	  on
+		  SupportAbsoluteTime	  on
+		  LogVarNameModifier	  "rt_"
+		  MatFileLogging	  off
+		  MultiInstanceERTCode	  off
+		  CodeInterfacePackaging  "Nonreusable function"
+		  SupportNonFinite	  on
+		  SupportComplex	  on
+		  PurelyIntegerCode	  off
+		  SupportContinuousTime	  off
+		  SupportNonInlinedSFcns  off
+		  SupportVariableSizeSignals off
+		  EnableShiftOperators	  on
+		  ParenthesesLevel	  "Nominal"
+		  CastingMode		  "Nominal"
+		  MATLABClassNameForMDSCustomization "Simulink.SoftwareTarget.ERTCustomization"
+		  ModelStepFunctionPrototypeControlCompliant off
+		  CPPClassGenCompliant	  off
+		  AutosarCompliant	  off
+		  GRTInterface		  off
+		  GenerateAllocFcn	  off
+		  GenerateSharedConstants on
+		  GenerateASAP2		  off
+		  ExtMode		  off
+		  ExtModeTransport	  0
+		  ExtModeStaticAlloc	  off
+		  ExtModeStaticAllocSize  1000000
+		  ExtModeTesting	  off
+		  ExtModeMexFile	  "ext_comm"
+		  ExtModeIntrfLevel	  "Level1"
+		  InlinedParameterPlacement "NonHierarchical"
+		  TargetOS		  "BareBoardExample"
+		  MultiInstanceErrorCode  "Error"
+		  RateGroupingCode	  on
+		  RootIOFormat		  "Individual arguments"
+		  RTWCAPISignals	  off
+		  RTWCAPIParams		  off
+		  RTWCAPIStates		  off
+		  RTWCAPIRootIO		  off
+		  ERTSrcFileBannerTemplate "sourceFileTemplate.cgt"
+		  ERTHdrFileBannerTemplate "sourceFileTemplate.cgt"
+		  ERTDataSrcFileTemplate  "sourceFileTemplate.cgt"
+		  ERTDataHdrFileTemplate  "sourceFileTemplate.cgt"
+		  ERTCustomFileTemplate	  "customRoutineProcess.tlc"
+		  EnableDataOwnership	  off
+		  SignalDisplayLevel	  10
+		  ParamTuneLevel	  10
+		  GlobalDataDefinition	  "Auto"
+		  DataDefinitionFile	  "global.c"
+		  GlobalDataReference	  "Auto"
+		  ERTFilePackagingFormat  "Modular"
+		  DataReferenceFile	  "global.h"
+		  PreserveExpressionOrder off
+		  PreserveIfCondition	  off
+		  ConvertIfToSwitch	  off
+		  PreserveExternInFcnDecls on
+		  SuppressUnreachableDefaultCases off
+		  IndentStyle		  "K&R"
+		  IndentSize		  "2"
+		  EnableUserReplacementTypes off
+		  Array {
+		    Type		    "Struct"
+		    Dimension		    1
+		    MATStruct {
+		    double		    ""
+		    single		    ""
+		    int32		    ""
+		    int16		    ""
+		    int8		    ""
+		    uint32		    ""
+		    uint16		    ""
+		    uint8		    ""
+		    boolean		    ""
+		    int			    ""
+		    uint		    ""
+		    char		    ""
+		    }
+		    PropName		    "ReplacementTypes"
+		  }
+		  MemSecPackage		  "--- None ---"
+		  MemSecDataConstants	  "Default"
+		  MemSecDataIO		  "Default"
+		  MemSecDataInternal	  "Default"
+		  MemSecDataParameters	  "Default"
+		  MemSecFuncInitTerm	  "Default"
+		  MemSecFuncExecute	  "Default"
+		  MemSecFuncSharedUtil	  "Default"
+		}
+		PropName		"Components"
+	      }
+	      CustomProperty {
+		DataType		"slbool"
+		Name			"DownloadApplication"
+		Value			off
+	      }
+	      CustomProperty {
+		DataType		"slbool"
+		Name			"STM32CubeMxPathUpdate"
+		Value			off
+	      }
+	      CustomProperty {
+		DataType		"string"
+		Name			"STM32CubeMxPath"
+		Value			"C:\\Program Files (x86)\\STMicroelectronics\\STM32Cube\\STM32CubeMX"
+	      }
+	      CustomProperty {
+		DataType		"string"
+		Name			"Target_Inst_path"
+		Value			"C:\\SNAP_V~1\\mcd_cd\\Matlab\\STM32"
+	      }
+	      CustomProperty {
+		DataType		"string"
+		Name			"Target_Inst_Fullpath"
+		Value			"C:\\snap_view\\mcd_cd\\Matlab\\STM32"
+	      }
+	    }
+	    PropName		    "Components"
+	  }
+	}
+	PropName		"Components"
+      }
+      Name		      "Configuration"
+      CurrentDlgPage	      "Code Generation/STM32 Options"
+      ConfigPrmDlgPosition     [ 206, 84, 1233, 655 ] 
+    }
+    PropName		    "ConfigurationSets"
+  }
+  Simulink.ConfigSet {
+    $PropName		    "ActiveConfigurationSet"
+    $ObjectID		    7
+  }
+  Object {
+    $PropName		    "DataTransfer"
+    $ObjectID		    19
+    $ClassName		    "Simulink.GlobalDataTransfer"
+    DefaultTransitionBetweenSyncTasks "Ensure deterministic transfer (maximum delay)"
+    DefaultTransitionBetweenAsyncTasks "Ensure data integrity only"
+    DefaultTransitionBetweenContTasks "Ensure deterministic transfer (minimum delay)"
+    DefaultExtrapolationMethodBetweenContTasks "None"
+    AutoInsertRateTranBlk   [0]
+  }
+  ExplicitPartitioning	  off
+  BlockDefaults {
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    NamePlacement	    "normal"
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    ShowName		    on
+    BlockRotation	    0
+    BlockMirror		    off
+  }
+  AnnotationDefaults {
+    HorizontalAlignment	    "center"
+    VerticalAlignment	    "middle"
+    ForegroundColor	    "black"
+    BackgroundColor	    "white"
+    DropShadow		    off
+    FontName		    "Helvetica"
+    FontSize		    10
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+    UseDisplayTextAsClickCallback off
+  }
+  LineDefaults {
+    FontName		    "Helvetica"
+    FontSize		    9
+    FontWeight		    "normal"
+    FontAngle		    "normal"
+  }
+  MaskDefaults {
+    SelfModifiable	    "off"
+    IconFrame		    "on"
+    IconOpaque		    "on"
+    RunInitForIconRedraw    "off"
+    IconRotate		    "none"
+    PortRotate		    "default"
+    IconUnits		    "autoscale"
+  }
+  MaskParameterDefaults {
+    Evaluate		    "on"
+    Tunable		    "on"
+    NeverSave		    "off"
+    Internal		    "off"
+    ReadOnly		    "off"
+    Enabled		    "on"
+    Visible		    "on"
+    ToolTip		    "on"
+  }
+  BlockParameterDefaults {
+    Block {
+      BlockType		      S-Function
+      FunctionName	      "system"
+      SFunctionModules	      "''"
+      PortCounts	      "[]"
+      SFunctionDeploymentMode off
+    }
+  }
+  System {
+    Name		    "STM32_Timers"
+    Location		    [34, 283, 629, 754]
+    Open		    on
+    ModelBrowserVisibility  off
+    ModelBrowserWidth	    200
+    ScreenColor		    "white"
+    PaperOrientation	    "landscape"
+    PaperPositionMode	    "auto"
+    PaperType		    "usletter"
+    PaperUnits		    "inches"
+    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+    TiledPageScale	    1
+    ShowPageBoundaries	    off
+    ZoomFactor		    "100"
+    ReportName		    "simulink-default.rpt"
+    SIDHighWatermark	    "16"
+    Block {
+      BlockType		      S-Function
+      Name		      "Timers"
+      SID		      "9"
+      Ports		      []
+      Position		      [60, 83, 165, 142]
+      ZOrder		      -5
+      NamePlacement	      "alternate"
+      ShowName		      off
+      FunctionName	      "TIMERS_Config"
+      Parameters	      "get_param(gcbh,'TIM_Name'),get_param(gcbh,'TIM_APBClock'),get_param(gcbh,'TIM_CKD'),get_param("
+      "gcbh,'TIM_Set_Clk'),get_param(gcbh,'TIM_Prescaler'),get_param(gcbh,'TIM_Clock'),get_param(gcbh,'Variable_frequen"
+      "cy'),get_param(gcbh,'TIM_Set_OutFreq'),get_param(gcbh,'TIM_ARR'),get_param(gcbh,'Output_frequency'),get_param(gc"
+      "bh,'Repetition_counter'),get_param(gcbh,'TIM_Mode'),get_param(gcbh,'TIM_DMA'),get_param(gcbh,'TIM_IRQ'),get_para"
+      "m(gcbh,'TIM_IRQ_ONLY'),get_param(gcbh,'TIM_UP'),get_param(gcbh,'TIM_TRG'),get_param(gcbh,'TIM_COM'),get_param(gc"
+      "bh,'TIM_BRK'),get_param(gcbh,'NbTIM'),get_param(gcbh,'CH1_enable'),get_param(gcbh,'CH1N_enable'),get_param(gcbh,"
+      "'CH1_type'),get_param(gcbh,'CH1_DMA'),get_param(gcbh,'CH1_int'),get_param(gcbh,'CH1_edge'),get_param(gcbh,'CH1_d"
+      "iv'),get_param(gcbh,'CH1_variable_duty'),get_param(gcbh,'CH1_set_pulse'),get_param(gcbh,'CH1_output_duty'),get_p"
+      "aram(gcbh,'CH1_pulse'),get_param(gcbh,'CH2_enable'),get_param(gcbh,'CH2N_enable'),get_param(gcbh,'CH2_type'),get"
+      "_param(gcbh,'CH2_DMA'),get_param(gcbh,'CH2_int'),get_param(gcbh,'CH2_edge'),get_param(gcbh,'CH2_div'),get_param("
+      "gcbh,'CH2_variable_duty'),get_param(gcbh,'CH2_set_pulse'),get_param(gcbh,'CH2_output_duty'),get_param(gcbh,'CH2_"
+      "pulse'),get_param(gcbh,'CH3_enable'),get_param(gcbh,'CH3N_enable'),get_param(gcbh,'CH3_type'),get_param(gcbh,'CH"
+      "3_DMA'),get_param(gcbh,'CH3_int'),get_param(gcbh,'CH3_edge'),get_param(gcbh,'CH3_div'),get_param(gcbh,'CH3_varia"
+      "ble_duty'),get_param(gcbh,'CH3_set_pulse'),get_param(gcbh,'CH3_output_duty'),get_param(gcbh,'CH3_pulse'),get_par"
+      "am(gcbh,'CH4_enable'),get_param(gcbh,'CH4N_enable'),get_param(gcbh,'CH4_type'),get_param(gcbh,'CH4_DMA'),get_par"
+      "am(gcbh,'CH4_int'),get_param(gcbh,'CH4_edge'),get_param(gcbh,'CH4_div'),get_param(gcbh,'CH4_variable_duty'),get_"
+      "param(gcbh,'CH4_set_pulse'),get_param(gcbh,'CH4_output_duty'),get_param(gcbh,'CH4_pulse')"
+      EnableBusSupport	      off
+      Object {
+	$PropName		"MaskObject"
+	$ObjectID		20
+	$ClassName		"Simulink.Mask"
+	Type			"Timers"
+	Description		"Timers configuration comes from ioc file.\nCH1-4 channels possibility.\n"
+	Help			"web('help_Timers.html', '-helpbrowser')"
+	Initialization		"set_param(gcb, 'MaskSelfModifiable', 'on');\nTIMERS_Config_callback('init');\n\n\n"
+	SelfModifiable		"on"
+	Display			"color('blue'); text(0.6, 0.90, 'STM32', 'horizontalalignment', 'right');color('black'); text(0.50, 0.12, '"
+	"Timers', 'horizontalAlignment','center');\nimage(imread('ST.bmp','bmp'),'top-right');\nTIMName = get_param(gcbh,'TIM_"
+	"Name');\ndisp(TIMName);\nnumInput = 1;\nnumOutput = 1;\nnoOutput = 0;\ncolor('red');\n%Test if IRQ only = No output\n"
+	"if isequal(get_param(gcbh,'TIM_IRQ_ONLY'),'on')\n    noOutput = 1;\nend\n\n%Variable Output PWM frequency \nif isequa"
+	"l(get_param(gcbh,'Variable_frequency'),'on')\n    port_label('input',numInput,'OutFreq');\n    numInput = numInput +1"
+	";\n%display('Variable_frequency');   \nend\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%Set default variable\nencoder"
+	" = 'off'; % NO Encoder\nCH1_enable = get_param(gcbh,'CH1_enable');\nCH2_enable = get_param(gcbh,'CH2_enable');\nCH3_e"
+	"nable = get_param(gcbh,'CH3_enable');\nCH4_enable = get_param(gcbh,'CH4_enable');\nCH1_type = get_param(gcbh,'CH1_typ"
+	"e');\nCH2_type = get_param(gcbh,'CH2_type');\nCH3_type = get_param(gcbh,'CH3_type');\nCH4_type = get_param(gcbh,'CH4_"
+	"type');\nCH1_input = strfind(char(CH1_type),'Input_');\nCH2_input = strfind(char(CH2_type),'Input_');\nCH3_input = st"
+	"rfind(char(CH3_type),'Input_');\nCH4_input = strfind(char(CH4_type),'Input_');\nif(isempty(CH1_input))\n    CH1_outpu"
+	"t = 1;\nelse\n    CH1_output = 0;    \nend\nif(isempty(CH2_input))\n    CH2_output = 1;\nelse\n    CH2_output = 0;   "
+	" \nend\nif(isempty(CH3_input))\n    CH3_output = 1;\nelse\n    CH3_output = 0;    \nend\nif(isempty(CH4_input))\n    "
+	"CH4_output = 1;\nelse\n    CH4_output = 0;    \nend\n%Test interrupt\nIRQMsg = ['IRQ',10];\ninterruptEnable = 0;\n\nT"
+	"IM_UP = get_param(gcbh,'TIM_UP');\nif(isequal(TIM_UP,'on'))\n    IRQMsg = [IRQMsg,'UP',10];\n    interruptEnable = 1;"
+	"\nend\nTIM_TRG = get_param(gcbh,'TIM_TRG');\nif(isequal(TIM_TRG,'on'))\n    IRQMsg = [IRQMsg,'TRG',10];\n    interrup"
+	"tEnable = 1;\nend\nTIM_COM = get_param(gcbh,'TIM_COM');\nif(isequal(TIM_COM,'on'))\n    IRQMsg = [IRQMsg,'COM',10];\n"
+	"    interruptEnable = 1;\nend\nTIM_BRK = get_param(gcbh,'TIM_BRK');\nif(isequal(TIM_BRK,'on'))\n    IRQMsg = [IRQMsg,"
+	"'BRK',10];\n    interruptEnable = 1;\nend\nTIM_IRQ = get_param(gcbh,'TIM_IRQ');\nCH1_int = get_param(gcbh,'CH1_int');"
+	"\nif(isequal(TIM_IRQ,'on')&&isequal(CH1_int,'on')&&CH1_output==1)\n    IRQMsg = [IRQMsg,'CH1',10];\n    interruptEnab"
+	"le = 1;\nend\nCH2_int = get_param(gcbh,'CH2_int');\nif(isequal(TIM_IRQ,'on')&&isequal(CH2_int,'on')&&CH2_output==1)\n"
+	"    IRQMsg = [IRQMsg,'CH2',10];\n    interruptEnable = 1;\nend\nCH3_int = get_param(gcbh,'CH3_int');\nif(isequal(TIM_"
+	"IRQ,'on')&&isequal(CH3_int,'on')&&CH3_output==1)\n    IRQMsg = [IRQMsg,'CH3',10];\n    interruptEnable = 1;\nend\nCH4"
+	"_int = get_param(gcbh,'CH4_int');\nif(isequal(TIM_IRQ,'on')&&isequal(CH4_int,'on')&&CH4_output==1)\n    IRQMsg = [IRQ"
+	"Msg,'CH4',10];\n    interruptEnable = 1;\nend\nif (interruptEnable == 1)\n    port_label('output',numOutput,IRQMsg);\n"
+	"    numOutput = numOutput + 1; \n%display('CH_int');       \nend\n%Get and process channel 1 type\nif isequal(CH1_ena"
+	"ble,'on')\nCH1_type = get_param(gcbh,'CH1_type');\nif isequal(CH1_type,'Output_Comp')\nend\nif ((isequal(CH1_type,'In"
+	"put_PWM')||isequal(CH1_type,'Input_Capture'))&&noOutput==0)\n    port_label('output',numOutput,'CH1 Freq');\n    numO"
+	"utput = numOutput + 1;    \n%display('1-Input_PWM1');   \n    port_label('output',numOutput,'CH1 Duty');\n    numOutp"
+	"ut = numOutput + 1;    \n%display('1-Input_PWM2');   \nend\nif (isequal(CH1_type,'Output_PWM')||isequal(CH1_type,'Out"
+	"put_Comp'))\n    if isequal(get_param(gcbh,'CH1_variable_duty'),'on')\n        port_label('input',numInput,'duty CH1'"
+	");\n%display('1-Output_PWM');   \n        numInput = numInput +1;\n    end    \nend\nif isequal(CH1_type,'Input_ETR')"
+	"\nend\nif isequal(CH1_type,'Input_Encoder')\n    encoder = 'on';\nend\nif isequal(CH1_type,'Output_TRGO')\nend\nif is"
+	"equal(CH1_type,'Output_Forced')\nend\nif isequal(CH1_type,'Input_Hall_Sensor')\nend\nend\n%Get and process channel 2 "
+	"type\nif isequal(CH2_enable,'on')\nCH2_type = get_param(gcbh,'CH2_type');\nif isequal(CH2_type,'Output_Comp')\nend\ni"
+	"f ((isequal(CH2_type,'Input_PWM')||isequal(CH2_type,'Input_Capture'))&&noOutput==0)\n    port_label('output',numOutpu"
+	"t,'CH2 Freq');\n%display('2-Input_PWM1');   \n    numOutput = numOutput + 1;    \n    port_label('output',numOutput,'"
+	"CH2 Duty');\n%display('2-Input_PWM2');   \n    numOutput = numOutput + 1;    \nend\nif (isequal(CH2_type,'Output_PWM'"
+	")||isequal(CH2_type,'Output_Comp'))\n    if isequal(get_param(gcbh,'CH2_variable_duty'),'on')\n        port_label('in"
+	"put',numInput,'duty CH2');\n%display('2-Output_PWM');   \n        numInput = numInput +1;\n    end    \nend\nif isequ"
+	"al(CH2_type,'Input_ETR')\nend\nif isequal(CH2_type,'Input_Encoder')\n    encoder = 'on';\nend\nif isequal(CH2_type,'O"
+	"utput_TRGO')\nend\nif isequal(CH2_type,'Output_Forced')\nend\nif isequal(CH2_type,'Input_Hall_Sensor')\nend\nend\n%Ge"
+	"t and process channel 3 type\nif isequal(CH3_enable,'on')\nCH3_type = get_param(gcbh,'CH3_type');\nif isequal(CH3_typ"
+	"e,'Output_Comp')\nend\nif ((isequal(CH3_type,'Input_PWM')||isequal(CH3_type,'Input_Capture'))&&noOutput==0)\n    port"
+	"_label('output',numOutput,'CH3 Freq');\n%display('3-Input_PWM1');   \n    numOutput = numOutput + 1;    \n    port_la"
+	"bel('output',numOutput,'CH3 Duty');\n%display('3-Input_PWM2');   \n    numOutput = numOutput + 1;    \nend\nif (isequ"
+	"al(CH3_type,'Output_PWM')||isequal(CH3_type,'Output_Comp'))\n    if isequal(get_param(gcbh,'CH3_variable_duty'),'on')"
+	"\n        port_label('input',numInput,'duty CH3');\n%display('3-Output_PWM');   \n        numInput = numInput +1;\n  "
+	"  end    \nend\nif isequal(CH3_type,'Input_ETR')\nend\nif isequal(CH3_type,'Input_Encoder')\n    encoder = 'on';\nend"
+	"\nif isequal(CH3_type,'Output_TRGO')\nend\nif isequal(CH3_type,'Output_Forced')\nend\nif isequal(CH3_type,'Input_Hall"
+	"_Sensor')\nend\nend\n%Get and process channel 4 type\nif isequal(CH4_enable,'on')\nCH4_type = get_param(gcbh,'CH4_typ"
+	"e');\nif isequal(CH4_type,'Output_Comp')\nend\nif ((isequal(CH4_type,'Input_PWM')||isequal(CH4_type,'Input_Capture'))"
+	"&&noOutput==0)\n    port_label('output',numOutput,'CH4 Freq');\n%display('4-Input_PWM1');   \n    numOutput = numOutp"
+	"ut + 1;    \n    port_label('output',numOutput,'CH4 Duty');\n%display('4-Input_PWM2');   \n    numOutput = numOutput "
+	"+ 1;    \nend\nif (isequal(CH4_type,'Output_PWM')||isequal(CH4_type,'Output_Comp'))\n    if isequal(get_param(gcbh,'C"
+	"H4_variable_duty'),'on')\n        port_label('input',numInput,'duty CH4');\n%display('4-Output_PWM');   \n        num"
+	"Input = numInput +1;\n    end    \nend\nif isequal(CH4_type,'Input_ETR')\nend\nif isequal(CH4_type,'Input_Encoder')\n"
+	"    encoder = 'on';\nend\nif isequal(CH4_type,'Output_TRGO')\nend\nif isequal(CH4_type,'Output_Forced')\nend\nif iseq"
+	"ual(CH4_type,'Input_Hall_Sensor')\nend\nend\n%Test for encoder output\nif (isequal(encoder,'on')&&noOutput==0)\nport_"
+	"label('output',numOutput,'CNT');\n%display('Encoder1');   \nnumOutput = numOutput + 1;\nport_label('output',numOutput"
+	",'DIR');\n%display('Encoder2');   \nport_label('input',numInput,'Reset CNT');\n%display('Encoder3');   \nend"
+	IconUnits		"normalized"
+	Array {
+	  Type			  "Simulink.MaskParameter"
+	  Dimension		  65
+	  Object {
+	    $ObjectID		    21
+	    Type		    "edit"
+	    Name		    "currentTIM"
+	    Prompt		    ""
+	    Value		    "TIM1"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Visible		    "off"
+	  }
+	  Object {
+	    $ObjectID		    22
+	    Type		    "popup"
+	    Array {
+	      Type		      "Cell"
+	      Dimension		      30
+	      Cell		      "TIM1"
+	      Cell		      "TIM2"
+	      Cell		      "TIM3"
+	      Cell		      "TIM4"
+	      Cell		      "TIM5"
+	      Cell		      "TIM6"
+	      Cell		      "TIM7"
+	      Cell		      "TIM8"
+	      Cell		      "TIM9"
+	      Cell		      "TIM10"
+	      Cell		      "TIM11"
+	      Cell		      "TIM12"
+	      Cell		      "TIM13"
+	      Cell		      "TIM14"
+	      Cell		      "TIM15"
+	      Cell		      "TIM16"
+	      Cell		      "TIM17"
+	      Cell		      "TIM18"
+	      Cell		      "TIM19"
+	      Cell		      "TIM20"
+	      Cell		      "TIM21"
+	      Cell		      "TIM22"
+	      Cell		      "TIM23"
+	      Cell		      "TIM24"
+	      Cell		      "TIM25"
+	      Cell		      "TIM26"
+	      Cell		      "TIM27"
+	      Cell		      "TIM28"
+	      Cell		      "TIM29"
+	      Cell		      "TIM30"
+	      PropName		      "TypeOptions"
+	    }
+	    Name		    "TIM_Name"
+	    Prompt		    "Timer"
+	    Value		    "TIM1"
+	    Evaluate		    "off"
+	    Callback		    "TIMERS_Config_callback('TIM_Name');"
+	  }
+	  Object {
+	    $ObjectID		    23
+	    Type		    "edit"
+	    Name		    "TIM_APBClock"
+	    Prompt		    "APB timer clock (Hz)"
+	    Value		    "0"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    24
+	    Type		    "edit"
+	    Name		    "TIM_CKD"
+	    Prompt		    "Internal clock division (CKD)"
+	    Value		    "1"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    25
+	    Type		    "checkbox"
+	    Name		    "TIM_Set_Clk"
+	    Prompt		    "Set timer clock"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('set_clk');"
+	  }
+	  Object {
+	    $ObjectID		    26
+	    Type		    "edit"
+	    Name		    "TIM_Prescaler"
+	    Prompt		    "Prescaler"
+	    Value		    "0"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('prescaler');"
+	  }
+	  Object {
+	    $ObjectID		    27
+	    Type		    "edit"
+	    Name		    "TIM_Clock"
+	    Prompt		    "Timer clock (Hz)"
+	    Value		    "0.00"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	    Callback		    "TIMERS_Config_callback('tim_clock');"
+	  }
+	  Object {
+	    $ObjectID		    28
+	    Type		    "checkbox"
+	    Name		    "Variable_frequency"
+	    Prompt		    "Variable output channel frequency"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	  }
+	  Object {
+	    $ObjectID		    29
+	    Type		    "checkbox"
+	    Name		    "TIM_Set_OutFreq"
+	    Prompt		    "Set output channel frequency"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('set_out_freq');"
+	  }
+	  Object {
+	    $ObjectID		    30
+	    Type		    "edit"
+	    Name		    "TIM_ARR"
+	    Prompt		    "Counter period (ARR register)"
+	    Value		    "1"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('tim_arr');"
+	  }
+	  Object {
+	    $ObjectID		    31
+	    Type		    "edit"
+	    Name		    "Output_frequency"
+	    Prompt		    "Fixed output channel frequency value (Hz)"
+	    Value		    "0.00"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	    Callback		    "TIMERS_Config_callback('out_freq');"
+	  }
+	  Object {
+	    $ObjectID		    32
+	    Type		    "edit"
+	    Name		    "Repetition_counter"
+	    Prompt		    "Repetition counter value (RCR)"
+	    Value		    "0"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	    Visible		    "off"
+	  }
+	  Object {
+	    $ObjectID		    33
+	    Type		    "edit"
+	    Name		    "TIM_Mode"
+	    Prompt		    "Counter mode"
+	    Value		    "Up"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    34
+	    Type		    "edit"
+	    Name		    "TIM_DMA"
+	    Prompt		    "global DMA"
+	    Value		    "none"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    35
+	    Type		    "checkbox"
+	    Name		    "TIM_IRQ"
+	    Prompt		    "Channel interrupt available"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    36
+	    Type		    "checkbox"
+	    Name		    "TIM_IRQ_ONLY"
+	    Prompt		    "No outputs"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    37
+	    Type		    "checkbox"
+	    Name		    "TIM_UP"
+	    Prompt		    "UP"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    38
+	    Type		    "checkbox"
+	    Name		    "TIM_TRG"
+	    Prompt		    "TRG"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    39
+	    Type		    "checkbox"
+	    Name		    "TIM_COM"
+	    Prompt		    "COM"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    40
+	    Type		    "checkbox"
+	    Name		    "TIM_BRK"
+	    Prompt		    "BRK"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    41
+	    Type		    "edit"
+	    Name		    "NbTIM"
+	    Prompt		    ""
+	    Value		    "0"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Visible		    "off"
+	  }
+	  Object {
+	    $ObjectID		    42
+	    Type		    "checkbox"
+	    Name		    "CH1_enable"
+	    Prompt		    " CH1 Enable"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    43
+	    Type		    "checkbox"
+	    Name		    "CH1N_enable"
+	    Prompt		    "CH1N Enable"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    44
+	    Type		    "popup"
+	    Array {
+	      Type		      "Cell"
+	      Dimension		      10
+	      Cell		      "Output_Comp"
+	      Cell		      "Input_PWM"
+	      Cell		      "Output_PWM"
+	      Cell		      "Input_Capture"
+	      Cell		      "Input_ETR"
+	      Cell		      "Input_Encoder"
+	      Cell		      "Output_TRGO"
+	      Cell		      "Output_Forced"
+	      Cell		      "Input_Hall_Sensor"
+	      Cell		      "Unknown"
+	      PropName		      "TypeOptions"
+	    }
+	    Name		    "CH1_type"
+	    Prompt		    "Channel mode"
+	    Value		    "Unknown"
+	    Evaluate		    "off"
+	    Enabled		    "off"
+	    Callback		    "TIMERS_Config_callback('CH1_type');"
+	  }
+	  Object {
+	    $ObjectID		    45
+	    Type		    "checkbox"
+	    Name		    "CH1_DMA"
+	    Prompt		    "DMA used"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    46
+	    Type		    "checkbox"
+	    Name		    "CH1_int"
+	    Prompt		    "Enable interrupt"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    47
+	    Type		    "edit"
+	    Name		    "CH1_edge"
+	    Prompt		    "Edge"
+	    Value		    "Rising"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    48
+	    Type		    "edit"
+	    Name		    "CH1_div"
+	    Prompt		    "Prescaler Division Ratio"
+	    Value		    "1"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    49
+	    Type		    "checkbox"
+	    Name		    "CH1_variable_duty"
+	    Prompt		    "Duty cycle is an input port"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	  }
+	  Object {
+	    $ObjectID		    50
+	    Type		    "checkbox"
+	    Name		    "CH1_set_pulse"
+	    Prompt		    "Set duty cycle"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('set_duty1');"
+	  }
+	  Object {
+	    $ObjectID		    51
+	    Type		    "edit"
+	    Name		    "CH1_output_duty"
+	    Prompt		    "Output duty cycle (%)"
+	    Value		    "0.00"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	    Callback		    "TIMERS_Config_callback('CH1_duty');"
+	  }
+	  Object {
+	    $ObjectID		    52
+	    Type		    "edit"
+	    Name		    "CH1_pulse"
+	    Prompt		    "CH1 pulse value"
+	    Value		    "0"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('CH1_pulse');"
+	  }
+	  Object {
+	    $ObjectID		    53
+	    Type		    "checkbox"
+	    Name		    "CH2_enable"
+	    Prompt		    " CH2 Enable"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    54
+	    Type		    "checkbox"
+	    Name		    "CH2N_enable"
+	    Prompt		    "CH2N Enable"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    55
+	    Type		    "popup"
+	    Array {
+	      Type		      "Cell"
+	      Dimension		      10
+	      Cell		      "Output_Comp"
+	      Cell		      "Input_PWM"
+	      Cell		      "Output_PWM"
+	      Cell		      "Input_Capture"
+	      Cell		      "Input_ETR"
+	      Cell		      "Input_Encoder"
+	      Cell		      "Output_TRGO"
+	      Cell		      "Output_Forced"
+	      Cell		      "Input_Hall_Sensor"
+	      Cell		      "Unknown"
+	      PropName		      "TypeOptions"
+	    }
+	    Name		    "CH2_type"
+	    Prompt		    "Channel mode"
+	    Value		    "Unknown"
+	    Evaluate		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    56
+	    Type		    "checkbox"
+	    Name		    "CH2_DMA"
+	    Prompt		    "DMA used"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    57
+	    Type		    "checkbox"
+	    Name		    "CH2_int"
+	    Prompt		    "Enable interrupt"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    58
+	    Type		    "edit"
+	    Name		    "CH2_edge"
+	    Prompt		    "Edge"
+	    Value		    "Rising"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    59
+	    Type		    "edit"
+	    Name		    "CH2_div"
+	    Prompt		    "Prescaler Division Ratio"
+	    Value		    "1"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    60
+	    Type		    "checkbox"
+	    Name		    "CH2_variable_duty"
+	    Prompt		    "Duty cycle is an input port"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	  }
+	  Object {
+	    $ObjectID		    61
+	    Type		    "checkbox"
+	    Name		    "CH2_set_pulse"
+	    Prompt		    "Set duty cycle"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('set_duty2');"
+	  }
+	  Object {
+	    $ObjectID		    62
+	    Type		    "edit"
+	    Name		    "CH2_output_duty"
+	    Prompt		    "Output duty cycle (%)"
+	    Value		    "0.00"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	    Callback		    "TIMERS_Config_callback('CH2_duty');"
+	  }
+	  Object {
+	    $ObjectID		    63
+	    Type		    "edit"
+	    Name		    "CH2_pulse"
+	    Prompt		    "CH2 pulse value"
+	    Value		    "0"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('CH2_pulse');"
+	  }
+	  Object {
+	    $ObjectID		    64
+	    Type		    "checkbox"
+	    Name		    "CH3_enable"
+	    Prompt		    " CH3 Enable"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    65
+	    Type		    "checkbox"
+	    Name		    "CH3N_enable"
+	    Prompt		    "CH3N Enable"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    66
+	    Type		    "popup"
+	    Array {
+	      Type		      "Cell"
+	      Dimension		      10
+	      Cell		      "Output_Comp"
+	      Cell		      "Input_PWM"
+	      Cell		      "Output_PWM"
+	      Cell		      "Input_Capture"
+	      Cell		      "Input_ETR"
+	      Cell		      "Input_Encoder"
+	      Cell		      "Output_TRGO"
+	      Cell		      "Output_Forced"
+	      Cell		      "Input_Hall_Sensor"
+	      Cell		      "Unknown"
+	      PropName		      "TypeOptions"
+	    }
+	    Name		    "CH3_type"
+	    Prompt		    "Channel mode"
+	    Value		    "Unknown"
+	    Evaluate		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    67
+	    Type		    "checkbox"
+	    Name		    "CH3_DMA"
+	    Prompt		    "DMA used"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    68
+	    Type		    "checkbox"
+	    Name		    "CH3_int"
+	    Prompt		    "Enable interrupt"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    69
+	    Type		    "edit"
+	    Name		    "CH3_edge"
+	    Prompt		    "Edge"
+	    Value		    "Rising"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    70
+	    Type		    "edit"
+	    Name		    "CH3_div"
+	    Prompt		    "Prescaler Division Ratio"
+	    Value		    "1"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    71
+	    Type		    "checkbox"
+	    Name		    "CH3_variable_duty"
+	    Prompt		    "Duty cycle is an input port"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	  }
+	  Object {
+	    $ObjectID		    72
+	    Type		    "checkbox"
+	    Name		    "CH3_set_pulse"
+	    Prompt		    "Set duty cycle"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('set_duty3');"
+	  }
+	  Object {
+	    $ObjectID		    73
+	    Type		    "edit"
+	    Name		    "CH3_output_duty"
+	    Prompt		    "Output duty cycle (%)"
+	    Value		    "0.00"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	    Callback		    "TIMERS_Config_callback('CH3_duty');"
+	  }
+	  Object {
+	    $ObjectID		    74
+	    Type		    "edit"
+	    Name		    "CH3_pulse"
+	    Prompt		    "CH3 pulse value"
+	    Value		    "0"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('CH3_pulse');"
+	  }
+	  Object {
+	    $ObjectID		    75
+	    Type		    "checkbox"
+	    Name		    "CH4_enable"
+	    Prompt		    " CH4 Enable"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    76
+	    Type		    "checkbox"
+	    Name		    "CH4N_enable"
+	    Prompt		    "CH4N Enable"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    77
+	    Type		    "popup"
+	    Array {
+	      Type		      "Cell"
+	      Dimension		      10
+	      Cell		      "Output_Comp"
+	      Cell		      "Input_PWM"
+	      Cell		      "Output_PWM"
+	      Cell		      "Input_Capture"
+	      Cell		      "Input_ETR"
+	      Cell		      "Input_Encoder"
+	      Cell		      "Output_TRGO"
+	      Cell		      "Output_Forced"
+	      Cell		      "Input_Hall_Sensor"
+	      Cell		      "Unknown"
+	      PropName		      "TypeOptions"
+	    }
+	    Name		    "CH4_type"
+	    Prompt		    "Channel mode"
+	    Value		    "Unknown"
+	    Evaluate		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    78
+	    Type		    "checkbox"
+	    Name		    "CH4_DMA"
+	    Prompt		    "DMA used"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    79
+	    Type		    "checkbox"
+	    Name		    "CH4_int"
+	    Prompt		    "Enable interrupt"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    80
+	    Type		    "edit"
+	    Name		    "CH4_edge"
+	    Prompt		    "Edge"
+	    Value		    "Rising"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    81
+	    Type		    "edit"
+	    Name		    "CH4_div"
+	    Prompt		    "Prescaler Division Ratio"
+	    Value		    "1"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	  }
+	  Object {
+	    $ObjectID		    82
+	    Type		    "checkbox"
+	    Name		    "CH4_variable_duty"
+	    Prompt		    "Duty cycle is an input port"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	  }
+	  Object {
+	    $ObjectID		    83
+	    Type		    "checkbox"
+	    Name		    "CH4_set_pulse"
+	    Prompt		    "Set duty cycle"
+	    Value		    "off"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('set_duty4');"
+	  }
+	  Object {
+	    $ObjectID		    84
+	    Type		    "edit"
+	    Name		    "CH4_output_duty"
+	    Prompt		    "Output duty cycle (%)"
+	    Value		    "0.00"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Enabled		    "off"
+	    Callback		    "TIMERS_Config_callback('CH4_duty');"
+	  }
+	  Object {
+	    $ObjectID		    85
+	    Type		    "edit"
+	    Name		    "CH4_pulse"
+	    Prompt		    "CH4 pulse value"
+	    Value		    "0"
+	    Evaluate		    "off"
+	    Tunable		    "off"
+	    Callback		    "TIMERS_Config_callback('CH4_pulse');"
+	  }
+	  PropName		  "Parameters"
+	}
+	Array {
+	  Type			  "Simulink.dialog.Container"
+	  Dimension		  2
+	  Object {
+	    $ObjectID		    86
+	    $ClassName		    "Simulink.dialog.Group"
+	    Prompt		    "%<MaskType>"
+	    Object {
+	      $PropName		      "DialogControls"
+	      $ObjectID		      87
+	      $ClassName	      "Simulink.dialog.Text"
+	      Prompt		      "%<MaskDescription>"
+	      Name		      "DescTextVar"
+	    }
+	    Name		    "DescGroupVar"
+	  }
+	  Object {
+	    $ObjectID		    88
+	    $ClassName		    "Simulink.dialog.TabContainer"
+	    Array {
+	      Type		      "Simulink.dialog.Tab"
+	      Dimension		      5
+	      Object {
+		$ObjectID		89
+		Prompt			"Global"
+		Array {
+		  Type			  "Simulink.dialog.Control"
+		  Dimension		  5
+		  Object {
+		    $ObjectID		    90
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "currentTIM"
+		  }
+		  Object {
+		    $ObjectID		    91
+		    $ClassName		    "Simulink.dialog.parameter.Popup"
+		    Name		    "TIM_Name"
+		  }
+		  Object {
+		    $ObjectID		    92
+		    $ClassName		    "Simulink.dialog.Group"
+		    Prompt		    "CLOCK"
+		    Array {
+		    Type		    "Simulink.dialog.parameter.Control"
+		    Dimension		    5
+		    Object {
+		    $ObjectID		    93
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "TIM_APBClock"
+		    }
+		    Object {
+		    $ObjectID		    94
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Row			    "current"
+		    Name		    "TIM_CKD"
+		    }
+		    Object {
+		    $ObjectID		    95
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "TIM_Set_Clk"
+		    }
+		    Object {
+		    $ObjectID		    96
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "TIM_Prescaler"
+		    }
+		    Object {
+		    $ObjectID		    97
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Row			    "current"
+		    Name		    "TIM_Clock"
+		    }
+		    PropName		    "DialogControls"
+		    }
+		    Name		    "Clock"
+		  }
+		  Object {
+		    $ObjectID		    98
+		    $ClassName		    "Simulink.dialog.Group"
+		    Prompt		    "OUTPUT CHANNELS"
+		    Array {
+		    Type		    "Simulink.dialog.Control"
+		    Dimension		    6
+		    Object {
+		    $ObjectID		    99
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "Variable_frequency"
+		    }
+		    Object {
+		    $ObjectID		    100
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "TIM_Set_OutFreq"
+		    }
+		    Object {
+		    $ObjectID		    101
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "TIM_ARR"
+		    }
+		    Object {
+		    $ObjectID		    102
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Row			    "current"
+		    Name		    "Output_frequency"
+		    }
+		    Object {
+		    $ObjectID		    103
+		    $ClassName		    "Simulink.dialog.Text"
+		    Prompt		    "ARR value is also encoder ticks number per loop."
+		    Enabled		    "off"
+		    Name		    "Encoder_text"
+		    }
+		    Object {
+		    $ObjectID		    104
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "Repetition_counter"
+		    }
+		    PropName		    "DialogControls"
+		    }
+		    Name		    "OutClock"
+		  }
+		  Object {
+		    $ObjectID		    105
+		    $ClassName		    "Simulink.dialog.Group"
+		    Prompt		    "PARAMETERS"
+		    Array {
+		    Type		    "Simulink.dialog.Control"
+		    Dimension		    4
+		    Object {
+		    $ObjectID		    106
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Name		    "TIM_Mode"
+		    }
+		    Object {
+		    $ObjectID		    107
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Name		    "TIM_DMA"
+		    }
+		    Object {
+		    $ObjectID		    108
+		    $ClassName		    "Simulink.dialog.Group"
+		    Prompt		    "INTERRUPT"
+		    Array {
+		    Type		    "Simulink.dialog.parameter.CheckBox"
+		    Dimension		    6
+		    Object {
+		    $ObjectID		    109
+		    Name		    "TIM_IRQ"
+		    }
+		    Object {
+		    $ObjectID		    110
+		    Row			    "current"
+		    Name		    "TIM_IRQ_ONLY"
+		    }
+		    Object {
+		    $ObjectID		    111
+		    Name		    "TIM_UP"
+		    }
+		    Object {
+		    $ObjectID		    112
+		    Row			    "current"
+		    Name		    "TIM_TRG"
+		    }
+		    Object {
+		    $ObjectID		    113
+		    Row			    "current"
+		    Name		    "TIM_COM"
+		    }
+		    Object {
+		    $ObjectID		    114
+		    Row			    "current"
+		    Name		    "TIM_BRK"
+		    }
+		    PropName		    "DialogControls"
+		    }
+		    Name		    "itParam"
+		    }
+		    Object {
+		    $ObjectID		    115
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "NbTIM"
+		    }
+		    PropName		    "DialogControls"
+		    }
+		    Name		    "otherParam"
+		  }
+		  PropName		  "DialogControls"
+		}
+		Name			"ParameterTabGlobal"
+	      }
+	      Object {
+		$ObjectID		116
+		Prompt			"CH1"
+		Array {
+		  Type			  "Simulink.dialog.Control"
+		  Dimension		  8
+		  Object {
+		    $ObjectID		    117
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH1_enable"
+		  }
+		  Object {
+		    $ObjectID		    118
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Row			    "current"
+		    Name		    "CH1N_enable"
+		  }
+		  Object {
+		    $ObjectID		    119
+		    $ClassName		    "Simulink.dialog.parameter.Popup"
+		    Name		    "CH1_type"
+		  }
+		  Object {
+		    $ObjectID		    120
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Row			    "current"
+		    Name		    "CH1_DMA"
+		  }
+		  Object {
+		    $ObjectID		    121
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH1_int"
+		  }
+		  Object {
+		    $ObjectID		    122
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Name		    "CH1_edge"
+		  }
+		  Object {
+		    $ObjectID		    123
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Row			    "current"
+		    Name		    "CH1_div"
+		  }
+		  Object {
+		    $ObjectID		    124
+		    $ClassName		    "Simulink.dialog.Group"
+		    Prompt		    "OUTPUT PWM"
+		    Array {
+		    Type		    "Simulink.dialog.parameter.Control"
+		    Dimension		    4
+		    Object {
+		    $ObjectID		    125
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH1_variable_duty"
+		    }
+		    Object {
+		    $ObjectID		    126
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH1_set_pulse"
+		    }
+		    Object {
+		    $ObjectID		    127
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "CH1_output_duty"
+		    }
+		    Object {
+		    $ObjectID		    128
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Row			    "current"
+		    Name		    "CH1_pulse"
+		    }
+		    PropName		    "DialogControls"
+		    }
+		    Name		    "CH1_PWM_OUT"
+		  }
+		  PropName		  "DialogControls"
+		}
+		Name			"ParameterTabCH1"
+	      }
+	      Object {
+		$ObjectID		129
+		Prompt			"CH2"
+		Array {
+		  Type			  "Simulink.dialog.Control"
+		  Dimension		  8
+		  Object {
+		    $ObjectID		    130
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH2_enable"
+		  }
+		  Object {
+		    $ObjectID		    131
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Row			    "current"
+		    Name		    "CH2N_enable"
+		  }
+		  Object {
+		    $ObjectID		    132
+		    $ClassName		    "Simulink.dialog.parameter.Popup"
+		    Name		    "CH2_type"
+		  }
+		  Object {
+		    $ObjectID		    133
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Row			    "current"
+		    Name		    "CH2_DMA"
+		  }
+		  Object {
+		    $ObjectID		    134
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH2_int"
+		  }
+		  Object {
+		    $ObjectID		    135
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Name		    "CH2_edge"
+		  }
+		  Object {
+		    $ObjectID		    136
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Row			    "current"
+		    Name		    "CH2_div"
+		  }
+		  Object {
+		    $ObjectID		    137
+		    $ClassName		    "Simulink.dialog.Group"
+		    Prompt		    "OUTPUT PWM"
+		    Array {
+		    Type		    "Simulink.dialog.parameter.Control"
+		    Dimension		    4
+		    Object {
+		    $ObjectID		    138
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH2_variable_duty"
+		    }
+		    Object {
+		    $ObjectID		    139
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH2_set_pulse"
+		    }
+		    Object {
+		    $ObjectID		    140
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "CH2_output_duty"
+		    }
+		    Object {
+		    $ObjectID		    141
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Row			    "current"
+		    Name		    "CH2_pulse"
+		    }
+		    PropName		    "DialogControls"
+		    }
+		    Name		    "CH2_PWM_OUT"
+		  }
+		  PropName		  "DialogControls"
+		}
+		Name			"ParameterTabCH2"
+	      }
+	      Object {
+		$ObjectID		142
+		Prompt			"CH3"
+		Array {
+		  Type			  "Simulink.dialog.Control"
+		  Dimension		  8
+		  Object {
+		    $ObjectID		    143
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH3_enable"
+		  }
+		  Object {
+		    $ObjectID		    144
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Row			    "current"
+		    Name		    "CH3N_enable"
+		  }
+		  Object {
+		    $ObjectID		    145
+		    $ClassName		    "Simulink.dialog.parameter.Popup"
+		    Name		    "CH3_type"
+		  }
+		  Object {
+		    $ObjectID		    146
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Row			    "current"
+		    Name		    "CH3_DMA"
+		  }
+		  Object {
+		    $ObjectID		    147
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH3_int"
+		  }
+		  Object {
+		    $ObjectID		    148
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Name		    "CH3_edge"
+		  }
+		  Object {
+		    $ObjectID		    149
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Row			    "current"
+		    Name		    "CH3_div"
+		  }
+		  Object {
+		    $ObjectID		    150
+		    $ClassName		    "Simulink.dialog.Group"
+		    Prompt		    "OUTPUT PWM"
+		    Array {
+		    Type		    "Simulink.dialog.parameter.Control"
+		    Dimension		    4
+		    Object {
+		    $ObjectID		    151
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH3_variable_duty"
+		    }
+		    Object {
+		    $ObjectID		    152
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH3_set_pulse"
+		    }
+		    Object {
+		    $ObjectID		    153
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "CH3_output_duty"
+		    }
+		    Object {
+		    $ObjectID		    154
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Row			    "current"
+		    Name		    "CH3_pulse"
+		    }
+		    PropName		    "DialogControls"
+		    }
+		    Name		    "CH3_PWM_OUT"
+		  }
+		  PropName		  "DialogControls"
+		}
+		Name			"ParameterTabCH3"
+	      }
+	      Object {
+		$ObjectID		155
+		Prompt			"CH4"
+		Array {
+		  Type			  "Simulink.dialog.Control"
+		  Dimension		  8
+		  Object {
+		    $ObjectID		    156
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH4_enable"
+		  }
+		  Object {
+		    $ObjectID		    157
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Row			    "current"
+		    Name		    "CH4N_enable"
+		  }
+		  Object {
+		    $ObjectID		    158
+		    $ClassName		    "Simulink.dialog.parameter.Popup"
+		    Name		    "CH4_type"
+		  }
+		  Object {
+		    $ObjectID		    159
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Row			    "current"
+		    Name		    "CH4_DMA"
+		  }
+		  Object {
+		    $ObjectID		    160
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH4_int"
+		  }
+		  Object {
+		    $ObjectID		    161
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Name		    "CH4_edge"
+		  }
+		  Object {
+		    $ObjectID		    162
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    PromptLocation	    "left"
+		    Row			    "current"
+		    Name		    "CH4_div"
+		  }
+		  Object {
+		    $ObjectID		    163
+		    $ClassName		    "Simulink.dialog.Group"
+		    Prompt		    "OUTPUT PWM"
+		    Array {
+		    Type		    "Simulink.dialog.parameter.Control"
+		    Dimension		    4
+		    Object {
+		    $ObjectID		    164
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH4_variable_duty"
+		    }
+		    Object {
+		    $ObjectID		    165
+		    $ClassName		    "Simulink.dialog.parameter.CheckBox"
+		    Name		    "CH4_set_pulse"
+		    }
+		    Object {
+		    $ObjectID		    166
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Name		    "CH4_output_duty"
+		    }
+		    Object {
+		    $ObjectID		    167
+		    $ClassName		    "Simulink.dialog.parameter.Edit"
+		    Row			    "current"
+		    Name		    "CH4_pulse"
+		    }
+		    PropName		    "DialogControls"
+		    }
+		    Name		    "CH4_PWM_OUT"
+		  }
+		  PropName		  "DialogControls"
+		}
+		Name			"ParameterTabCH4"
+	      }
+	      PropName		      "DialogControls"
+	    }
+	    Name		    "ParameterTabContainerVar"
+	  }
+	  PropName		  "DialogControls"
+	}
+      }
+    }
+  }
+}

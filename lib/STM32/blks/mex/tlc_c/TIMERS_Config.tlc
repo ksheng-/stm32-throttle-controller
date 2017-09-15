@@ -1,0 +1,2665 @@
+%% $RCSfile: TIMERS_Config.tlc,v $
+%% $Revision: 2.0 $
+%% $Date: 2014/07/03 $
+%%
+%% Abstract: TIMERS_Config 
+%%    STM32 Timers  CH1 to CH3 configuration
+%%    Generated code is based on STM32 HAL Library files.
+%%
+%% Copyright 1990-2009 The MathWorks, Inc.
+%assign CodeFormat = "Embedded-C"
+%implements TIMERS_Config "C"
+
+%include "FunctionCalledAsChart.tlc"
+
+%%warning "---------->Start Timers"
+
+%if !EXISTS(::CreateTimers)
+    %assign ::CreateTimers  = TLC_TRUE
+%endif
+
+%if !EXISTS(::InsertInitHeader)
+    %assign ::InsertInitHeader  = TLC_TRUE
+%endif
+
+%if !EXISTS(::InsertIncludes)
+    %assign ::InsertIncludes  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertIncludesToTIM)
+    %assign ::InsertIncludesToTIM  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertIncludesFromTIM)
+    %assign ::InsertIncludesFromTIM  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertTIM)
+    %assign ::InsertTIM  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertOutPwmTIMCallback)
+    %assign ::InsertOutPwmTIMCallback  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertOCDelayTIMCallback)
+    %assign ::InsertOCDelayTIMCallback  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertICTIMCallback)
+    %assign ::InsertICTIMCallback  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertCOMTIMCallback)
+    %assign ::InsertCOMTIMCallback  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertUPTIMCallback)
+    %assign ::InsertUPTIMCallback  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertBRKTIMCallback)
+    %assign ::InsertBRKTIMCallback  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::InsertTRIGTIMCallback)
+    %assign ::InsertTRIGIMCallback  = TLC_TRUE
+%endif 
+
+%assign  TIM_Name = SFcnParamSettings.TIM_Name
+
+%if !EXISTS(::VarDef_%<TIM_Name>)
+    %assign ::VarDef_%<TIM_Name>  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::Initialization_%<TIM_Name>)
+    %assign ::Initialization_%<TIM_Name>  = TLC_TRUE
+%endif 
+
+%if !EXISTS(::ItUpFcn_%<TIM_Name>)
+    %assign ::ItUpFcn_%<TIM_Name>  = TLC_TRUE
+%endif 
+%if !EXISTS(::ItTrgFcn_%<TIM_Name>)
+    %assign ::ItTrgFcn_%<TIM_Name>  = TLC_TRUE
+%endif 
+%if !EXISTS(::ItComFcn_%<TIM_Name>)
+    %assign ::ItComFcn_%<TIM_Name>  = TLC_TRUE
+%endif 
+%if !EXISTS(::ItBrkFcn_%<TIM_Name>)
+    %assign ::ItBrkFcn_%<TIM_Name>  = TLC_TRUE
+%endif 
+%if !EXISTS(::ItCcFcn_%<TIM_Name>)
+    %assign ::ItCcFcn_%<TIM_Name>  = TLC_TRUE
+%endif 
+
+
+
+%assign ::CreateTimers  = TLC_TRUE
+
+%trace CreateTimers  %<CreateTimers>
+
+
+%% Create function for Timers:
+%if EXISTS(CreateTimers) && (CreateTimers == TLC_TRUE)
+
+    %%assign ::CreateTimers = TLC_FALSE
+
+
+%% Code for system initialization:
+    %function Start(block,system) Output
+        %assign  TIM_Name = SFcnParamSettings.TIM_Name
+		%assign  TIM_APBClock 	= SFcnParamSettings.TIM_APBClock
+		%assign  TIM_Prescaler 	= SFcnParamSettings.TIM_Prescaler
+        %assign  TIM_Clock  = SFcnParamSettings.TIM_Clock
+		%assign  TIM_ARR  = SFcnParamSettings.TIM_ARR
+		%assign  TIM_DMA  = SFcnParamSettings.TIM_DMA
+		%assign  TIM_IRQ  = SFcnParamSettings.TIM_IRQ
+		%assign  TIM_IRQ_ONLY  = SFcnParamSettings.TIM_IRQ_ONLY
+		%assign  TIM_UP  = SFcnParamSettings.TIM_UP
+		%assign  TIM_TRG  = SFcnParamSettings.TIM_TRG
+		%assign  TIM_COM  = SFcnParamSettings.TIM_COM
+		%assign  TIM_BRK  = SFcnParamSettings.TIM_BRK
+		%assign  NbTIM  = SFcnParamSettings.NbTIM
+		%assign  CH1_enable = SFcnParamSettings.CH1_enable
+		%assign  CH2_enable = SFcnParamSettings.CH2_enable
+		%assign  CH3_enable = SFcnParamSettings.CH3_enable
+		%assign  CH4_enable = SFcnParamSettings.CH4_enable
+		%assign  CH1N_enable = SFcnParamSettings.CH1N_enable
+		%assign  CH2N_enable = SFcnParamSettings.CH2N_enable
+		%assign  CH3N_enable = SFcnParamSettings.CH3N_enable
+		%assign  CH4N_enable = SFcnParamSettings.CH4N_enable
+		%assign  CH1_type = SFcnParamSettings.CH1_type
+		%assign  CH2_type = SFcnParamSettings.CH2_type
+		%assign  CH3_type = SFcnParamSettings.CH3_type
+		%assign  CH4_type = SFcnParamSettings.CH4_type
+		%assign  CH1_pulse = SFcnParamSettings.CH1_pulse
+		%assign  CH2_pulse = SFcnParamSettings.CH2_pulse
+		%assign  CH3_pulse = SFcnParamSettings.CH3_pulse
+		%assign  CH4_pulse = SFcnParamSettings.CH4_pulse
+		%assign  CH1_int   = SFcnParamSettings.CH1_int
+		%assign  CH2_int   = SFcnParamSettings.CH2_int
+		%assign  CH3_int   = SFcnParamSettings.CH3_int
+		%assign  CH4_int   = SFcnParamSettings.CH4_int
+		%assign  CH1_DMA = SFcnParamSettings.CH1_DMA
+		%assign  CH2_DMA = SFcnParamSettings.CH2_DMA
+		%assign  CH3_DMA = SFcnParamSettings.CH3_DMA
+		%assign  CH4_DMA = SFcnParamSettings.CH4_DMA
+		%assign  Variable_frequency = SFcnParamSettings.Variable_frequency
+		%assign  CH1_variable_duty  = SFcnParamSettings.CH1_variable_duty
+		%assign  CH2_variable_duty  = SFcnParamSettings.CH2_variable_duty
+		%assign  CH3_variable_duty  = SFcnParamSettings.CH3_variable_duty
+		%assign  CH4_variable_duty  = SFcnParamSettings.CH4_variable_duty
+		%assign  CH1_edge   = SFcnParamSettings.CH1_edge
+		%assign  CH2_edge   = SFcnParamSettings.CH2_edge
+		%assign  CH3_edge   = SFcnParamSettings.CH3_edge
+		%assign  CH4_edge   = SFcnParamSettings.CH4_edge
+		%assign  CH1_div   = SFcnParamSettings.CH1_div
+		%assign  CH2_div   = SFcnParamSettings.CH2_div
+		%assign  CH3_div   = SFcnParamSettings.CH3_div
+		%assign  CH4_div   = SFcnParamSettings.CH4_div
+
+%% Code for required TIM external definition: in model_TIM.c file
+		%assign timNum = IDNUM("%<TIM_Name>")[1]
+
+    %if !EXISTS(::Initialization_%<TIM_Name>) || (::Initialization_%<TIM_Name> == TLC_TRUE)
+        %assign ::Initialization_%<TIM_Name>    = TLC_FALSE	
+        %openfile TIM_Buf
+			/*Store %<TIM_Name> data information and its handler */ 
+		%if (%<NbTIM> > 1)
+			G_TIM_Data[G_NbTimConf] = &%<TIM_Name>_DataLink;
+			G_TIM_Handler[G_NbTimConf] = &htim%<timNum>;
+			G_NbTimConf++; /*Inc number of configured TIM */
+		%else
+			G_TIM_Data = &%<TIM_Name>_DataLink;
+			G_TIM_Handler = &htim%<timNum>;
+		%endif
+            /*Store TIM information */
+ 			%<TIM_Name>_DataLink.TIM_Prescaler = %<TIM_Prescaler>;
+ 			%<TIM_Name>_DataLink.TIM_APBClock = %<TIM_APBClock>;
+            %<TIM_Name>_DataLink.TIM_ARR = %<TIM_ARR> - 1;
+            %<TIM_Name>_DataLink.TIM_Clock = %<TIM_Clock>;
+        %if (ISEQUAL(CH1_type,"Input_Capture"))
+            /* Input Capture data channel 1 */
+            %<TIM_Name>_DataLink.ICC1ReadValue1 = 0;
+            %<TIM_Name>_DataLink.ICC1ReadValue2 = 0;
+            %<TIM_Name>_DataLink.ICC1ReadValue3 = 0;
+            %<TIM_Name>_DataLink.ICC1ReadValue4 = 0;
+            %<TIM_Name>_DataLink.ICC1CaptureNumber = 1;
+            %<TIM_Name>_DataLink.ICC1Capture = 0;
+            %<TIM_Name>_DataLink.ICC1Freq = 0;
+            %<TIM_Name>_DataLink.ICC1Duty = 0;
+		%endif
+        %if (ISEQUAL(CH2_type,"Input_Capture"))
+            /* Input Capture data channel 2 */
+            %<TIM_Name>_DataLink.ICC2ReadValue1 = 0;
+            %<TIM_Name>_DataLink.ICC2ReadValue2 = 0;
+            %<TIM_Name>_DataLink.ICC2ReadValue3 = 0;
+            %<TIM_Name>_DataLink.ICC2ReadValue4 = 0;
+            %<TIM_Name>_DataLink.ICC2CaptureNumber = 1;
+            %<TIM_Name>_DataLink.ICC2Capture = 0;
+            %<TIM_Name>_DataLink.ICC2Freq = 0;
+            %<TIM_Name>_DataLink.ICC2Duty = 0;
+        %endif
+        %if (ISEQUAL(CH3_type,"Input_Capture"))
+            /* Input Capture data channel 3 */
+            %<TIM_Name>_DataLink.ICC3ReadValue1 = 0;
+            %<TIM_Name>_DataLink.ICC3ReadValue2 = 0;
+            %<TIM_Name>_DataLink.ICC3ReadValue3 = 0;
+            %<TIM_Name>_DataLink.ICC3ReadValue4 = 0;
+            %<TIM_Name>_DataLink.ICC3CaptureNumber = 1;
+            %<TIM_Name>_DataLink.ICC3Capture = 0;
+            %<TIM_Name>_DataLink.ICC3Freq = 0;
+            %<TIM_Name>_DataLink.ICC3Duty = 0;
+        %endif
+        %if (ISEQUAL(CH4_type,"Input_Capture"))
+            /* Input Capture data channel 4 */
+            %<TIM_Name>_DataLink.ICC4ReadValue1 = 0;
+            %<TIM_Name>_DataLink.ICC4ReadValue2 = 0;
+            %<TIM_Name>_DataLink.ICC4ReadValue3 = 0;
+            %<TIM_Name>_DataLink.ICC4ReadValue4 = 0;
+            %<TIM_Name>_DataLink.ICC4CaptureNumber = 1;
+            %<TIM_Name>_DataLink.ICC4Capture = 0;
+            %<TIM_Name>_DataLink.ICC4Freq = 0;
+            %<TIM_Name>_DataLink.ICC4Duty = 0;
+        %endif
+        %if (ISEQUAL(CH1_type,"Output_Comp"))
+            %<TIM_Name>_DataLink.CH1_type = OUTPUT_COMP;
+		%endif
+        %if (ISEQUAL(CH1_type,"Input_PWM"))
+            %<TIM_Name>_DataLink.CH1_type = INPUT_PWM;
+		%endif
+        %if (ISEQUAL(CH1_type,"Output_PWM"))
+            %<TIM_Name>_DataLink.CH1_type = OUTPUT_PWM;
+		%endif
+        %if (ISEQUAL(CH1_type,"Input_Capture"))
+            %<TIM_Name>_DataLink.CH1_type = INPUT_CAPTURE;
+		%endif
+        %if (ISEQUAL(CH1_type,"Input_ETR"))
+            %<TIM_Name>_DataLink.CH1_type = INPUT_ETR;
+		%endif
+        %if (ISEQUAL(CH1_type,"Input_Encoder"))
+            %<TIM_Name>_DataLink.CH1_type = INPUT_ENCODER;
+		%endif
+        %if (ISEQUAL(CH1_type,"Output_TRGO"))
+            %<TIM_Name>_DataLink.CH1_type = OUTPUT_TRGO;
+		%endif
+        %if (ISEQUAL(CH1_type,"Output_Forced"))
+            %<TIM_Name>_DataLink.CH1_type = OUTPUT_FORCED;
+		%endif
+        %if (ISEQUAL(CH1_type,"Input_Hall_Sensor"))
+            %<TIM_Name>_DataLink.CH1_type = INPUT_HALL_SENSOR;
+		%endif
+        %if (ISEQUAL(CH1_type,"Unknown"))
+            %<TIM_Name>_DataLink.CH1_type = UNKNOWN;
+		%endif
+        %if (ISEQUAL(CH2_type,"Output_Comp"))
+            %<TIM_Name>_DataLink.CH2_type = OUTPUT_COMP;
+		%endif
+        %if (ISEQUAL(CH2_type,"Input_PWM"))
+            %<TIM_Name>_DataLink.CH2_type = INPUT_PWM;
+		%endif
+        %if (ISEQUAL(CH2_type,"Output_PWM"))
+            %<TIM_Name>_DataLink.CH2_type = OUTPUT_PWM;
+		%endif
+        %if (ISEQUAL(CH2_type,"Input_Capture"))
+            %<TIM_Name>_DataLink.CH2_type = INPUT_CAPTURE;
+		%endif
+        %if (ISEQUAL(CH2_type,"Input_ETR"))
+            %<TIM_Name>_DataLink.CH2_type = INPUT_ETR;
+		%endif
+        %if (ISEQUAL(CH2_type,"Input_Encoder"))
+            %<TIM_Name>_DataLink.CH2_type = INPUT_ENCODER;
+		%endif
+        %if (ISEQUAL(CH2_type,"Output_TRGO"))
+            %<TIM_Name>_DataLink.CH2_type = OUTPUT_TRGO;
+		%endif
+        %if (ISEQUAL(CH2_type,"Output_Forced"))
+            %<TIM_Name>_DataLink.CH2_type = OUTPUT_FORCED;
+		%endif
+        %if (ISEQUAL(CH2_type,"Input_Hall_Sensor"))
+            %<TIM_Name>_DataLink.CH2_type = INPUT_HALL_SENSOR;
+		%endif
+        %if (ISEQUAL(CH2_type,"Unknown"))
+            %<TIM_Name>_DataLink.CH2_type = UNKNOWN;
+		%endif
+        %if (ISEQUAL(CH3_type,"Output_Comp"))
+            %<TIM_Name>_DataLink.CH3_type = OUTPUT_COMP;
+		%endif
+        %if (ISEQUAL(CH3_type,"Input_PWM"))
+            %<TIM_Name>_DataLink.CH3_type = INPUT_PWM;
+		%endif
+        %if (ISEQUAL(CH3_type,"Output_PWM"))
+            %<TIM_Name>_DataLink.CH3_type = OUTPUT_PWM;
+		%endif
+        %if (ISEQUAL(CH3_type,"Input_Capture"))
+            %<TIM_Name>_DataLink.CH3_type = INPUT_CAPTURE;
+		%endif
+        %if (ISEQUAL(CH3_type,"Input_ETR"))
+            %<TIM_Name>_DataLink.CH3_type = INPUT_ETR;
+		%endif
+        %if (ISEQUAL(CH3_type,"Input_Encoder"))
+            %<TIM_Name>_DataLink.CH3_type = INPUT_ENCODER;
+		%endif
+        %if (ISEQUAL(CH3_type,"Output_TRGO"))
+            %<TIM_Name>_DataLink.CH3_type = OUTPUT_TRGO;
+		%endif
+        %if (ISEQUAL(CH3_type,"Output_Forced"))
+            %<TIM_Name>_DataLink.CH3_type = OUTPUT_FORCED;
+		%endif
+        %if (ISEQUAL(CH3_type,"Input_Hall_Sensor"))
+            %<TIM_Name>_DataLink.CH3_type = INPUT_HALL_SENSOR;
+		%endif
+        %if (ISEQUAL(CH3_type,"Unknown"))
+            %<TIM_Name>_DataLink.CH3_type = UNKNOWN;
+		%endif
+        %if (ISEQUAL(CH4_type,"Output_Comp"))
+            %<TIM_Name>_DataLink.CH4_type = OUTPUT_COMP;
+		%endif
+        %if (ISEQUAL(CH4_type,"Input_PWM"))
+            %<TIM_Name>_DataLink.CH4_type = INPUT_PWM;
+		%endif
+        %if (ISEQUAL(CH4_type,"Output_PWM"))
+            %<TIM_Name>_DataLink.CH4_type = OUTPUT_PWM;
+		%endif
+        %if (ISEQUAL(CH4_type,"Input_Capture"))
+            %<TIM_Name>_DataLink.CH4_type = INPUT_CAPTURE;
+		%endif
+        %if (ISEQUAL(CH4_type,"Input_ETR"))
+            %<TIM_Name>_DataLink.CH4_type = INPUT_ETR;
+		%endif
+        %if (ISEQUAL(CH4_type,"Input_Encoder"))
+            %<TIM_Name>_DataLink.CH4_type = INPUT_ENCODER;
+		%endif
+        %if (ISEQUAL(CH4_type,"Output_TRGO"))
+            %<TIM_Name>_DataLink.CH4_type = OUTPUT_TRGO;
+		%endif
+        %if (ISEQUAL(CH4_type,"Output_Forced"))
+            %<TIM_Name>_DataLink.CH4_type = OUTPUT_FORCED;
+		%endif
+        %if (ISEQUAL(CH4_type,"Input_Hall_Sensor"))
+            %<TIM_Name>_DataLink.CH4_type = INPUT_HALL_SENSOR;
+		%endif
+        %if (ISEQUAL(CH4_type,"Unknown"))
+            %<TIM_Name>_DataLink.CH4_type = UNKNOWN;
+		%endif
+            /* Interrupt vector initialization */
+            %<TIM_Name>_DataLink.ItUpFcn = NULL;
+            %<TIM_Name>_DataLink.ItTrgFcn = NULL;
+            %<TIM_Name>_DataLink.ItComFcn = NULL;
+            %<TIM_Name>_DataLink.ItBrkFcn = NULL;
+            %<TIM_Name>_DataLink.ItCcFcn = NULL;
+
+        %if (ISEQUAL(CH1_type,"Input_PWM") || ISEQUAL(CH1_type,"Input_Capture") || ... 
+             ISEQUAL(CH2_type,"Input_PWM") || ISEQUAL(CH2_type,"Input_Capture") || ... 
+             ISEQUAL(CH3_type,"Input_PWM") || ISEQUAL(CH3_type,"Input_Capture") || ... 
+             ISEQUAL(CH4_type,"Input_PWM") || ISEQUAL(CH4_type,"Input_Capture"))
+            /* Timer is used as input capture */
+            /*Prescaler is null for input capture mode*/
+            (&htim%<timNum>)->Instance->PSC |= 0x00;
+            /*Autoreload: ARR is max value*/
+            __HAL_TIM_SetAutoreload(&htim%<timNum>, 0xFFFF);
+            /*ClockDivision is null*/
+            __HAL_TIM_SetClockDivision(&htim%<timNum>, 0x00 );
+        %else
+            /*Update register value with blocset value*/
+            %if (ISEQUAL(CH1_enable,"on")&&ISEQUAL(CH1_type,"Input_Encoder")&&ISEQUAL(CH2_enable,"on")&&ISEQUAL(CH2_type,"Input_Encoder"))
+            /*Prescaler is null for encoder mode*/
+            (&htim%<timNum>)->Instance->PSC |= 0x00;
+            %else
+            /*Prescaler*/
+            (&htim%<timNum>)->Instance->PSC |= %<TIM_Prescaler>;
+            %endif
+            /*Autoreload: ARR */
+            __HAL_TIM_SetAutoreload(&htim%<timNum>, %<TIM_ARR> - 1);
+        %endif
+        %if (ISEQUAL(CH1_enable,"on"))
+            %if (ISEQUAL(CH1_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH1_type,"Output_Comp") == TLC_TRUE)
+             /*Set CH1 Pulse value*/            
+            %if (%<CH1_pulse> == 0)
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_1, (uint32_t)((%<TIM_ARR> - 1)/2));
+            %else
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_1, (uint32_t)(%<CH1_pulse>));
+            %endif
+            %endif
+        %endif
+        %if (ISEQUAL(CH2_enable,"on"))
+            %if (ISEQUAL(CH2_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH2_type,"Output_Comp") == TLC_TRUE)
+            /*Set CH2 Pulse value*/
+            %if (%<CH2_pulse> == 0)
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_2, (uint32_t)((%<TIM_ARR> - 1)/2));
+            %else
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_2, (uint32_t)(%<CH2_pulse>));
+            %endif
+            %endif
+        %endif
+        %if (ISEQUAL(CH3_enable,"on"))
+            %if (ISEQUAL(CH3_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH3_type,"Output_Comp") == TLC_TRUE)
+            /*Set CH3 Pulse value*/
+            %if (%<CH3_pulse> == 0)
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_3, (uint32_t)((%<TIM_ARR> - 1)/2));
+            %else
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_3, (uint32_t)(%<CH3_pulse>));
+            %endif
+            %endif
+        %endif
+        %if (ISEQUAL(CH4_enable,"on"))
+            %if (ISEQUAL(CH4_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH4_type,"Output_Comp") == TLC_TRUE)
+            /*Set CH4 Pulse value*/
+            %if (%<CH4_pulse> == 0)
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_4, (uint32_t)((%<TIM_ARR> - 1)/2));
+            %else
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_4, (uint32_t)(%<CH4_pulse>));
+            %endif
+           %endif
+        %endif
+        %if (ISEQUAL(TIM_DMA, "none")==TLC_FALSE || ISEQUAL(CH1_DMA, "on")|| ISEQUAL(CH2_DMA, "on")|| ISEQUAL(CH3_DMA, "on")|| ISEQUAL(CH4_DMA, "on"))
+            %if (ISEQUAL(CH1_type,"Output_PWM")||ISEQUAL(CH2_type,"Output_PWM")||ISEQUAL(CH3_type,"Output_PWM")||ISEQUAL(CH4_type,"Output_PWM"))
+            /* Update Capture Compare buffer */
+            %if (ISEQUAL(CH1_DMA, "on"))
+            %<TIM_Name>_aCCValue_Buffer[0] = %<CH1_pulse>;
+            %endif
+            %if (ISEQUAL(CH2_DMA, "on"))
+            %<TIM_Name>_aCCValue_Buffer[1] = %<CH2_pulse>;
+            %endif
+            %if (ISEQUAL(CH3_DMA, "on"))
+            %<TIM_Name>_aCCValue_Buffer[2] = %<CH3_pulse>;
+            %endif
+            %if (ISEQUAL(CH4_DMA, "on"))
+            %<TIM_Name>_aCCValue_Buffer[3] = %<CH4_pulse>;
+            %endif
+            %endif
+            %if (ISEQUAL(CH1_type,"Output_Comp")||ISEQUAL(CH2_type,"Output_Comp")||ISEQUAL(CH3_type,"Output_Comp")||ISEQUAL(CH4_type,"Output_Comp"))
+            /* Update Capture Compare buffer */
+            %if (ISEQUAL(CH1_DMA, "on"))
+            %<TIM_Name>_aCCValue_Buffer[0] = %<CH1_pulse>;
+            %endif
+            %if (ISEQUAL(CH2_DMA, "on"))
+            %<TIM_Name>_aCCValue_Buffer[1] = %<CH2_pulse>;
+            %endif
+            %if (ISEQUAL(CH3_DMA, "on"))
+            %<TIM_Name>_aCCValue_Buffer[2] = %<CH3_pulse>;
+            %endif
+            %if (ISEQUAL(CH4_DMA, "on"))
+            %<TIM_Name>_aCCValue_Buffer[3] = %<CH4_pulse>;
+            %endif
+            %endif
+        %endif
+        %if (ISEQUAL(CH1_enable,"on")&&ISEQUAL(CH1_type,"Input_Encoder")&&ISEQUAL(CH2_enable,"on")&&ISEQUAL(CH2_type,"Input_Encoder"))
+            %if (ISEQUAL(CH1_DMA, "on"))
+            /* Start the Input Encoder in DMA mode */ 
+            HAL_TIM_Encoder_Start_DMA(&htim%<timNum>, TIM_CHANNEL_ALL, &%<TIM_Name>_ICValue_Buffer[0], &%<TIM_Name>_ICValue_Buffer[1], 1);
+            %elseif (ISEQUAL(TIM_IRQ, "on"))
+            HAL_TIM_Encoder_Start_IT(&htim%<timNum>, TIM_CHANNEL_ALL);
+            %else
+            HAL_TIM_Encoder_Start(&htim%<timNum>, TIM_CHANNEL_ALL);
+            %endif
+        %endif
+        %if (ISEQUAL(CH1_enable,"on"))
+            /* Wait for htim%<timNum> State READY */
+            while((&htim%<timNum>)->State == HAL_TIM_STATE_BUSY) {}
+            %if (ISEQUAL(CH1_type,"Output_PWM"))
+            %if (ISEQUAL(CH1_DMA, "on"))
+            /* Start PWM signal generation in DMA mode */ 
+            HAL_TIM_PWM_Start_DMA(&htim%<timNum>, TIM_CHANNEL_1, &%<TIM_Name>_aCCValue_Buffer[0], 1);
+            %if (ISEQUAL(CH1N_enable,"on"))
+            /* Enable the complementary PWM output 1 */
+            HAL_TIMEx_PWMN_Start_DMA(&htim%<timNum>, TIM_CHANNEL_1, &%<TIM_Name>_aCCValue_Buffer[0], 1);
+            %endif
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH1_int, "on"))
+            HAL_TIM_PWM_Start_IT(&htim%<timNum>, TIM_CHANNEL_1);
+            %if (ISEQUAL(CH1N_enable,"on"))
+            /* Enable the complementary PWM output 1 */
+            HAL_TIMEx_PWMN_Start_IT(&htim%<timNum>, TIM_CHANNEL_1);
+            %endif
+            %else
+            HAL_TIM_PWM_Start(&htim%<timNum>, TIM_CHANNEL_1);
+            %if (ISEQUAL(CH1N_enable,"on"))
+            /* Enable the complementary PWM output 1 */
+            HAL_TIMEx_PWMN_Start(&htim%<timNum>, TIM_CHANNEL_1);
+            %endif
+            %endif
+            %endif
+            %if (ISEQUAL(CH1_type,"Output_Comp"))
+            %if (ISEQUAL(CH1_DMA, "on"))
+            /* Start OC signal generation in DMA mode */ 
+            HAL_TIM_OC_Start_DMA(&htim%<timNum>, TIM_CHANNEL_1, &%<TIM_Name>_aCCValue_Buffer[0], 1);
+            %if (ISEQUAL(CH1N_enable,"on"))
+            /* Enable the complementary OC output 1 */
+            HAL_TIMEx_OCN_Start_DMA(&htim%<timNum>, TIM_CHANNEL_1, &%<TIM_Name>_aCCValue_Buffer[0], 1);
+            %endif
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH1_int, "on"))
+            HAL_TIM_OC_Start_IT(&htim%<timNum>, TIM_CHANNEL_1);
+            %if (ISEQUAL(CH1N_enable,"on"))
+            /* Enable the complementary OC output 1 */
+            HAL_TIMEx_OCN_Start_IT(&htim%<timNum>, TIM_CHANNEL_1);
+            %endif
+            %else
+            HAL_TIM_OC_Start(&htim%<timNum>, TIM_CHANNEL_1);
+            %if (ISEQUAL(CH1N_enable,"on"))
+            /* Enable the complementary OC output 1 */
+            HAL_TIMEx_OCN_Start(&htim%<timNum>, TIM_CHANNEL_1);
+            %endif
+            %endif
+            %endif
+            %if (ISEQUAL(CH1_type,"Input_PWM") || ISEQUAL(CH1_type,"Input_Capture"))
+            %if (ISEQUAL(CH1_DMA, "on"))
+            /* Input Capture DMA value referenced */ 
+            %<TIM_Name>_DataLink.ICCData = %<TIM_Name>_ICValue_Buffer;
+            /* Start the Input Capture in DMA mode */ 
+            HAL_TIM_IC_Start_DMA(&htim%<timNum>, TIM_CHANNEL_1, &%<TIM_Name>_ICValue_Buffer[0], 1);
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH1_int, "on"))
+            HAL_TIM_IC_Start_IT(&htim%<timNum>, TIM_CHANNEL_1);
+            %else
+            HAL_TIM_IC_Start(&htim%<timNum>, TIM_CHANNEL_1);
+            %endif
+            %endif
+            %if ((ISEQUAL(CH1_type,"Input_Encoder")&&(ISEQUAL(CH2_type,"Input_Encoder") == TLC_FALSE)))
+            %if (ISEQUAL(CH1_DMA, "on"))
+            /* Start the Input Encoder in DMA mode */ 
+            HAL_TIM_Encoder_Start_DMA(&htim%<timNum>, TIM_CHANNEL_1, &%<TIM_Name>_ICValue_Buffer[0], &%<TIM_Name>_ICValue_Buffer[1], 1);
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH1_int, "on"))
+            HAL_TIM_Encoder_Start_IT(&htim%<timNum>, TIM_CHANNEL_1);
+            %else
+            HAL_TIM_Encoder_Start(&htim%<timNum>, TIM_CHANNEL_1);
+            %endif
+            %endif
+        %endif
+        %if (ISEQUAL(CH2_enable,"on"))
+            /* Wait for htim%<timNum> State READY */
+            while((&htim%<timNum>)->State == HAL_TIM_STATE_BUSY) {}
+            %if (ISEQUAL(CH2_type,"Output_PWM"))
+            %if (ISEQUAL(CH2_DMA, "on"))
+            /* Start PWM signal generation in DMA mode */ 
+            HAL_TIM_PWM_Start_DMA(&htim%<timNum>, TIM_CHANNEL_2, &%<TIM_Name>_aCCValue_Buffer[1], 1);
+            %if (ISEQUAL(CH2N_enable,"on"))
+            /* Enable the complementary PWM output 2 */
+            HAL_TIMEx_PWMN_Start_DMA(&htim%<timNum>, TIM_CHANNEL_2, &%<TIM_Name>_aCCValue_Buffer[1], 1);
+            %endif
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH2_int, "on"))
+            HAL_TIM_PWM_Start_IT(&htim%<timNum>, TIM_CHANNEL_2);
+            %if (ISEQUAL(CH2N_enable,"on"))
+            /* Enable the complementary PWM output 2 */
+            HAL_TIMEx_PWMN_Start_IT(&htim%<timNum>, TIM_CHANNEL_2);
+            %endif
+            %else
+            HAL_TIM_PWM_Start(&htim%<timNum>, TIM_CHANNEL_2);
+            %if (ISEQUAL(CH2N_enable,"on"))
+            /* Enable the complementary PWM output 2 */
+            HAL_TIMEx_PWMN_Start(&htim%<timNum>, TIM_CHANNEL_2);
+            %endif
+            %endif
+            %endif
+            %if (ISEQUAL(CH2_type,"Output_Comp"))
+            %if (ISEQUAL(CH2_DMA, "on"))
+            /* Start OC signal generation in DMA mode */ 
+            HAL_TIM_OC_Start_DMA(&htim%<timNum>, TIM_CHANNEL_2, &%<TIM_Name>_aCCValue_Buffer[1], 1);
+            %if (ISEQUAL(CH2N_enable,"on"))
+            /* Enable the complementary OC output 2 */
+            HAL_TIMEx_OCN_Start_DMA(&htim%<timNum>, TIM_CHANNEL_2, &%<TIM_Name>_aCCValue_Buffer[1], 1);
+            %endif
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH2_int, "on"))
+            HAL_TIM_OC_Start_IT(&htim%<timNum>, TIM_CHANNEL_2);
+            %if (ISEQUAL(CH2N_enable,"on"))
+            /* Enable the complementary OC output 2 */
+            HAL_TIMEx_OCN_Start_IT(&htim%<timNum>, TIM_CHANNEL_2);
+            %endif
+            %else
+            HAL_TIM_OC_Start(&htim%<timNum>, TIM_CHANNEL_2);
+            %if (ISEQUAL(CH2N_enable,"on"))
+            /* Enable the complementary OC output 2 */
+            HAL_TIMEx_OCN_Start(&htim%<timNum>, TIM_CHANNEL_2);
+            %endif
+            %endif
+            %endif
+            %if (ISEQUAL(CH2_type,"Input_PWM") || ISEQUAL(CH2_type,"Input_Capture"))
+            %if (ISEQUAL(CH2_DMA, "on"))
+            /* Input Capture DMA value referenced */ 
+            %<TIM_Name>_DataLink.ICCData = %<TIM_Name>_ICValue_Buffer;
+            /* Start the Input Capture in DMA mode */ 
+            HAL_TIM_IC_Start_DMA(&htim%<timNum>, TIM_CHANNEL_2, &%<TIM_Name>_ICValue_Buffer[1], 1);
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH2_int, "on"))
+            HAL_TIM_IC_Start_IT(&htim%<timNum>, TIM_CHANNEL_2);
+            %else
+            HAL_TIM_IC_Start(&htim%<timNum>, TIM_CHANNEL_2);
+            %endif
+            %endif
+            %if ((ISEQUAL(CH2_type,"Input_Encoder")&&(ISEQUAL(CH1_type,"Input_Encoder") == TLC_FALSE)))
+            %if (ISEQUAL(CH2_DMA, "on"))
+            /* Start the Input Encoder in DMA mode */ 
+            HAL_TIM_Encoder_Start_DMA(&htim%<timNum>, TIM_CHANNEL_2, &%<TIM_Name>_ICValue_Buffer[0], &%<TIM_Name>_ICValue_Buffer[1], 1);
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH2_int, "on"))
+            HAL_TIM_Encoder_Start_IT(&htim%<timNum>, TIM_CHANNEL_2);
+            %else
+            HAL_TIM_Encoder_Start(&htim%<timNum>, TIM_CHANNEL_2);
+            %endif
+            %endif
+        %endif
+        %if (ISEQUAL(CH3_enable,"on"))
+            /* Wait for htim%<timNum> State READY */
+            while((&htim%<timNum>)->State == HAL_TIM_STATE_BUSY) {}
+            %if (ISEQUAL(CH3_type,"Output_PWM"))
+            %if (ISEQUAL(CH3_DMA, "on"))
+            /* Start PWM signal generation in DMA mode */ 
+            HAL_TIM_PWM_Start_DMA(&htim%<timNum>, TIM_CHANNEL_3, &%<TIM_Name>_aCCValue_Buffer[2], 1);
+            %if (ISEQUAL(CH3N_enable,"on"))
+            /* Enable the complementary PWM output 3 */
+            HAL_TIMEx_PWMN_Start_DMA(&htim%<timNum>, TIM_CHANNEL_3, &%<TIM_Name>_aCCValue_Buffer[2], 1);
+            %endif
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH3_int, "on"))
+            HAL_TIM_PWM_Start_IT(&htim%<timNum>, TIM_CHANNEL_3);
+            %if (ISEQUAL(CH3N_enable,"on"))
+            /* Enable the complementary PWM output 3 */
+            HAL_TIMEx_PWMN_Start_IT(&htim%<timNum>, TIM_CHANNEL_3);
+            %endif
+            %else
+            HAL_TIM_PWM_Start(&htim%<timNum>, TIM_CHANNEL_3);
+            %if (ISEQUAL(CH3N_enable,"on"))
+            /* Enable the complementary PWM output 3 */
+            HAL_TIMEx_PWMN_Start(&htim%<timNum>, TIM_CHANNEL_3);
+            %endif
+            %endif
+            %endif
+            %if (ISEQUAL(CH3_type,"Output_Comp"))
+            %if (ISEQUAL(CH3_DMA, "on"))
+            /* Start OC signal generation in DMA mode */ 
+            HAL_TIM_OC_Start_DMA(&htim%<timNum>, TIM_CHANNEL_3, &%<TIM_Name>_aCCValue_Buffer[2], 1);
+            %if (ISEQUAL(CH3N_enable,"on"))
+            /* Enable the complementary OC output 3 */
+            HAL_TIMEx_OCN_Start_DMA(&htim%<timNum>, TIM_CHANNEL_3, &%<TIM_Name>_aCCValue_Buffer[2], 1);
+            %endif
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH3_int, "on"))
+            HAL_TIM_OC_Start_IT(&htim%<timNum>, TIM_CHANNEL_3);
+            %if (ISEQUAL(CH3N_enable,"on"))
+            /* Enable the complementary OC output 3 */
+            HAL_TIMEx_OCN_Start_IT(&htim%<timNum>, TIM_CHANNEL_3);
+            %endif
+            %else
+            HAL_TIM_OC_Start(&htim%<timNum>, TIM_CHANNEL_3);
+            %if (ISEQUAL(CH3N_enable,"on"))
+            /* Enable the complementary OC output 3 */
+            HAL_TIMEx_OCN_Start(&htim%<timNum>, TIM_CHANNEL_3);
+            %endif
+            %endif
+            %endif
+            %if (ISEQUAL(CH3_type,"Input_PWM") || ISEQUAL(CH3_type,"Input_Capture"))
+            %if (ISEQUAL(CH3_DMA, "on"))
+            /* Input Capture DMA value referenced */ 
+            %<TIM_Name>_DataLink.ICCData = %<TIM_Name>_ICValue_Buffer;
+            /* Start the Input Capture in DMA mode */ 
+            HAL_TIM_IC_Start_DMA(&htim%<timNum>, TIM_CHANNEL_3, &%<TIM_Name>_ICValue_Buffer[2], 1);
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH3_int, "on"))
+            HAL_TIM_IC_Start_IT(&htim%<timNum>, TIM_CHANNEL_3);
+            %else
+            HAL_TIM_IC_Start(&htim%<timNum>, TIM_CHANNEL_3);
+            %endif
+            %endif
+        %endif
+        %if (ISEQUAL(CH4_enable,"on"))
+            /* Wait for htim%<timNum> State READY */
+            while((&htim%<timNum>)->State == HAL_TIM_STATE_BUSY) {}
+            %if (ISEQUAL(CH4_type,"Output_PWM"))
+            %if (ISEQUAL(CH4_DMA, "on"))
+            /* Start PWM signal generation in DMA mode */ 
+            HAL_TIM_PWM_Start_DMA(&htim%<timNum>, TIM_CHANNEL_4, &%<TIM_Name>_aCCValue_Buffer[3], 1);
+            %if (ISEQUAL(CH4N_enable,"on"))
+            /* Enable the complementary PWM output 4 */
+            HAL_TIMEx_PWMN_Start_DMA(&htim%<timNum>, TIM_CHANNEL_4, &%<TIM_Name>_aCCValue_Buffer[3], 1);
+            %endif
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH4_int, "on"))
+            HAL_TIM_PWM_Start_IT(&htim%<timNum>, TIM_CHANNEL_4);
+            %if (ISEQUAL(CH4N_enable,"on"))
+            /* Enable the complementary PWM output 4 */
+            HAL_TIMEx_PWMN_Start_IT(&htim%<timNum>, TIM_CHANNEL_4);
+            %endif
+            %else
+            HAL_TIM_PWM_Start(&htim%<timNum>, TIM_CHANNEL_4);
+            %if (ISEQUAL(CH4N_enable,"on"))
+            /* Enable the complementary PWM output 4 */
+            HAL_TIMEx_PWMN_Start(&htim%<timNum>, TIM_CHANNEL_4);
+            %endif
+            %endif
+            %endif
+            %if (ISEQUAL(CH4_type,"Output_Comp"))
+            %if (ISEQUAL(CH4_DMA, "on"))
+            /* Start OC signal generation in DMA mode */ 
+            HAL_TIM_OC_Start_DMA(&htim%<timNum>, TIM_CHANNEL_4, &%<TIM_Name>_aCCValue_Buffer[3], 1);
+            %if (ISEQUAL(CH4N_enable,"on"))
+            /* Enable the complementary OC output 4 */
+            HAL_TIMEx_OCN_Start_DMA(&htim%<timNum>, TIM_CHANNEL_4, &%<TIM_Name>_aCCValue_Buffer[3], 1);
+            %endif
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH4_int, "on"))
+            HAL_TIM_OC_Start_IT(&htim%<timNum>, TIM_CHANNEL_4);
+            %if (ISEQUAL(CH4N_enable,"on"))
+            /* Enable the complementary OC output 4 */
+            HAL_TIMEx_OCN_Start_IT(&htim%<timNum>, TIM_CHANNEL_4);
+            %endif
+            %else
+            HAL_TIM_OC_Start(&htim%<timNum>, TIM_CHANNEL_4);
+            %if (ISEQUAL(CH4N_enable,"on"))
+            /* Enable the complementary OC output 4 */
+            HAL_TIMEx_OCN_Start(&htim%<timNum>, TIM_CHANNEL_4);
+            %endif
+            %endif
+            %endif
+            %if (ISEQUAL(CH4_type,"Input_PWM") || ISEQUAL(CH4_type,"Input_Capture"))
+            %if (ISEQUAL(CH4_DMA, "on"))
+            /* Input Capture DMA value referenced */ 
+            %<TIM_Name>_DataLink.ICCData = %<TIM_Name>_ICValue_Buffer;
+            /* Start the Input Capture in DMA mode */ 
+            HAL_TIM_IC_Start_DMA(&htim%<timNum>, TIM_CHANNEL_4, &%<TIM_Name>_ICValue_Buffer[3], 1);
+            %elseif (ISEQUAL(TIM_IRQ, "on")&&ISEQUAL(CH4_int, "on"))
+            HAL_TIM_IC_Start_IT(&htim%<timNum>, TIM_CHANNEL_4);
+            %else
+            HAL_TIM_IC_Start(&htim%<timNum>, TIM_CHANNEL_4);
+            %endif
+            %endif
+        %endif		
+        %closefile TIM_Buf
+		%<LibMdlStartCustomCode(TIM_Buf,"execution")>;	
+    %endif	
+
+        %openfile TIM_Buf
+        %if (ISEQUAL(TIM_UP, "on"))
+        %if !EXISTS(::ItUpFcn_%<TIM_Name>) || (::ItUpFcn_%<TIM_Name> == TLC_TRUE)
+            %assign ::ItUpFcn_%<TIM_Name>    = TLC_FALSE		
+            /* Update interrupt function */
+            %<TIM_Name>_DataLink.ItUpFcn = %<TIM_Name>_ItUpFcn;
+			%else
+            %exit %<TIM_Name>: Update interrupt already connected. Update interrupt Not allowed. 
+        %endif
+        %endif
+        %if (ISEQUAL(TIM_TRG, "on"))
+        %if !EXISTS(::ItTrgFcn_%<TIM_Name>) || (::ItTrgFcn_%<TIM_Name> == TLC_TRUE)
+            %assign ::ItTrgFcn_%<TIM_Name>    = TLC_FALSE		
+            /* Trigger interrupt function */
+            %<TIM_Name>_DataLink.ItTrgFcn = %<TIM_Name>_ItTrgFcn;
+			%else
+            %exit %<TIM_Name>: Trigger interrupt already connected. Trigger interrupt Not allowed. 
+        %endif
+        %endif
+        %if (ISEQUAL(TIM_COM, "on"))
+        %if !EXISTS(::ItComFcn_%<TIM_Name>) || (::ItComFcn_%<TIM_Name> == TLC_TRUE)
+            %assign ::ItComFcn_%<TIM_Name>    = TLC_FALSE		
+            /* Commutation interrupt function */
+            %<TIM_Name>_DataLink.ItComFcn = %<TIM_Name>_ItComFcn;
+			%else
+            %exit %<TIM_Name>: Commutation interrupt already connected. Commutation interrupt Not allowed. 
+        %endif
+        %endif
+        %if (ISEQUAL(TIM_BRK, "on"))
+        %if !EXISTS(::ItBrkFcn_%<TIM_Name>) || (::ItBrkFcn_%<TIM_Name> == TLC_TRUE)
+            %assign ::ItBrkFcn_%<TIM_Name>    = TLC_FALSE		
+            /* Break interrupt function */
+            %<TIM_Name>_DataLink.ItBrkFcn = %<TIM_Name>_ItBrkFcn;
+			%else
+            %exit %<TIM_Name>: Break interrupt already connected. Break interrupt Not allowed. 
+        %endif
+        %endif
+        %if (ISEQUAL(TIM_IRQ,"on")&& ...
+            ((ISEQUAL(CH1_int, "on")&&ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type,"Output_PWM")||ISEQUAL(CH1_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH2_int, "on")&&ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type,"Output_PWM")||ISEQUAL(CH2_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH3_int, "on")&&ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type,"Output_PWM")||ISEQUAL(CH3_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH4_int, "on")&&ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type,"Output_PWM")||ISEQUAL(CH4_type,"Output_Comp")))))
+            %if !EXISTS(::ItCcFcn_%<TIM_Name>) || (::ItCcFcn_%<TIM_Name> == TLC_TRUE)
+            %assign ::ItCcFcn_%<TIM_Name>    = TLC_FALSE		
+            /* Capture/Compare interrupt function */
+            %<TIM_Name>_DataLink.ItCcFcn = %<TIM_Name>_ItCcFcn;
+			%else
+            %exit Multiple %<TIM_Name> Timers block: All Channels interrut must be validated from same block. 
+            %endif
+        %endif
+
+        %if (ISEQUAL(TIM_UP, "on"))
+            %if(ISEQUAL(TIM_DMA, "UPDATE"))
+                /* Start DMA for Update event*/ 
+                HAL_TIM_Base_Start_DMA(&htim%<timNum>, &%<TIM_Name>_DataLink.TIM_ARR, 1);
+            %else
+                /* Start interrupt for Update event*/ 
+                HAL_TIM_Base_Start_IT(&htim%<timNum>);
+            %endif
+        %endif        
+
+        %if (ISEQUAL(TIM_COM, "on"))
+            %if(ISEQUAL(TIM_DMA, "TRIG/COM")||ISEQUAL(TIM_DMA, "COM"))
+                /* Start DMA for communication event */
+                /* NOTE THAT SOURCE IS CONFIGURED AS SOFTWARE USING COMG BIT*/
+                HAL_TIMEx_ConfigCommutationEvent_DMA(&htim%<timNum>,TIM_TS_NONE, TIM_COMMUTATION_SOFTWARE);
+            %else
+                /* Start interrupt for communication event */ 
+                /* NOTE THAT SOURCE IS CONFIGURED AS SOFTWARE USING COMG BIT*/
+                HAL_TIMEx_ConfigCommutationEvent_IT(&htim%<timNum>, TIM_TS_NONE, TIM_COMMUTATION_SOFTWARE);
+            %endif
+        %endif        
+
+        %if (ISEQUAL(TIM_TRG, "on"))
+			/* Enable the TIM%<timNum> Trigger interrupt */
+			__HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_TRIGGER);
+		%endif
+
+        %if (ISEQUAL(TIM_BRK, "on"))
+			/* Enable the TIM%<timNum> Break interrupt */
+			__HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_BREAK);
+		%endif
+        %closefile TIM_Buf
+		%<LibMdlStartCustomCode(TIM_Buf,"execution")>;	
+    %endfunction
+
+
+
+%% Code for Timers configuration call:
+    %function BlockInstanceSetup(block, system) void
+        %%model.c and model.h files
+        %assign SrcBaseName = LibGetMdlSrcBaseName()
+        %assign modelH      = LibCreateSourceFile("Header", "Simulink", SrcBaseName)
+        %assign modelC      = LibCreateSourceFile("Source", "Simulink", SrcBaseName)
+        %%model_TIM.h and model_TIM.c files
+        %assign SrcBaseName_TIM = "%<SrcBaseName>_TIM"
+        %assign modelH_TIM      = LibCreateSourceFile("Header", "Simulink", SrcBaseName_TIM)
+        %assign modelC_TIM      = LibCreateSourceFile("Source", "Simulink", SrcBaseName_TIM)
+%%Include model.h to model_TIM.c 
+        %if EXISTS(::InsertIncludesToTIM) && (::InsertIncludesToTIM == TLC_TRUE)
+            %assign ::InsertIncludesToTIM    = TLC_FALSE		
+            %openfile TIM_Buf
+				#include "%<SrcBaseName>.h"
+				#include "%<SrcBaseName_TIM>.h"
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelC_TIM,"Includes",TIM_Buf)>
+        %endif
+%%AND Include model_TIM.h to model.c
+        %if EXISTS(::InsertIncludesFromTIM) && (::InsertIncludesFromTIM == TLC_TRUE)
+            %assign ::InsertIncludesFromTIM    = TLC_FALSE		
+            %openfile TIM_Buf
+				#include "%<SrcBaseName_TIM>.h"
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelH,"Includes",TIM_Buf)>
+            
+			%openfile TIM_Buf
+				//RP MODIF #include "%<SrcBaseName>_STM32.h"
+				#include "STM32_Config.h"
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelH_TIM,"Includes",TIM_Buf)>						
+        %endif
+
+        %assign  TIM_Name = SFcnParamSettings.TIM_Name
+		%assign  TIM_APBClock 	= SFcnParamSettings.TIM_APBClock
+		%assign  TIM_Prescaler 	= SFcnParamSettings.TIM_Prescaler
+        %assign  TIM_Clock  = SFcnParamSettings.TIM_Clock
+		%assign  TIM_ARR  = SFcnParamSettings.TIM_ARR
+		%assign  TIM_DMA  = SFcnParamSettings.TIM_DMA
+		%assign  TIM_IRQ  = SFcnParamSettings.TIM_IRQ
+		%assign  TIM_IRQ_ONLY  = SFcnParamSettings.TIM_IRQ_ONLY
+		%assign  TIM_UP  = SFcnParamSettings.TIM_UP
+		%assign  TIM_TRG  = SFcnParamSettings.TIM_TRG
+		%assign  TIM_COM  = SFcnParamSettings.TIM_COM
+		%assign  TIM_BRK  = SFcnParamSettings.TIM_BRK
+		%assign  NbTIM  = SFcnParamSettings.NbTIM
+		%assign  CH1_enable = SFcnParamSettings.CH1_enable
+		%assign  CH2_enable = SFcnParamSettings.CH2_enable
+		%assign  CH3_enable = SFcnParamSettings.CH3_enable
+		%assign  CH4_enable = SFcnParamSettings.CH4_enable
+		%assign  CH1N_enable = SFcnParamSettings.CH1N_enable
+		%assign  CH2N_enable = SFcnParamSettings.CH2N_enable
+		%assign  CH3N_enable = SFcnParamSettings.CH3N_enable
+		%assign  CH4N_enable = SFcnParamSettings.CH4N_enable
+		%assign  CH1_type = SFcnParamSettings.CH1_type
+		%assign  CH2_type = SFcnParamSettings.CH2_type
+		%assign  CH3_type = SFcnParamSettings.CH3_type
+		%assign  CH4_type = SFcnParamSettings.CH4_type
+		%assign  CH1_pulse = SFcnParamSettings.CH1_pulse
+		%assign  CH2_pulse = SFcnParamSettings.CH2_pulse
+		%assign  CH3_pulse = SFcnParamSettings.CH3_pulse
+		%assign  CH4_pulse = SFcnParamSettings.CH4_pulse
+		%assign  CH1_int   = SFcnParamSettings.CH1_int
+		%assign  CH2_int   = SFcnParamSettings.CH2_int
+		%assign  CH3_int   = SFcnParamSettings.CH3_int
+		%assign  CH4_int   = SFcnParamSettings.CH4_int
+		%assign  CH1_DMA = SFcnParamSettings.CH1_DMA
+		%assign  CH2_DMA = SFcnParamSettings.CH2_DMA
+		%assign  CH3_DMA = SFcnParamSettings.CH3_DMA
+		%assign  CH4_DMA = SFcnParamSettings.CH4_DMA
+		%assign  Variable_frequency = SFcnParamSettings.Variable_frequency
+		%assign  CH1_variable_duty  = SFcnParamSettings.CH1_variable_duty
+		%assign  CH2_variable_duty  = SFcnParamSettings.CH2_variable_duty
+		%assign  CH3_variable_duty  = SFcnParamSettings.CH3_variable_duty
+		%assign  CH4_variable_duty  = SFcnParamSettings.CH4_variable_duty
+		%assign  CH1_edge   = SFcnParamSettings.CH1_edge
+		%assign  CH2_edge   = SFcnParamSettings.CH2_edge
+		%assign  CH3_edge   = SFcnParamSettings.CH3_edge
+		%assign  CH4_edge   = SFcnParamSettings.CH4_edge
+		%assign  CH1_div   = SFcnParamSettings.CH1_div
+		%assign  CH2_div   = SFcnParamSettings.CH2_div
+		%assign  CH3_div   = SFcnParamSettings.CH3_div
+		%assign  CH4_div   = SFcnParamSettings.CH4_div
+
+%% Code for required TIM external definition: in model_TIM.c file
+		%assign timNum = IDNUM("%<TIM_Name>")[1]
+
+        %if EXISTS(::InsertTIM) && (::InsertTIM == TLC_TRUE)
+            %assign ::InsertTIM    = TLC_FALSE		
+            %openfile TIM_Buf
+			/** 
+			* @brief  TIM data information
+			*/ 
+			typedef struct 	{
+             uint32_t     TIM_Prescaler;
+             uint32_t     TIM_APBClock;
+             uint32_t     TIM_ARR;
+             uint32_t     TIM_Clock;
+             uint8_t      CH1_type;
+             uint8_t      CH2_type;
+             uint8_t      CH3_type;
+             uint8_t      CH4_type;
+             /* Input Capture data */
+             uint32_t* ICCData;
+             uint32_t ICC1Capture;
+             uint32_t ICC1Freq;
+             uint32_t ICC1Duty;
+             uint32_t ICC2Capture;
+             uint32_t ICC2Freq;
+             uint32_t ICC2Duty;
+             uint32_t ICC3Capture;
+             uint32_t ICC3Freq;
+             uint32_t ICC3Duty;
+             uint32_t ICC4Capture;
+             uint32_t ICC4Freq;
+             uint32_t ICC4Duty;
+             uint16_t ICC1ReadValue1;
+             uint16_t ICC1ReadValue2;
+             uint16_t ICC1ReadValue3;
+             uint16_t ICC1ReadValue4;
+             uint16_t ICC2ReadValue1;
+             uint16_t ICC2ReadValue2;
+             uint16_t ICC2ReadValue3;
+             uint16_t ICC2ReadValue4;
+             uint16_t ICC3ReadValue1;
+             uint16_t ICC3ReadValue2;
+             uint16_t ICC3ReadValue3;
+             uint16_t ICC3ReadValue4;
+             uint16_t ICC4ReadValue1;
+             uint16_t ICC4ReadValue2;
+             uint16_t ICC4ReadValue3;
+             uint16_t ICC4ReadValue4;
+             uint8_t ICC1CaptureNumber;
+             uint8_t ICC2CaptureNumber;
+             uint8_t ICC3CaptureNumber;
+             uint8_t ICC4CaptureNumber;
+             void (* ItUpFcn)(void);  
+             void (* ItTrgFcn)(void);  
+             void (* ItComFcn)(void);  
+             void (* ItBrkFcn)(void);  
+             void (* ItCcFcn)(TIM_HandleTypeDef *htim);  
+    		}TIM_DataLinkTypeDef;	
+
+            typedef enum
+            {
+             OUTPUT_COMP = 0,
+             OUTPUT_PWM ,
+             OUTPUT_TRGO ,
+             OUTPUT_FORCED ,
+             INPUT_PWM ,
+             INPUT_CAPTURE ,
+             INPUT_ETR ,
+             INPUT_ENCODER ,
+             INPUT_HALL_SENSOR ,
+             UNKNOWN
+            }TIM_ChTypeDef;
+
+ 			%if (%<NbTIM> > 1)
+			extern uint16_t        G_NbTimConf; /* Number of configured TIMER*/
+            /* Array of TIMER data information */
+            extern TIM_DataLinkTypeDef*   G_TIM_Data[%<NbTIM>];
+			extern TIM_HandleTypeDef*     G_TIM_Handler[%<NbTIM>];
+			%else
+            extern TIM_DataLinkTypeDef*   G_TIM_Data;      /* Pointer to TIMER data information*/
+			extern TIM_HandleTypeDef*     G_TIM_Handler;   /* Pointer to TIMER handler */
+			%endif
+
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelH_TIM,"Defines",TIM_Buf)>
+           
+  		    %openfile TIM_Buf
+ 			%if (%<NbTIM> > 1)
+			uint16_t               G_NbTimConf = 0; /* Number of configured TIMER*/
+            /* Array of TIMER data information */
+            TIM_DataLinkTypeDef*   G_TIM_Data[%<NbTIM>];
+			TIM_HandleTypeDef*     G_TIM_Handler[%<NbTIM>];
+			%else
+            TIM_DataLinkTypeDef*   G_TIM_Data;      /* Pointer to TIMER data information*/
+			TIM_HandleTypeDef*     G_TIM_Handler;   /* Pointer to TIMER handler */
+			%endif
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelC_TIM,"Defines",TIM_Buf)>
+		%endif
+
+	%if !EXISTS(::VarDef_%<TIM_Name>) || (::VarDef_%<TIM_Name> == TLC_TRUE)
+        %assign ::VarDef_%<TIM_Name>    = TLC_FALSE		
+
+        %openfile TIM_Buf
+            /* %<TIM_Name> handler */
+            extern TIM_HandleTypeDef htim%<timNum>;
+        %closefile TIM_Buf
+        %<LibSetSourceFileSection(modelH_TIM,"Defines",TIM_Buf)>
+
+        %openfile TIM_Buf
+    	/* %<TIM_Name> data information*/
+        TIM_DataLinkTypeDef   %<TIM_Name>_DataLink;
+        %if (ISEQUAL(TIM_IRQ, "on")==TLC_FALSE && ISEQUAL(TIM_DMA, "none") && ...
+             ISEQUAL(CH1_DMA, "off") && ...
+             ISEQUAL(CH2_DMA, "off") && ...
+             ISEQUAL(CH3_DMA, "off") && ...
+             ISEQUAL(CH4_DMA, "off"))
+		/* %<TIM_Name> polling timeout value. Number of Solver loop. (can be changed)*/
+		uint32_t G_%<TIM_Name>_PollTimeOut = 10;
+		%endif		
+        %if (ISEQUAL(TIM_DMA, "none")==TLC_FALSE || ISEQUAL(CH1_DMA, "on")|| ISEQUAL(CH2_DMA, "on")|| ISEQUAL(CH3_DMA, "on")|| ISEQUAL(CH4_DMA, "on"))
+        %if (((ISEQUAL(CH1_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH1_type,"Output_Comp") == TLC_TRUE) &&ISEQUAL(CH1_enable,"on") == TLC_TRUE )|| ...
+             ((ISEQUAL(CH2_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH2_type,"Output_Comp") == TLC_TRUE) &&ISEQUAL(CH2_enable,"on") == TLC_TRUE )|| ...
+             ((ISEQUAL(CH3_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH3_type,"Output_Comp") == TLC_TRUE) &&ISEQUAL(CH3_enable,"on") == TLC_TRUE )|| ...
+             ((ISEQUAL(CH4_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH4_type,"Output_Comp") == TLC_TRUE) &&ISEQUAL(CH4_enable,"on") == TLC_TRUE ))
+        /* %<TIM_Name> Capture Compare buffer */
+        uint32_t %<TIM_Name>_aCCValue_Buffer[4] = {0, 0, 0, 0};
+        %endif
+        %if ((ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type,"Input_Capture")||ISEQUAL(CH1_type,"Input_PWM")))|| ...
+             (ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type,"Input_Capture")||ISEQUAL(CH2_type,"Input_PWM")))|| ...
+             (ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type,"Input_Capture")||ISEQUAL(CH3_type,"Input_PWM")))|| ...
+             (ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type,"Input_Capture")||ISEQUAL(CH4_type,"Input_PWM"))))
+        uint32_t %<TIM_Name>_ICValue_Buffer[4] = {0, 0, 0, 0};
+        %endif
+        %endif
+        %closefile TIM_Buf
+        %<LibSetSourceFileSection(modelC_TIM,"Defines",TIM_Buf)>
+
+        %openfile TIM_Buf
+    	/* %<TIM_Name> data information*/
+        extern TIM_DataLinkTypeDef   %<TIM_Name>_DataLink;
+         %if (ISEQUAL(TIM_IRQ, "on")==TLC_FALSE && ISEQUAL(TIM_DMA, "none") && ...
+             ISEQUAL(CH1_DMA, "off") && ...
+             ISEQUAL(CH2_DMA, "off") && ...
+             ISEQUAL(CH3_DMA, "off") && ...
+             ISEQUAL(CH4_DMA, "off"))
+		/* %<TIM_Name> polling timeout value. Number of Solver loop. (can be changed)*/
+		extern uint32_t G_%<TIM_Name>_PollTimeOut;
+		%endif		
+        %if (ISEQUAL(TIM_DMA, "none")==TLC_FALSE || ISEQUAL(CH1_DMA, "on")|| ISEQUAL(CH2_DMA, "on")|| ISEQUAL(CH3_DMA, "on")|| ISEQUAL(CH4_DMA, "on"))
+        %if (((ISEQUAL(CH1_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH1_type,"Output_Comp") == TLC_TRUE) &&ISEQUAL(CH1_enable,"on") == TLC_TRUE )|| ...
+             ((ISEQUAL(CH2_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH2_type,"Output_Comp") == TLC_TRUE) &&ISEQUAL(CH2_enable,"on") == TLC_TRUE )|| ...
+             ((ISEQUAL(CH3_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH3_type,"Output_Comp") == TLC_TRUE) &&ISEQUAL(CH3_enable,"on") == TLC_TRUE )|| ...
+             ((ISEQUAL(CH4_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH4_type,"Output_Comp") == TLC_TRUE) &&ISEQUAL(CH4_enable,"on") == TLC_TRUE ))
+        /* %<TIM_Name> Capture Compare buffer */
+        extern uint32_t %<TIM_Name>_aCCValue_Buffer[4];
+        %endif
+        %if ((ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type,"Input_Capture")||ISEQUAL(CH1_type,"Input_PWM")))|| ...
+             (ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type,"Input_Capture")||ISEQUAL(CH2_type,"Input_PWM")))|| ...
+             (ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type,"Input_Capture")||ISEQUAL(CH3_type,"Input_PWM")))|| ...
+             (ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type,"Input_Capture")||ISEQUAL(CH4_type,"Input_PWM"))))
+        extern uint32_t %<TIM_Name>_ICValue_Buffer[4];
+        %endif
+        %endif
+        %closefile TIM_Buf
+        %<LibSetSourceFileSection(modelH_TIM,"Defines",TIM_Buf)>
+	%endif
+
+		
+        %if (ISEQUAL(TIM_IRQ,"on")&& ...
+			((ISEQUAL(CH1_int, "on")&&ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type,"Input_Capture")||ISEQUAL(CH1_type,"Input_PWM")||ISEQUAL(CH1_type,"Input_Encoder")))|| ...
+             (ISEQUAL(CH2_int, "on")&&ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type,"Input_Capture")||ISEQUAL(CH2_type,"Input_PWM")||ISEQUAL(CH2_type,"Input_Encoder")))|| ...
+             (ISEQUAL(CH3_int, "on")&&ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type,"Input_Capture")||ISEQUAL(CH3_type,"Input_PWM")||ISEQUAL(CH3_type,"Input_Encoder")))|| ...
+             (ISEQUAL(CH4_int, "on")&&ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type,"Input_Capture")||ISEQUAL(CH4_type,"Input_PWM")||ISEQUAL(CH4_type,"Input_Encoder")))))
+        %if EXISTS(::InsertICTIMCallback) && (::InsertICTIMCallback == TLC_TRUE)
+            %assign ::InsertICTIMCallback    = TLC_FALSE		
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : HAL_TIM_IC_CaptureCallback
+            * Description    : Timer callback for IC
+            * Input          : TIM_HandleTypeDef*   TIM IC handle
+            *******************************************************************************/
+            void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
+            {
+            %if(ISEQUAL(CH1_edge,"Rising_Falling")||ISEQUAL(CH2_edge,"Rising_Falling")||ISEQUAL(CH3_edge,"Rising_Falling")||ISEQUAL(CH4_edge,"Rising_Falling"))
+                uint32_t tmpccer = 0; /* To be able to switch edge */
+            %endif
+			%if(%<NbTIM> > 1)	
+				uint16_t L_TimHandleIdx = 0;/* Index to find TIM data information */
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data[0]; /* Pt to the list of TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler[0]; /* Pt to the list of TIM handler */
+				for(L_TimHandleIdx = 0;L_TimHandleIdx < %<NbTIM>;L_TimHandleIdx++) {
+					pL_TIM_Handler = G_TIM_Handler[L_TimHandleIdx];
+					if(pL_TIM_Handler == htim) {
+						pL_TIM_Data = G_TIM_Data[L_TimHandleIdx];
+						break;
+					}
+				}
+			%else
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data; /* Pt to TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler; /* Pt to TIM handler */
+			%endif
+				if(pL_TIM_Handler == htim) {
+                      /* Test for channel 1 */
+                      if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1){
+                        if(pL_TIM_Data->CH1_type == INPUT_CAPTURE) {
+    					 /* Process It for current received channel */
+						 if(pL_TIM_Data->ICC1CaptureNumber == 1) {						 
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH1_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC1ReadValue1 = pL_TIM_Data->ICCData[0];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC1ReadValue1 = (uint16_t) (htim->Instance->CCR1);
+                          %endif
+						  %if(ISEQUAL(CH1_edge,"Rising_Falling"))
+                             /* Next trigger will be falling */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC1P | TIM_CCER_CC1NP);
+                             tmpccer |= TIM_CCER_CC1P;
+                             htim->Instance->CCER = tmpccer;
+ 							 pL_TIM_Data->ICC1CaptureNumber = 2;
+						 } else if(pL_TIM_Data->ICC1CaptureNumber == 2) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH1_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC1ReadValue2 = pL_TIM_Data->ICCData[0];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC1ReadValue2 = (uint16_t) (htim->Instance->CCR1);
+                          %endif
+                             /* Next trigger will be rising */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC1P | TIM_CCER_CC1NP);
+                             htim->Instance->CCER = tmpccer;					  
+							 pL_TIM_Data->ICC1CaptureNumber = 3;
+						  %else
+ 							 pL_TIM_Data->ICC1CaptureNumber = 3;
+                          %endif
+						 } else if(pL_TIM_Data->ICC1CaptureNumber == 3) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH1_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC1ReadValue3 = pL_TIM_Data->ICCData[0];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC1ReadValue3 = (uint16_t) (htim->Instance->CCR1);
+                          %endif
+						  %if(ISEQUAL(CH1_edge,"Rising_Falling"))
+                             /* Next trigger will be falling */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC1P | TIM_CCER_CC1NP);
+                             tmpccer |= TIM_CCER_CC1P;
+                             htim->Instance->CCER = tmpccer;
+ 							 pL_TIM_Data->ICC1CaptureNumber = 4;
+						 } else if(pL_TIM_Data->ICC1CaptureNumber == 4) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH1_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC1ReadValue4 = pL_TIM_Data->ICCData[0];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC1ReadValue4 = (uint16_t) (htim->Instance->CCR1);
+                          %endif
+                             /* Next trigger will be rising */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC1P | TIM_CCER_CC1NP);
+                             htim->Instance->CCER = tmpccer;					  
+							 pL_TIM_Data->ICC1CaptureNumber = 1;
+						  %else
+ 							 pL_TIM_Data->ICC1CaptureNumber = 1;
+                          %endif
+						 }
+                        }
+                      }
+                      /* Test for channel 2 */
+                      if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2){
+                        if(pL_TIM_Data->CH2_type == INPUT_CAPTURE){
+    					 /* Process It for current received channel */
+						 if(pL_TIM_Data->ICC2CaptureNumber == 1) {						 
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH2_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC2ReadValue1 = pL_TIM_Data->ICCData[1];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC2ReadValue1 = (uint16_t) (htim->Instance->CCR2);
+                          %endif
+						  %if(ISEQUAL(CH2_edge,"Rising_Falling"))
+                             /* Next trigger will be falling */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC2P | TIM_CCER_CC2NP);
+                             tmpccer |= TIM_CCER_CC2P;
+                             htim->Instance->CCER = tmpccer;
+ 							 pL_TIM_Data->ICC2CaptureNumber = 2;
+						 } else if(pL_TIM_Data->ICC2CaptureNumber == 2) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH2_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC2ReadValue2 = pL_TIM_Data->ICCData[1];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC2ReadValue2 = (uint16_t) (htim->Instance->CCR2);
+                          %endif
+                             /* Next trigger will be rising */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC2P | TIM_CCER_CC2NP);
+                             htim->Instance->CCER = tmpccer;					  
+							 pL_TIM_Data->ICC2CaptureNumber = 3;
+						  %else
+ 							 pL_TIM_Data->ICC2CaptureNumber = 3;
+                          %endif
+						 } else if(pL_TIM_Data->ICC2CaptureNumber == 3) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH2_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC2ReadValue3 = pL_TIM_Data->ICCData[1];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC2ReadValue3 = (uint16_t) (htim->Instance->CCR2);
+                          %endif
+						  %if(ISEQUAL(CH2_edge,"Rising_Falling"))
+                             /* Next trigger will be falling */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC2P | TIM_CCER_CC2NP);
+                             tmpccer |= TIM_CCER_CC2P;
+                             htim->Instance->CCER = tmpccer;
+ 							 pL_TIM_Data->ICC2CaptureNumber = 4;
+						 } else if(pL_TIM_Data->ICC2CaptureNumber == 4) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH2_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC2ReadValue4 = pL_TIM_Data->ICCData[1];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC2ReadValue4 = (uint16_t) (htim->Instance->CCR2);
+                          %endif
+                             /* Next trigger will be rising */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC2P | TIM_CCER_CC2NP);
+                             htim->Instance->CCER = tmpccer;					  
+							 pL_TIM_Data->ICC2CaptureNumber = 1;
+						  %else
+ 							 pL_TIM_Data->ICC2CaptureNumber = 1;
+                          %endif
+						 }
+                        }
+                      }
+                      /* Test for channel 3 */
+                      if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3){
+                        if(pL_TIM_Data->CH3_type == INPUT_CAPTURE){
+    					 /* Process It for current received channel */
+						 if(pL_TIM_Data->ICC3CaptureNumber == 1) {						 
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH3_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC3ReadValue1 = pL_TIM_Data->ICCData[2];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC3ReadValue1 = (uint16_t) (htim->Instance->CCR3);
+                          %endif
+						  %if(ISEQUAL(CH3_edge,"Rising_Falling"))
+                             /* Next trigger will be falling */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC3P | TIM_CCER_CC3NP);
+                             tmpccer |= TIM_CCER_CC3P;
+                             htim->Instance->CCER = tmpccer;
+ 							 pL_TIM_Data->ICC3CaptureNumber = 2;
+						 } else if(pL_TIM_Data->ICC3CaptureNumber == 2) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH3_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC3ReadValue2 = pL_TIM_Data->ICCData[2];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC3ReadValue2 = (uint16_t) (htim->Instance->CCR3);
+                          %endif
+                             /* Next trigger will be rising */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC3P | TIM_CCER_CC3NP);
+                             htim->Instance->CCER = tmpccer;					  
+							 pL_TIM_Data->ICC3CaptureNumber = 3;
+						  %else
+ 							 pL_TIM_Data->ICC3CaptureNumber = 3;
+                          %endif
+						 } else if(pL_TIM_Data->ICC3CaptureNumber == 3) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH3_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC3ReadValue3 = pL_TIM_Data->ICCData[2];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC3ReadValue3 = (uint16_t) (htim->Instance->CCR3);
+                          %endif
+						  %if(ISEQUAL(CH3_edge,"Rising_Falling"))
+                             /* Next trigger will be falling */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC3P | TIM_CCER_CC3NP);
+                             tmpccer |= TIM_CCER_CC3P;
+                             htim->Instance->CCER = tmpccer;
+ 							 pL_TIM_Data->ICC3CaptureNumber = 4;
+						 } else if(pL_TIM_Data->ICC3CaptureNumber == 4) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH3_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC3ReadValue4 = pL_TIM_Data->ICCData[2];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC3ReadValue4 = (uint16_t) (htim->Instance->CCR3);
+                          %endif
+                             /* Next trigger will be rising */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC3P | TIM_CCER_CC3NP);
+                             htim->Instance->CCER = tmpccer;					  
+							 pL_TIM_Data->ICC3CaptureNumber = 1;
+						  %else
+ 							 pL_TIM_Data->ICC3CaptureNumber = 1;
+                          %endif
+						 }
+                        }
+                      }
+                      /* Test for channel 4 */
+                      if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4){
+                        if(pL_TIM_Data->CH4_type == INPUT_CAPTURE){
+    					 /* Process It for current received channel */
+						 if(pL_TIM_Data->ICC4CaptureNumber == 1) {						 
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH4_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC4ReadValue1 = pL_TIM_Data->ICCData[3];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC4ReadValue1 = (uint16_t) (htim->Instance->CCR4);
+                          %endif
+						  %if(ISEQUAL(CH4_edge,"Rising_Falling"))
+                             /* Next trigger will be falling */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC4P | TIM_CCER_CC4NP);
+                             tmpccer |= TIM_CCER_CC4P;
+                             htim->Instance->CCER = tmpccer;
+ 							 pL_TIM_Data->ICC4CaptureNumber = 2;
+						 } else if(pL_TIM_Data->ICC4CaptureNumber == 2) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH4_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC4ReadValue2 = pL_TIM_Data->ICCData[3];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC4ReadValue2 = (uint16_t) (htim->Instance->CCR4);
+                          %endif
+                             /* Next trigger will be rising */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC4P | TIM_CCER_CC4NP);
+                             htim->Instance->CCER = tmpccer;					  
+							 pL_TIM_Data->ICC4CaptureNumber = 3;
+						  %else
+ 							 pL_TIM_Data->ICC4CaptureNumber = 3;
+                          %endif
+						 } else if(pL_TIM_Data->ICC4CaptureNumber == 3) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH4_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC4ReadValue3 = pL_TIM_Data->ICCData[3];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC4ReadValue3 = (uint16_t) (htim->Instance->CCR4);
+                          %endif
+						  %if(ISEQUAL(CH4_edge,"Rising_Falling"))
+                             /* Next trigger will be falling */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC4P | TIM_CCER_CC4NP);
+                             tmpccer |= TIM_CCER_CC4P;
+                             htim->Instance->CCER = tmpccer;
+ 							 pL_TIM_Data->ICC4CaptureNumber = 4;
+						 } else if(pL_TIM_Data->ICC4CaptureNumber == 4) {
+                          %if (ISEQUAL(TIM_DMA, "UPDATE") || ISEQUAL(CH4_DMA, "on"))
+                             /* Get Input Capture value from DMA*/            
+                             pL_TIM_Data->ICC4ReadValue4 = pL_TIM_Data->ICCData[3];
+                          %else
+                             /* Get Input Capture value */
+                             pL_TIM_Data->ICC4ReadValue4 = (uint16_t) (htim->Instance->CCR4);
+                          %endif
+                             /* Next trigger will be rising */
+                             tmpccer = htim->Instance->CCER;
+                             tmpccer &= ~(TIM_CCER_CC4P | TIM_CCER_CC4NP);
+                             htim->Instance->CCER = tmpccer;					  
+							 pL_TIM_Data->ICC4CaptureNumber = 1;
+						  %else
+ 							 pL_TIM_Data->ICC4CaptureNumber = 1;
+                          %endif
+						 }
+                        }
+                      }
+                   }
+               }
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+        %endif
+        %endif
+
+        %if (ISEQUAL(TIM_COM, "on"))
+        %if EXISTS(::InsertCOMTIMCallback) && (::InsertCOMTIMCallback == TLC_TRUE)
+            %assign ::InsertCOMTIMCallback    = TLC_FALSE		
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : HAL_TIMEx_CommutationCallback
+            * Description    : Timer callback for commutation event
+            * Input          : TIM_HandleTypeDef*   TIM IC handle
+            *******************************************************************************/
+            void HAL_TIMEx_CommutationCallback(TIM_HandleTypeDef *htim)
+            {
+			%if(%<NbTIM> > 1)				
+				uint16_t L_TimHandleIdx = 0;/* Index to retreive TIM data information */
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data[0]; /* Pt to the list of TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler[0]; /* Pt to the list of TIM handler */
+				for(L_TimHandleIdx = 0;L_TimHandleIdx < %<NbTIM>;L_TimHandleIdx++) {
+					pL_TIM_Handler = G_TIM_Handler[L_TimHandleIdx];
+					if(pL_TIM_Handler == htim) {
+						pL_TIM_Data = G_TIM_Data[L_TimHandleIdx];
+						break;
+					}
+				}
+			%else
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data; /* Pt to TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler; /* Pt to TIM handler */
+			%endif                
+				if(pL_TIM_Handler == htim) {
+                  if(pL_TIM_Data->ItComFcn != NULL){
+                    /* Call commutation function for %<TIM_Name> */
+                    pL_TIM_Data->ItComFcn();
+                  }
+                }
+            }
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+        %endif
+        %endif
+
+        %if (ISEQUAL(TIM_UP, "on"))
+        %if EXISTS(::InsertUPTIMCallback) && (::InsertUPTIMCallback == TLC_TRUE)
+            %assign ::InsertUPTIMCallback    = TLC_FALSE		
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : HAL_TIM_PeriodElapsedCallback
+            * Description    : Timer callback for update event
+            * Input          : TIM_HandleTypeDef*   TIM IC handle
+            *******************************************************************************/
+            void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+            {
+			%if(%<NbTIM> > 1)				
+				uint16_t L_TimHandleIdx = 0;/* Index to retreive TIM data information */
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data[0]; /* Pt to the list of TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler[0]; /* Pt to the list of TIM handler */
+				for(L_TimHandleIdx = 0;L_TimHandleIdx < %<NbTIM>;L_TimHandleIdx++) {
+					pL_TIM_Handler = G_TIM_Handler[L_TimHandleIdx];
+					if(pL_TIM_Handler == htim) {
+						pL_TIM_Data = G_TIM_Data[L_TimHandleIdx];
+						break;
+					}
+				}
+			%else
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data; /* Pt to TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler; /* Pt to TIM handler */
+			%endif                
+				if(pL_TIM_Handler == htim) {
+                  if(pL_TIM_Data->ItUpFcn != NULL){
+                    /* Call update function for %<TIM_Name> */
+                    pL_TIM_Data->ItUpFcn();
+                  }
+                }
+            }
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+        %endif
+        %endif
+
+        %if (ISEQUAL(TIM_BRK, "on"))
+        %if EXISTS(::InsertBRKTIMCallback) && (::InsertBRKTIMCallback == TLC_TRUE)
+            %assign ::InsertBRKTIMCallback    = TLC_FALSE		
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : HAL_TIMEx_BreakCallback
+            * Description    : Timer callback for break input event
+            * Input          : TIM_HandleTypeDef*   TIM IC handle
+            *******************************************************************************/
+            void HAL_TIMEx_BreakCallback(TIM_HandleTypeDef *htim)
+            {
+			%if(%<NbTIM> > 1)				
+				uint16_t L_TimHandleIdx = 0;/* Index to retreive TIM data information */
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data[0]; /* Pt to the list of TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler[0]; /* Pt to the list of TIM handler */
+				for(L_TimHandleIdx = 0;L_TimHandleIdx < %<NbTIM>;L_TimHandleIdx++) {
+					pL_TIM_Handler = G_TIM_Handler[L_TimHandleIdx];
+					if(pL_TIM_Handler == htim) {
+						pL_TIM_Data = G_TIM_Data[L_TimHandleIdx];
+						break;
+					}
+				}
+			%else
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data; /* Pt to TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler; /* Pt to TIM handler */
+			%endif                
+				if(pL_TIM_Handler == htim) {
+                  if(pL_TIM_Data->ItBrkFcn != NULL){
+                    /* Call break function for %<TIM_Name> */
+                    pL_TIM_Data->ItBrkFcn();
+                  }
+                }
+            }
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+        %endif
+        %endif
+    
+        %if (ISEQUAL(TIM_TRG, "on"))
+        %if EXISTS(::InsertTRIGTIMCallback) && (::InsertTRIGTIMCallback == TLC_TRUE)
+            %assign ::InsertTRIGTIMCallback    = TLC_FALSE		
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : HAL_TIM_TriggerCallback
+            * Description    : Timer callback for trigger detection event
+            * Input          : TIM_HandleTypeDef*   TIM IC handle
+            *******************************************************************************/
+            void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim)
+            {
+			%if(%<NbTIM> > 1)				
+				uint16_t L_TimHandleIdx = 0;/* Index to retreive TIM data information */
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data[0]; /* Pt to the list of TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler[0]; /* Pt to the list of TIM handler */
+				for(L_TimHandleIdx = 0;L_TimHandleIdx < %<NbTIM>;L_TimHandleIdx++) {
+					pL_TIM_Handler = G_TIM_Handler[L_TimHandleIdx];
+					if(pL_TIM_Handler == htim) {
+						pL_TIM_Data = G_TIM_Data[L_TimHandleIdx];
+						break;
+					}
+				}
+			%else
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data; /* Pt to TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler; /* Pt to TIM handler */
+			%endif                
+				if(pL_TIM_Handler == htim) {
+                  if(pL_TIM_Data->ItTrgFcn != NULL){
+                    /* Call trigger function for %<TIM_Name> */
+                    pL_TIM_Data->ItTrgFcn();
+                  }
+                }
+            }
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+        %endif
+        %endif
+		
+
+        %if (ISEQUAL(TIM_IRQ,"on")&& ...
+            ((ISEQUAL(CH1_int, "on")&&ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type,"Output_PWM")||ISEQUAL(CH1_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH2_int, "on")&&ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type,"Output_PWM")||ISEQUAL(CH2_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH3_int, "on")&&ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type,"Output_PWM")||ISEQUAL(CH3_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH4_int, "on")&&ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type,"Output_PWM")||ISEQUAL(CH4_type,"Output_Comp")))))
+
+        %if EXISTS(::InsertOutPwmTIMCallback) && (::InsertOutPwmTIMCallback == TLC_TRUE)
+            %assign ::InsertOutPwmTIMCallback    = TLC_FALSE		
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : HAL_TIM_PWM_PulseFinishedCallback
+            * Description    : Timer callback for OC or PWM
+            * Input          : TIM_HandleTypeDef*
+            *******************************************************************************/
+            void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim)
+            {
+			%if(%<NbTIM> > 1)				
+				uint16_t L_TimHandleIdx = 0;/* Index to retreive TIM data information */
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data[0]; /* Pt to the list of TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler[0]; /* Pt to the list of TIM handler */
+				for(L_TimHandleIdx = 0;L_TimHandleIdx < %<NbTIM>;L_TimHandleIdx++) {
+					pL_TIM_Handler = G_TIM_Handler[L_TimHandleIdx];
+					if(pL_TIM_Handler == htim) {
+						pL_TIM_Data = G_TIM_Data[L_TimHandleIdx];
+						break;
+					}
+				}
+			%else
+    			TIM_DataLinkTypeDef*   pL_TIM_Data = G_TIM_Data; /* Pt to TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler; /* Pt to TIM handler */
+			%endif
+				if(pL_TIM_Handler == htim) {
+                  if(pL_TIM_Data->ItCcFcn != NULL){
+                    /* Call compare capture function for %<TIM_Name> */
+                    pL_TIM_Data->ItCcFcn(htim);
+                  }
+                }
+            }
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+        %endif
+        %endif
+
+    %endfunction
+
+
+%% Function: Outputs ==========================================
+%% Abstract:
+%% Timers input value depending on pin config
+%%
+	%function Outputs(block, system) Output
+        %%model.c and model.h files
+        %assign SrcBaseName = LibGetMdlSrcBaseName()
+        %assign modelH      = LibCreateSourceFile("Header", "Simulink", SrcBaseName)
+        %assign modelC      = LibCreateSourceFile("Source", "Simulink", SrcBaseName)
+        %%model_TIM.h and model_TIM.c files
+        %assign SrcBaseName_TIM = "%<SrcBaseName>_TIM"
+        %assign modelH_TIM      = LibCreateSourceFile("Header", "Simulink", SrcBaseName_TIM)
+        %assign modelC_TIM      = LibCreateSourceFile("Source", "Simulink", SrcBaseName_TIM)
+		
+        %assign  TIM_Name = SFcnParamSettings.TIM_Name
+		%assign  TIM_APBClock 	= SFcnParamSettings.TIM_APBClock
+		%assign  TIM_Prescaler 	= SFcnParamSettings.TIM_Prescaler
+        %assign  TIM_Clock     	= SFcnParamSettings.TIM_Clock
+		%assign  TIM_ARR  = SFcnParamSettings.TIM_ARR
+		%assign  TIM_DMA  = SFcnParamSettings.TIM_DMA
+		%assign  TIM_IRQ  = SFcnParamSettings.TIM_IRQ
+		%assign  TIM_IRQ_ONLY  = SFcnParamSettings.TIM_IRQ_ONLY
+		%assign  TIM_UP  = SFcnParamSettings.TIM_UP
+		%assign  TIM_TRG  = SFcnParamSettings.TIM_TRG
+		%assign  TIM_COM  = SFcnParamSettings.TIM_COM
+		%assign  TIM_BRK  = SFcnParamSettings.TIM_BRK
+		%assign  NbTIM  = SFcnParamSettings.NbTIM
+		%assign  CH1_enable = SFcnParamSettings.CH1_enable
+		%assign  CH2_enable = SFcnParamSettings.CH2_enable
+		%assign  CH3_enable = SFcnParamSettings.CH3_enable
+		%assign  CH4_enable = SFcnParamSettings.CH4_enable
+		%assign  CH1_type = SFcnParamSettings.CH1_type
+		%assign  CH2_type = SFcnParamSettings.CH2_type
+		%assign  CH3_type = SFcnParamSettings.CH3_type
+		%assign  CH4_type = SFcnParamSettings.CH4_type
+		%assign  CH1_pulse = SFcnParamSettings.CH1_pulse
+		%assign  CH2_pulse = SFcnParamSettings.CH2_pulse
+		%assign  CH3_pulse = SFcnParamSettings.CH3_pulse
+		%assign  CH4_pulse = SFcnParamSettings.CH4_pulse
+		%assign  CH1_int   = SFcnParamSettings.CH1_int
+		%assign  CH2_int   = SFcnParamSettings.CH2_int
+		%assign  CH3_int   = SFcnParamSettings.CH3_int
+		%assign  CH4_int   = SFcnParamSettings.CH4_int
+		%assign  CH1_DMA = SFcnParamSettings.CH1_DMA
+		%assign  CH2_DMA = SFcnParamSettings.CH2_DMA
+		%assign  CH3_DMA = SFcnParamSettings.CH3_DMA
+		%assign  CH4_DMA = SFcnParamSettings.CH4_DMA
+		%assign  Variable_frequency = SFcnParamSettings.Variable_frequency
+		%assign  CH1_variable_duty  = SFcnParamSettings.CH1_variable_duty
+		%assign  CH2_variable_duty  = SFcnParamSettings.CH2_variable_duty
+		%assign  CH3_variable_duty  = SFcnParamSettings.CH3_variable_duty
+		%assign  CH4_variable_duty  = SFcnParamSettings.CH4_variable_duty
+		%assign  CH1_output_duty = SFcnParamSettings.CH1_output_duty
+		%assign  CH2_output_duty = SFcnParamSettings.CH2_output_duty
+		%assign  CH3_output_duty = SFcnParamSettings.CH3_output_duty
+		%assign  CH4_output_duty = SFcnParamSettings.CH4_output_duty
+		%assign  timNum = IDNUM("%<TIM_Name>")[1]
+        %assign  chOffset = 0
+
+        %if (ISEQUAL(TIM_COM, "on"))
+        %assign  chOffset = %<chOffset> + 1
+
+            %openfile TIM_Buf
+            void %<TIM_Name>_ItComFcn(void);
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelH_TIM,"Defines",TIM_Buf)>
+
+			%assign chartIsFound = 0
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : %<TIM_Name>_ItComFcn
+            * Description    : %<TIM_Name> commutation event interrupt
+            * Input          : None
+            *******************************************************************************/
+            void %<TIM_Name>_ItComFcn()
+            {
+                    %foreach callIdx = NumSFcnSysOutputCalls
+                        %if (ISEQUAL(TIM_UP,"off") && ISEQUAL(TIM_TRG,"off") && ISEQUAL(callIdx, 0))				
+        					%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                				%assign wrnTxt = "No code will be generated for COM IRQ  "\
+                        		"since it is not connected to a system."
+                                %<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                		%elseif  (ISEQUAL(TIM_UP,"off") && ISEQUAL(TIM_TRG,"on") && ISEQUAL(callIdx, 1))				
+                        	%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                                %assign wrnTxt = "No code will be generated for COM IRQ  "\
+        						"since it is not connected to a system."
+                				%<LibReportWarning(wrnTxt)>
+                        		%continue
+        					%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                			%% call the downstream system
+                        	%<LibBlockExecuteFcnCall(block, callIdx)>\
+        				%elseif  (ISEQUAL(TIM_UP,"on") && ISEQUAL(TIM_TRG,"off") && ISEQUAL(callIdx, 1))				
+                			%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                        		%assign wrnTxt = "No code will be generated for COM IRQ  "\
+                                "since it is not connected to a system."
+        						%<LibReportWarning(wrnTxt)>
+                				%continue
+                        	%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+        					%% call the downstream system
+                			%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %elseif  (ISEQUAL(TIM_UP,"on") && ISEQUAL(TIM_TRG,"on") && ISEQUAL(callIdx, 2))				
+                            %if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+        						%assign wrnTxt = "No code will be generated for COM IRQ  "\
+                				"since it is not connected to a system."
+                        		%<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                		%endif
+                    %endforeach
+            }
+            %closefile TIM_Buf
+			%if (chartIsFound == 1)
+				%<LibSetSourceFileSection(modelC,"Functions",TIM_Buf)>	
+			%else
+				%<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+			%endif
+        %endif
+
+        %if (ISEQUAL(TIM_UP, "on"))
+        %assign  chOffset = %<chOffset> + 1
+
+			%assign chartIsFound = 0
+            %openfile TIM_Buf
+            extern void %<TIM_Name>_ItUpFcn(void);
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelH_TIM,"Defines",TIM_Buf)>
+
+            %openfile TIM_Buf 			
+            /*******************************************************************************
+            * Function Name  : %<TIM_Name>_ItUpFcn
+            * Description    : %<TIM_Name> update interrupt
+            * Input          : None
+			* %<TIM_Name>_ItUpFcn is called from HAL_TIM_PeriodElapsedCallback function
+			* in %<SrcBaseName_TIM>.c file.
+            *******************************************************************************/
+            void %<TIM_Name>_ItUpFcn()
+            {
+                    %foreach callIdx = NumSFcnSysOutputCalls
+                        %if (ISEQUAL(callIdx, 0))	
+                            %if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                                %assign wrnTxt = "No code will be generated for UPDATE IRQ  "\
+                                "since it is not connected to a system."
+                                %<LibReportWarning(wrnTxt)>
+                                %continue
+                            %endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                            %% call the downstream system
+                            %<LibBlockExecuteFcnCall(block, callIdx)>\
+                    	%endif
+                    %endforeach
+            }
+            %closefile TIM_Buf
+			%if (chartIsFound == 1)
+%%				%<LibSetSourceFileSection(modelC,"Functions",TIM_Buf)>	
+				%<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+			%else
+				%<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+			%endif
+        %endif
+
+        %if (ISEQUAL(TIM_BRK, "on"))
+        %assign  chOffset = %<chOffset> + 1
+
+            %openfile TIM_Buf
+             void %<TIM_Name>_ItBrkFcn(void);
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelH_TIM,"Defines",TIM_Buf)>
+
+			%assign chartIsFound = 0
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : %<TIM_Name>_ItBrkFcn
+            * Description    : %<TIM_Name> break event interrupt
+            * Input          : None
+            *******************************************************************************/
+            void %<TIM_Name>_ItBrkFcn()
+            {
+                    %foreach callIdx = NumSFcnSysOutputCalls
+                        %if (ISEQUAL(TIM_UP,"off") && ISEQUAL(TIM_TRG,"off") && ISEQUAL(TIM_COM,"off") && ISEQUAL(callIdx, 0))				
+        					%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                				%assign wrnTxt = "No code will be generated for BRK IRQ  "\
+                        		"since it is not connected to a system."
+                                %<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                		%elseif  (((ISEQUAL(TIM_UP,"on") && ISEQUAL(TIM_TRG,"off") && ISEQUAL(TIM_COM,"off"))||(ISEQUAL(TIM_UP,"off") && ISEQUAL(TIM_TRG,"on") && ISEQUAL(TIM_COM,"off"))||(ISEQUAL(TIM_UP,"off") && ISEQUAL(TIM_TRG,"off") && ISEQUAL(TIM_COM,"on")))&& ISEQUAL(callIdx, 1))
+                        	%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                                %assign wrnTxt = "No code will be generated for BRK IRQ  "\
+        						"since it is not connected to a system."
+                				%<LibReportWarning(wrnTxt)>
+                        		%continue
+        					%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                			%% call the downstream system
+                        	%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %elseif  (((ISEQUAL(TIM_UP,"on") && ISEQUAL(TIM_TRG,"on") && ISEQUAL(TIM_COM,"off"))||(ISEQUAL(TIM_UP,"on") && ISEQUAL(TIM_TRG,"off") && ISEQUAL(TIM_COM,"on"))||(ISEQUAL(TIM_UP,"off") && ISEQUAL(TIM_TRG,"on") && ISEQUAL(TIM_COM,"on")))&& ISEQUAL(callIdx, 2))				
+                            %if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+        						%assign wrnTxt = "No code will be generated for BRK IRQ  "\
+                				"since it is not connected to a system."
+                        		%<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %elseif  (ISEQUAL(TIM_UP,"on") && ISEQUAL(TIM_TRG,"on") && ISEQUAL(TIM_COM,"on")&& ISEQUAL(callIdx, 3))
+                            %if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+        						%assign wrnTxt = "No code will be generated for BRK IRQ  "\
+                				"since it is not connected to a system."
+                        		%<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                		%endif
+                    %endforeach
+            }
+            %closefile TIM_Buf
+			%if (chartIsFound == 1)
+				%<LibSetSourceFileSection(modelC,"Functions",TIM_Buf)>	
+			%else
+				%<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+			%endif
+        %endif
+    
+        %if (ISEQUAL(TIM_TRG, "on"))
+        %assign  chOffset = %<chOffset> + 1
+
+            %openfile TIM_Buf
+            void %<TIM_Name>_ItTrgFcn(void);
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelH_TIM,"Defines",TIM_Buf)>
+
+			%assign chartIsFound = 0
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : %<TIM_Name>_ItTrgFcn
+            * Description    : %<TIM_Name> trigger event interrupt
+            * Input          : None
+            *******************************************************************************/
+            void %<TIM_Name>_ItTrgFcn()
+            {
+                    %foreach callIdx = NumSFcnSysOutputCalls
+        				%if (ISEQUAL(TIM_UP,"off") && ISEQUAL(callIdx, 0))				
+                			%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                        		%assign wrnTxt = "No code will be generated for TRIGGER IRQ  "\
+                                "since it is not connected to a system."
+                                %<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %elseif (ISEQUAL(TIM_UP,"on") && ISEQUAL(callIdx, 1))				
+                			%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                            	%assign wrnTxt = "No code will be generated for TRIGGER IRQ  "\
+        						"since it is not connected to a system."
+                				%<LibReportWarning(wrnTxt)>
+                        		%continue
+        					%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                			%% call the downstream system
+                        	%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %endif
+                    %endforeach
+            }
+            %closefile TIM_Buf
+			%if (chartIsFound == 1)
+				%<LibSetSourceFileSection(modelC,"Functions",TIM_Buf)>	
+			%else
+				%<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+			%endif
+        %endif
+
+       %if (ISEQUAL(TIM_IRQ,"on")&& ...
+            ((ISEQUAL(CH1_int, "on")&&ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH2_int, "on")&&ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH3_int, "on")&&ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH4_int, "on")&&ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type,"Output_Comp")))))
+
+        %if EXISTS(::InsertOCDelayTIMCallback) && (::InsertOCDelayTIMCallback == TLC_TRUE)
+            %assign ::InsertOCDelayTIMCallback    = TLC_FALSE		
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : HAL_TIM_OC_DelayElapsedCallback
+            * Description    : Timer callback for OC event
+            * Input          : TIM_HandleTypeDef*
+            *******************************************************************************/
+            void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
+            {
+                uint32_t uhCapture = 0;
+			%if(%<NbTIM> > 1)				
+				uint16_t L_TimHandleIdx = 0;/* Index to retreive TIM data information */
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler[0]; /* Pt to the list of TIM handler */
+				for(L_TimHandleIdx = 0;L_TimHandleIdx < %<NbTIM>;L_TimHandleIdx++) {
+					pL_TIM_Handler = G_TIM_Handler[L_TimHandleIdx];
+					if(pL_TIM_Handler == htim) {
+						break;
+					}
+				}
+			%else
+				TIM_HandleTypeDef*     pL_TIM_Handler = G_TIM_Handler; /* Pt to TIM handler */
+			%endif
+                
+				if(pL_TIM_Handler == htim) {
+                    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+                        uhCapture = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+                        /* Set the Capture Compare Register value */
+                        __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_1, (uint32_t)((uhCapture + htim->Instance->CCR1)));
+                    }
+                    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2) {
+                        uhCapture = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
+                        /* Set the Capture Compare Register value */
+                        __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_2, (uint32_t)((uhCapture + htim->Instance->CCR2)));
+                    }
+                    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
+                        uhCapture = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
+                        /* Set the Capture Compare Register value */
+                        __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_3, (uint32_t)((uhCapture + htim->Instance->CCR3)));
+                    }
+                    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+                        uhCapture = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_4);
+                        /* Set the Capture Compare Register value */
+                        __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_4, (uint32_t)((uhCapture + htim->Instance->CCR4)));
+                    }
+                }
+            }
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+        %endif
+        %endif		
+
+
+        %if (ISEQUAL(TIM_IRQ,"on")&& ...
+            ((ISEQUAL(CH1_int, "on")&&ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type,"Output_PWM")||ISEQUAL(CH1_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH2_int, "on")&&ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type,"Output_PWM")||ISEQUAL(CH2_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH3_int, "on")&&ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type,"Output_PWM")||ISEQUAL(CH3_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH4_int, "on")&&ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type,"Output_PWM")||ISEQUAL(CH4_type,"Output_Comp")))))
+
+            %openfile TIM_Buf
+            void %<TIM_Name>_ItCcFcn(TIM_HandleTypeDef*);
+            %closefile TIM_Buf
+            %<LibSetSourceFileSection(modelH_TIM,"Defines",TIM_Buf)>
+	
+            %openfile TIM_Buf
+            /*******************************************************************************
+            * Function Name  : %<TIM_Name>_ItCcFcn
+            * Description    : %<TIM_Name>  capture compare event interrupt
+            * Input          : None
+            *******************************************************************************/
+            void %<TIM_Name>_ItCcFcn(TIM_HandleTypeDef *htim)
+            {
+                %if (ISEQUAL(CH1_int, "on"))	
+                    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+                    %foreach callIdx = NumSFcnSysOutputCalls
+                        %if (ISEQUAL(callIdx, %<chOffset>))	
+                            %if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                                %assign wrnTxt = "No code will be generated for CH1 IRQ  "\
+                                "since it is not connected to a system."
+                                %<LibReportWarning(wrnTxt)>
+                                %continue
+                            %endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                            %% call the downstream system
+                            %<LibBlockExecuteFcnCall(block, callIdx)>\
+                    	%endif
+                    %endforeach
+                    }
+                %endif
+                %if (ISEQUAL(CH2_int, "on"))
+                    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2) {
+                    %foreach callIdx = NumSFcnSysOutputCalls
+        				%if (ISEQUAL(CH1_int,"off") && ISEQUAL(callIdx, %<chOffset>))				
+                			%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                        		%assign wrnTxt = "No code will be generated for CH2 IRQ  "\
+                                "since it is not connected to a system."
+                                %<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %elseif (ISEQUAL(CH1_int,"on") && ISEQUAL(callIdx, %<chOffset> + 1))				
+                			%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                            	%assign wrnTxt = "No code will be generated for CH2 IRQ  "\
+        						"since it is not connected to a system."
+                				%<LibReportWarning(wrnTxt)>
+                        		%continue
+        					%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                			%% call the downstream system
+                        	%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %endif
+                    %endforeach
+                    }
+                %endif
+                %if (ISEQUAL(CH3_int, "on"))
+                    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3) {
+                    %foreach callIdx = NumSFcnSysOutputCalls
+                        %if (ISEQUAL(CH1_int,"off") && ISEQUAL(CH2_int,"off") && ISEQUAL(callIdx, %<chOffset>))				
+        					%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                				%assign wrnTxt = "No code will be generated for CH3 IRQ  "\
+                        		"since it is not connected to a system."
+                                %<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                		%elseif  (ISEQUAL(CH1_int,"off") && ISEQUAL(CH2_int,"on") && ISEQUAL(callIdx, %<chOffset> + 1))				
+                        	%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                                %assign wrnTxt = "No code will be generated for CH3 IRQ  "\
+        						"since it is not connected to a system."
+                				%<LibReportWarning(wrnTxt)>
+                        		%continue
+        					%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                			%% call the downstream system
+                        	%<LibBlockExecuteFcnCall(block, callIdx)>\
+        				%elseif  (ISEQUAL(CH1_int,"on") && ISEQUAL(CH2_int,"off") && ISEQUAL(callIdx, %<chOffset> + 1))				
+                			%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                        		%assign wrnTxt = "No code will be generated for CH3 IRQ  "\
+                                "since it is not connected to a system."
+        						%<LibReportWarning(wrnTxt)>
+                				%continue
+                        	%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+        					%% call the downstream system
+                			%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %elseif  (ISEQUAL(CH1_int,"on") && ISEQUAL(CH2_int,"on") && ISEQUAL(callIdx, %<chOffset> + 2))				
+                            %if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+        						%assign wrnTxt = "No code will be generated for CH3 IRQ  "\
+                				"since it is not connected to a system."
+                        		%<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                		%endif
+                    %endforeach
+                    }
+                %endif
+                %if (ISEQUAL(CH4_int, "on"))
+                    if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
+                    %foreach callIdx = NumSFcnSysOutputCalls
+                        %if (ISEQUAL(CH1_int,"off") && ISEQUAL(CH2_int,"off") && ISEQUAL(CH3_int,"off") && ISEQUAL(callIdx, %<chOffset>))				
+        					%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                				%assign wrnTxt = "No code will be generated for CH4 IRQ  "\
+                        		"since it is not connected to a system."
+                                %<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                		%elseif  (((ISEQUAL(CH1_int,"on") && ISEQUAL(CH2_int,"off") && ISEQUAL(CH3_int,"off"))||(ISEQUAL(CH1_int,"off") && ISEQUAL(CH2_int,"on") && ISEQUAL(CH3_int,"off"))||(ISEQUAL(CH1_int,"off") && ISEQUAL(CH2_int,"off") && ISEQUAL(CH3_int,"on")))&& ISEQUAL(callIdx, %<chOffset> + 1))
+                        	%if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+                                %assign wrnTxt = "No code will be generated for CH4 IRQ  "\
+        						"since it is not connected to a system."
+                				%<LibReportWarning(wrnTxt)>
+                        		%continue
+        					%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                			%% call the downstream system
+                        	%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %elseif  (((ISEQUAL(CH1_int,"on") && ISEQUAL(CH2_int,"on") && ISEQUAL(CH3_int,"off"))||(ISEQUAL(CH1_int,"on") && ISEQUAL(CH2_int,"off") && ISEQUAL(CH3_int,"on"))||(ISEQUAL(CH1_int,"off") && ISEQUAL(CH2_int,"on") && ISEQUAL(CH3_int,"on")))&& ISEQUAL(callIdx, %<chOffset> + 2))				
+                            %if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+        						%assign wrnTxt = "No code will be generated for CH4 IRQ  "\
+                				"since it is not connected to a system."
+                        		%<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                        %elseif  (ISEQUAL(CH1_int,"on") && ISEQUAL(CH2_int,"on") && ISEQUAL(CH3_int,"on")&& ISEQUAL(callIdx, %<chOffset> + 3))
+                            %if LibIsEqual(SFcnSystemOutputCall[callIdx].BlockToCall,"unconnected")
+        						%assign wrnTxt = "No code will be generated for CH4 IRQ  "\
+                				"since it is not connected to a system."
+                        		%<LibReportWarning(wrnTxt)>
+        						%continue
+                			%endif
+							%%Is it connected to model including Chart
+							%assign chartIsFound = FunctionCalledAsChart(callIdx)							
+                        	%% call the downstream system
+        					%<LibBlockExecuteFcnCall(block, callIdx)>\
+                		%endif
+                    %endforeach
+                    }
+                %endif
+            }
+            %closefile TIM_Buf
+			%if (chartIsFound == 1)
+				%<LibSetSourceFileSection(modelC,"Functions",TIM_Buf)>	
+			%else
+				%<LibSetSourceFileSection(modelC_TIM,"Functions",TIM_Buf)>	
+			%endif
+        %endif		
+		
+    %endfunction
+
+
+%% Function: Update ==========================================
+%% Abstract:
+%% Timers input value depending on pin config
+%%
+	%function Update(block, system) Output
+        %assign  TIM_Name = SFcnParamSettings.TIM_Name
+		%assign  TIM_APBClock 	= SFcnParamSettings.TIM_APBClock
+		%assign  TIM_Prescaler 	= SFcnParamSettings.TIM_Prescaler
+        %assign  TIM_Clock     	= SFcnParamSettings.TIM_Clock
+		%assign  TIM_ARR  = SFcnParamSettings.TIM_ARR
+		%assign  TIM_DMA  = SFcnParamSettings.TIM_DMA
+		%assign  TIM_IRQ  = SFcnParamSettings.TIM_IRQ
+		%assign  TIM_IRQ_ONLY  = SFcnParamSettings.TIM_IRQ_ONLY
+		%assign  TIM_UP  = SFcnParamSettings.TIM_UP
+		%assign  TIM_TRG  = SFcnParamSettings.TIM_TRG
+		%assign  TIM_COM  = SFcnParamSettings.TIM_COM
+		%assign  TIM_BRK  = SFcnParamSettings.TIM_BRK
+		%assign  NbTIM  = SFcnParamSettings.NbTIM
+		%assign  CH1_enable = SFcnParamSettings.CH1_enable
+		%assign  CH2_enable = SFcnParamSettings.CH2_enable
+		%assign  CH3_enable = SFcnParamSettings.CH3_enable
+		%assign  CH4_enable = SFcnParamSettings.CH4_enable
+		%assign  CH1_type = SFcnParamSettings.CH1_type
+		%assign  CH2_type = SFcnParamSettings.CH2_type
+		%assign  CH3_type = SFcnParamSettings.CH3_type
+		%assign  CH4_type = SFcnParamSettings.CH4_type
+		%assign  CH1_pulse = SFcnParamSettings.CH1_pulse
+		%assign  CH2_pulse = SFcnParamSettings.CH2_pulse
+		%assign  CH3_pulse = SFcnParamSettings.CH3_pulse
+		%assign  CH4_pulse = SFcnParamSettings.CH4_pulse
+		%assign  CH1_int   = SFcnParamSettings.CH1_int
+		%assign  CH2_int   = SFcnParamSettings.CH2_int
+		%assign  CH3_int   = SFcnParamSettings.CH3_int
+		%assign  CH4_int   = SFcnParamSettings.CH4_int
+		%assign  CH1_DMA = SFcnParamSettings.CH1_DMA
+		%assign  CH2_DMA = SFcnParamSettings.CH2_DMA
+		%assign  CH3_DMA = SFcnParamSettings.CH3_DMA
+		%assign  CH4_DMA = SFcnParamSettings.CH4_DMA
+		%assign  Variable_frequency = SFcnParamSettings.Variable_frequency
+		%assign  CH1_variable_duty  = SFcnParamSettings.CH1_variable_duty
+		%assign  CH2_variable_duty  = SFcnParamSettings.CH2_variable_duty
+		%assign  CH3_variable_duty  = SFcnParamSettings.CH3_variable_duty
+		%assign  CH4_variable_duty  = SFcnParamSettings.CH4_variable_duty
+		%assign  CH1_output_duty = SFcnParamSettings.CH1_output_duty
+		%assign  CH2_output_duty = SFcnParamSettings.CH2_output_duty
+		%assign  CH3_output_duty = SFcnParamSettings.CH3_output_duty
+		%assign  CH4_output_duty = SFcnParamSettings.CH4_output_duty
+  	    %assign  InputNum = 0 
+  	    %assign  OutputNum = 0
+		%assign  timNum = IDNUM("%<TIM_Name>")[1]
+		%assign  TIM_CKD  		= SFcnParamSettings.TIM_CKD
+		%assign  TIM_Set_Clk 	= SFcnParamSettings.TIM_Set_Clk
+		
+		%assign  TIM_Set_OutFreq    = SFcnParamSettings.TIM_Set_OutFreq
+		%assign  Output_frequency   = SFcnParamSettings.Output_frequency
+		%assign  Repetition_counter = SFcnParamSettings.Repetition_counter
+
+		%assign  TIM_Mode           = SFcnParamSettings.TIM_Mode
+
+		%assign  CH1_set_pulse      = SFcnParamSettings.CH1_set_pulse
+		%assign  CH2_set_pulse      = SFcnParamSettings.CH2_set_pulse
+		%assign  CH3_set_pulse          = SFcnParamSettings.CH3_set_pulse
+		%assign  CH4_set_pulse          = SFcnParamSettings.CH4_set_pulse
+		%assign  CH1_edge   = SFcnParamSettings.CH1_edge
+		%assign  CH2_edge   = SFcnParamSettings.CH2_edge
+		%assign  CH3_edge   = SFcnParamSettings.CH3_edge
+		%assign  CH4_edge   = SFcnParamSettings.CH4_edge
+		%assign  CH1_div   = SFcnParamSettings.CH1_div
+		%assign  CH2_div   = SFcnParamSettings.CH2_div
+		%assign  CH3_div   = SFcnParamSettings.CH3_div
+		%assign  CH4_div   = SFcnParamSettings.CH4_div
+
+
+        %if (ISEQUAL(Variable_frequency, "on"))          
+  	    %assign  InputFreq = LibBlockInputSignal(InputNum, "", "", 0) 
+  	    %assign  InputNum = %<InputNum> + 1
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> num:%<InputNum> freq:%<InputFreq>"		
+            /* Timer frequency is an input port */
+            __HAL_TIM_SetAutoreload(&htim%<timNum>, %<TIM_Clock> / %<InputFreq> - 1);
+        %endif
+
+        %if (ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH1_type,"Output_Comp") == TLC_TRUE))
+		%if (ISEQUAL(CH1_variable_duty,"on"))          
+  	    %assign  DutyCC1 = LibBlockInputSignal(InputNum, "", "", 0) 
+  	    %assign  InputNum = %<InputNum> + 1
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> cc1 varDuty:%<DutyCC1>"		
+		%else
+  	    %assign  DutyCC1 = %<CH1_output_duty>		
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> cc1 FixDuty:%<DutyCC1>"		
+		%endif
+        %if (ISEQUAL(CH1_type,"Output_PWM") == TLC_TRUE)
+          if(%<DutyCC1> < 0) {
+            /* Disable output and complementary output */
+			(&htim%<timNum>)->Instance->BDTR |= TIM_BDTR_MOE;  //MOE = 1
+            (&htim%<timNum>)->Instance->BDTR &= ~TIM_BDTR_OSSR;   //OSSR = 0
+            (&htim%<timNum>)->Instance->CCER &= ~TIM_CCER_CC1E;//CC1E = 0
+            (&htim%<timNum>)->Instance->CCER &= ~TIM_CCER_CC1NE;//CC1NE = 0
+            (&htim%<timNum>)->Instance->CR2 &= ~TIM_CR2_OIS1; //OIS1 = 0
+            (&htim%<timNum>)->Instance->CR2 &= ~TIM_CR2_OIS1N; //OIS1N = 0
+          } else {
+            // Enable output and complementary output and update dutyCycle
+			(&htim%<timNum>)->Instance->BDTR |= TIM_BDTR_MOE;  //MOE = 1
+            (&htim%<timNum>)->Instance->CCER |= TIM_CCER_CC1E;     //CC1E = 1
+            (&htim%<timNum>)->Instance->CCER |= TIM_CCER_CC1NE;     //CC1NE = 1
+            // Channel1 duty cycle is an input port 
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_1, (uint32_t)(%<DutyCC1> * (&htim%<timNum>)->Instance->ARR / 100));
+          }
+		%else
+          // Channel1 duty cycle is an input port 
+          __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_1, (uint32_t)(%<DutyCC1> * (&htim%<timNum>)->Instance->ARR / 100));
+        %endif
+        %endif
+
+        %if (ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH2_type,"Output_Comp") == TLC_TRUE))
+		%if (ISEQUAL(CH2_variable_duty,"on"))          
+  	    %assign  DutyCC2 = LibBlockInputSignal(InputNum, "", "", 0) 
+  	    %assign  InputNum = %<InputNum> + 1
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> cc2 varDuty:%<DutyCC2>"		
+		%else
+  	    %assign  DutyCC2 = %<CH2_output_duty>		
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> cc2 FixDuty:%<DutyCC2>"		
+		%endif
+        %if (ISEQUAL(CH2_type,"Output_PWM") == TLC_TRUE)
+          if(%<DutyCC2> < 0) {
+            /* Disable output and complementary output */
+			(&htim%<timNum>)->Instance->BDTR |= TIM_BDTR_MOE;  //MOE = 1
+            (&htim%<timNum>)->Instance->BDTR &= ~TIM_BDTR_OSSR;   //OSSR = 0
+            (&htim%<timNum>)->Instance->CCER &= ~TIM_CCER_CC2E;//CC2E = 0
+            (&htim%<timNum>)->Instance->CCER &= ~TIM_CCER_CC2NE;//CC2NE = 0
+            (&htim%<timNum>)->Instance->CR2 &= ~TIM_CR2_OIS2; //OIS2 = 0
+            (&htim%<timNum>)->Instance->CR2 &= ~TIM_CR2_OIS2N; //OIS2N = 0
+          } else {
+            /* Enable output and complementary output and update dutyCycle*/
+			(&htim%<timNum>)->Instance->BDTR |= TIM_BDTR_MOE;  //MOE = 1
+            (&htim%<timNum>)->Instance->CCER |= TIM_CCER_CC2E;     //CC2E = 1
+            (&htim%<timNum>)->Instance->CCER |= TIM_CCER_CC2NE;     //CC2NE = 1
+            /* Channel2 duty cycle is an input port */
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_2, (uint32_t)(%<DutyCC2> * (&htim%<timNum>)->Instance->ARR / 100));
+          }
+		%else
+          /* Channel2 duty cycle is an input port */
+          __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_2, (uint32_t)(%<DutyCC2> * (&htim%<timNum>)->Instance->ARR / 100));
+        %endif
+        %endif
+
+        %if (ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH3_type,"Output_Comp") == TLC_TRUE))
+		%if (ISEQUAL(CH3_variable_duty,"on"))          
+  	    %assign  DutyCC3 = LibBlockInputSignal(InputNum, "", "", 0) 
+  	    %assign  InputNum = %<InputNum> + 1
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> cc3 varDuty:%<DutyCC3>"		
+		%else
+  	    %assign  DutyCC3 = %<CH3_output_duty>		
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> cc3 FixDuty:%<DutyCC3>"		
+		%endif
+        %if (ISEQUAL(CH3_type,"Output_PWM") == TLC_TRUE)
+          if(%<DutyCC3> < 0) {
+            /* Disable output and complementary output */
+			(&htim%<timNum>)->Instance->BDTR |= TIM_BDTR_MOE;  //MOE = 1
+            (&htim%<timNum>)->Instance->BDTR &= ~TIM_BDTR_OSSR;   //OSSR = 0
+            (&htim%<timNum>)->Instance->CCER &= ~TIM_CCER_CC3E;//CC3E = 0
+            (&htim%<timNum>)->Instance->CCER &= ~TIM_CCER_CC3NE;//CC3NE = 0
+            (&htim%<timNum>)->Instance->CR2 &= ~TIM_CR2_OIS3; //OIS3 = 0
+            (&htim%<timNum>)->Instance->CR2 &= ~TIM_CR2_OIS3N; //OIS3N = 0
+          } else {
+            /* Enable output and complementary output and update dutyCycle*/
+			(&htim%<timNum>)->Instance->BDTR |= TIM_BDTR_MOE;  //MOE = 1
+            (&htim%<timNum>)->Instance->CCER |= TIM_CCER_CC3E;     //CC3E = 1
+            (&htim%<timNum>)->Instance->CCER |= TIM_CCER_CC3NE;     //CC3NE = 1
+            /* Channel3 duty cycle is an input port */
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_3, (uint32_t)(%<DutyCC3> * (&htim%<timNum>)->Instance->ARR / 100));
+          }
+		%else
+          /* Channel3 duty cycle is an input port */
+          __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_3, (uint32_t)(%<DutyCC3> * (&htim%<timNum>)->Instance->ARR / 100));
+        %endif
+        %endif
+
+        %if (ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type,"Output_PWM") == TLC_TRUE || ISEQUAL(CH4_type,"Output_Comp") == TLC_TRUE))
+		%if (ISEQUAL(CH4_variable_duty,"on"))          
+  	    %assign  DutyCC4 = LibBlockInputSignal(InputNum, "", "", 0) 
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> cc4 varDuty:%<DutyCC4>"		
+		%else
+  	    %assign  DutyCC4 = %<CH4_output_duty>		
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> cc4 FixDuty:%<DutyCC4>"		
+		%endif
+        %if (ISEQUAL(CH4_type,"Output_PWM") == TLC_TRUE)
+          if(%<DutyCC4> < 0) {
+            /* Disable output and complementary output */
+			(&htim%<timNum>)->Instance->BDTR |= TIM_BDTR_MOE;  //MOE = 1
+            (&htim%<timNum>)->Instance->BDTR &= ~TIM_BDTR_OSSR;   //OSSR = 0
+            (&htim%<timNum>)->Instance->CCER &= ~TIM_CCER_CC4E;//CC4E = 0
+            (&htim%<timNum>)->Instance->CR2 &= ~TIM_CR2_OIS4; //OIS4 = 0
+          } else {
+            /* Enable output and complementary output and update dutyCycle*/
+			(&htim%<timNum>)->Instance->BDTR |= TIM_BDTR_MOE;  //MOE = 1
+            (&htim%<timNum>)->Instance->CCER |= TIM_CCER_CC4E;     //CC4E = 1
+            /* Channel4 duty cycle is an input port */
+            __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_4, (uint32_t)(%<DutyCC4> * (&htim%<timNum>)->Instance->ARR / 100));
+          }
+		%else
+          /* Channel4 duty cycle is an input port */
+          __HAL_TIM_SetCompare(&htim%<timNum>, TIM_CHANNEL_4, (uint32_t)(%<DutyCC4> * (&htim%<timNum>)->Instance->ARR / 100));
+        %endif
+        %endif
+
+
+        %if (ISEQUAL(TIM_UP,"on")||ISEQUAL(TIM_COM,"on")||ISEQUAL(TIM_BRK,"on")||ISEQUAL(TIM_TRG,"on")||(ISEQUAL(TIM_IRQ,"on")&& ...
+            ((ISEQUAL(CH1_int, "on")&&ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type,"Output_PWM")||ISEQUAL(CH1_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH2_int, "on")&&ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type,"Output_PWM")||ISEQUAL(CH2_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH3_int, "on")&&ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type,"Output_PWM")||ISEQUAL(CH3_type,"Output_Comp")))|| ...
+             (ISEQUAL(CH4_int, "on")&&ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type,"Output_PWM")||ISEQUAL(CH4_type,"Output_Comp"))))))
+  	    %assign  OutputNum = %<OutputNum> + 1
+        %endif
+
+        %if ((ISEQUAL(TIM_IRQ,"on")&&ISEQUAL(CH1_enable,"on")&&(ISEQUAL(CH1_type, "Input_Capture")||ISEQUAL(CH1_type, "Input_PWM")))&&ISEQUAL(TIM_IRQ_ONLY,"off"))
+		%if (ISEQUAL(CH1_edge,"Rising")||ISEQUAL(CH1_edge,"Falling"))
+        /* Compute frequency only. Duty is null because of %<CH1_edge> edge interrupt configuration */
+        /* lock interrupt access during process */
+        __HAL_TIM_DISABLE_IT(&htim%<timNum>, TIM_IT_CC1);		
+		if (%<TIM_Name>_DataLink.ICC1CaptureNumber == 3) {
+			/* Change acquisition order */
+			%<TIM_Name>_DataLink.ICC1ReadValue2 = %<TIM_Name>_DataLink.ICC1ReadValue3;
+			%<TIM_Name>_DataLink.ICC1ReadValue3 = %<TIM_Name>_DataLink.ICC1ReadValue1;
+			%<TIM_Name>_DataLink.ICC1ReadValue1 = %<TIM_Name>_DataLink.ICC1ReadValue2;
+		}
+        if (%<TIM_Name>_DataLink.ICC1ReadValue3 >= %<TIM_Name>_DataLink.ICC1ReadValue1){
+            %<TIM_Name>_DataLink.ICC1Capture = (%<TIM_Name>_DataLink.ICC1ReadValue3 - %<TIM_Name>_DataLink.ICC1ReadValue1); 
+    	} else {
+       		%<TIM_Name>_DataLink.ICC1Capture = ((0xFFFF - %<TIM_Name>_DataLink.ICC1ReadValue1) + %<TIM_Name>_DataLink.ICC1ReadValue3); 
+		}
+        /* Compute Frequency */ 
+        if(%<TIM_Name>_DataLink.ICC1Capture){
+        %if (%<CH1_div> == 1)
+            %<TIM_Name>_DataLink.ICC1Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC1Capture ;	
+        %else
+            %<TIM_Name>_DataLink.ICC1Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC1Capture * %<CH1_div>;	
+        %endif
+        } else {
+			%<TIM_Name>_DataLink.ICC1Freq = 0;
+		}
+        /* Duty is Null */
+        %<TIM_Name>_DataLink.ICC1Duty = 0;
+        /* unlock interrupt */
+        __HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_CC1);
+		%else
+        /* lock interrupt access during process */        
+        __HAL_TIM_DISABLE_IT(&htim%<timNum>, TIM_IT_CC1);
+		if (%<TIM_Name>_DataLink.ICC1CaptureNumber == 2 || %<TIM_Name>_DataLink.ICC1CaptureNumber == 3) {
+			/* Change acquisition order */
+			%<TIM_Name>_DataLink.ICC1ReadValue2 = %<TIM_Name>_DataLink.ICC1ReadValue3;
+			%<TIM_Name>_DataLink.ICC1ReadValue3 = %<TIM_Name>_DataLink.ICC1ReadValue1;
+			%<TIM_Name>_DataLink.ICC1ReadValue1 = %<TIM_Name>_DataLink.ICC1ReadValue2;
+			%<TIM_Name>_DataLink.ICC1ReadValue2 = %<TIM_Name>_DataLink.ICC1ReadValue4;			
+		}		
+        if (%<TIM_Name>_DataLink.ICC1ReadValue3 >= %<TIM_Name>_DataLink.ICC1ReadValue1) {
+            %<TIM_Name>_DataLink.ICC1Capture = (%<TIM_Name>_DataLink.ICC1ReadValue3 - %<TIM_Name>_DataLink.ICC1ReadValue1); 
+        } else {
+       		%<TIM_Name>_DataLink.ICC1Capture = ((0xFFFF - %<TIM_Name>_DataLink.ICC1ReadValue1) + %<TIM_Name>_DataLink.ICC1ReadValue3); 
+        }
+        /*Compute Duty and Frequency */ 
+        if(%<TIM_Name>_DataLink.ICC1Capture){
+        %if (%<CH1_div> == 1)
+            %<TIM_Name>_DataLink.ICC1Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC1Capture;	
+			if (%<TIM_Name>_DataLink.ICC1ReadValue2 >= %<TIM_Name>_DataLink.ICC1ReadValue1){
+                %<TIM_Name>_DataLink.ICC1Duty = (uint32_t)((%<TIM_Name>_DataLink.ICC1ReadValue2 - %<TIM_Name>_DataLink.ICC1ReadValue1) * 100 / %<TIM_Name>_DataLink.ICC1Capture ); 
+			} else { 
+				%<TIM_Name>_DataLink.ICC1Duty = (uint32_t)(((0xFFFF - %<TIM_Name>_DataLink.ICC1ReadValue1) + %<TIM_Name>_DataLink.ICC1ReadValue2) * 100 / %<TIM_Name>_DataLink.ICC1Capture); 
+			}								
+        %else
+            %<TIM_Name>_DataLink.ICC1Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC1Capture * %<CH1_div>;	
+			%<TIM_Name>_DataLink.ICC1Duty = (uint32_t) 0;									
+        %endif
+        } else {
+			%<TIM_Name>_DataLink.ICC1Duty = (uint32_t) 0;									
+			%<TIM_Name>_DataLink.ICC1Freq = (uint32_t) 0;
+		}
+        /* unlock interrupt */
+        __HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_CC1);
+	    %endif
+		%assign y = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1
+        %<y> = %<TIM_Name>_DataLink.ICC1Freq;
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> freq_cc1 y:%<y>"		
+		%assign y = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1
+        %<y> = %<TIM_Name>_DataLink.ICC1Duty;
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> Duty_cc1 y:%<y>"		
+        %endif
+
+        %if ((ISEQUAL(TIM_IRQ,"on")&&ISEQUAL(CH2_enable,"on")&&(ISEQUAL(CH2_type, "Input_Capture")||ISEQUAL(CH2_type, "Input_PWM")))&&ISEQUAL(TIM_IRQ_ONLY,"off"))
+		%if (ISEQUAL(CH2_edge,"Rising")||ISEQUAL(CH2_edge,"Falling"))
+        /* lock interrupt access during process */        
+        __HAL_TIM_DISABLE_IT(&htim%<timNum>, TIM_IT_CC2);
+		if (%<TIM_Name>_DataLink.ICC2CaptureNumber == 3) {
+			/* Change acquisition order */
+			%<TIM_Name>_DataLink.ICC2ReadValue2 = %<TIM_Name>_DataLink.ICC2ReadValue3;
+			%<TIM_Name>_DataLink.ICC2ReadValue3 = %<TIM_Name>_DataLink.ICC2ReadValue1;
+			%<TIM_Name>_DataLink.ICC2ReadValue1 = %<TIM_Name>_DataLink.ICC2ReadValue2;
+		}
+        /* Compute frequency only. Duty is null because of %<CH1_edge> edge interrupt configuration */
+        if (%<TIM_Name>_DataLink.ICC2ReadValue3 >= %<TIM_Name>_DataLink.ICC2ReadValue1){
+            %<TIM_Name>_DataLink.ICC2Capture = (%<TIM_Name>_DataLink.ICC2ReadValue3 - %<TIM_Name>_DataLink.ICC2ReadValue1); 
+    	} else {
+       		%<TIM_Name>_DataLink.ICC2Capture = ((0xFFFF - %<TIM_Name>_DataLink.ICC2ReadValue1) + %<TIM_Name>_DataLink.ICC2ReadValue3); 
+		}
+        /* Compute Frequency */ 
+        if(%<TIM_Name>_DataLink.ICC2Capture){
+        %if (%<CH2_div> == 1)
+            %<TIM_Name>_DataLink.ICC2Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC2Capture;	
+        %else
+            %<TIM_Name>_DataLink.ICC2Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC2Capture * %<CH2_div>;	
+        %endif
+        } else {
+			%<TIM_Name>_DataLink.ICC2Freq = 0;
+		}
+        /* Duty is Null */
+        %<TIM_Name>_DataLink.ICC2Duty = 0;
+        /* unlock interrupt */
+        __HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_CC2);
+		%else
+        /* lock interrupt access during process */        
+        __HAL_TIM_DISABLE_IT(&htim%<timNum>, TIM_IT_CC2);
+		if (%<TIM_Name>_DataLink.ICC2CaptureNumber == 2 || %<TIM_Name>_DataLink.ICC2CaptureNumber == 3) {
+			/* Change acquisition order */
+			%<TIM_Name>_DataLink.ICC2ReadValue2 = %<TIM_Name>_DataLink.ICC2ReadValue3;
+			%<TIM_Name>_DataLink.ICC2ReadValue3 = %<TIM_Name>_DataLink.ICC2ReadValue1;
+			%<TIM_Name>_DataLink.ICC2ReadValue1 = %<TIM_Name>_DataLink.ICC2ReadValue2;
+			%<TIM_Name>_DataLink.ICC2ReadValue2 = %<TIM_Name>_DataLink.ICC2ReadValue4;			
+		}		
+        if (%<TIM_Name>_DataLink.ICC2ReadValue3 >= %<TIM_Name>_DataLink.ICC2ReadValue1) {
+            %<TIM_Name>_DataLink.ICC2Capture = (%<TIM_Name>_DataLink.ICC2ReadValue3 - %<TIM_Name>_DataLink.ICC2ReadValue1); 
+        } else {
+       		%<TIM_Name>_DataLink.ICC2Capture = ((0xFFFF - %<TIM_Name>_DataLink.ICC2ReadValue1) + %<TIM_Name>_DataLink.ICC2ReadValue3); 
+        }
+        /*Compute Duty and Frequency */ 
+        if(%<TIM_Name>_DataLink.ICC2Capture){
+        %if (%<CH2_div> == 1)
+            %<TIM_Name>_DataLink.ICC2Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC2Capture;	
+			if (%<TIM_Name>_DataLink.ICC2ReadValue2 >= %<TIM_Name>_DataLink.ICC2ReadValue1){
+                %<TIM_Name>_DataLink.ICC2Duty = (uint32_t)((%<TIM_Name>_DataLink.ICC2ReadValue2 - %<TIM_Name>_DataLink.ICC2ReadValue1) * 100 / %<TIM_Name>_DataLink.ICC2Capture ); 
+			} else { 
+				%<TIM_Name>_DataLink.ICC2Duty = (uint32_t)(((0xFFFF - %<TIM_Name>_DataLink.ICC2ReadValue1) + %<TIM_Name>_DataLink.ICC2ReadValue2) * 100 / %<TIM_Name>_DataLink.ICC2Capture); 
+			}								
+        %else
+            %<TIM_Name>_DataLink.ICC2Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC2Capture * %<CH2_div>;	
+			%<TIM_Name>_DataLink.ICC2Duty = (uint32_t) 0;									
+        %endif
+        } else {
+			%<TIM_Name>_DataLink.ICC2Duty = (uint32_t) 0;									
+			%<TIM_Name>_DataLink.ICC2Freq = (uint32_t) 0;
+		}
+        /* unlock interrupt */
+        __HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_CC2);
+	    %endif
+		%assign y = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1
+        %<y> = %<TIM_Name>_DataLink.ICC2Freq;
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> freq_cc2 y:%<y>"		
+		%assign y = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1
+        %<y> = %<TIM_Name>_DataLink.ICC2Duty;
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> Duty_cc2 y:%<y>"		
+        %endif
+
+        %if ((ISEQUAL(TIM_IRQ,"on")&&ISEQUAL(CH3_enable,"on")&&(ISEQUAL(CH3_type, "Input_Capture")||ISEQUAL(CH3_type, "Input_PWM")))&&ISEQUAL(TIM_IRQ_ONLY,"off"))
+		%if (ISEQUAL(CH3_edge,"Rising")||ISEQUAL(CH3_edge,"Falling"))
+        /* lock interrupt access during process */        
+        __HAL_TIM_DISABLE_IT(&htim%<timNum>, TIM_IT_CC3);
+		if (%<TIM_Name>_DataLink.ICC3CaptureNumber == 3) {
+			/* Change acquisition order */
+			%<TIM_Name>_DataLink.ICC3ReadValue2 = %<TIM_Name>_DataLink.ICC3ReadValue3;
+			%<TIM_Name>_DataLink.ICC3ReadValue3 = %<TIM_Name>_DataLink.ICC3ReadValue1;
+			%<TIM_Name>_DataLink.ICC3ReadValue1 = %<TIM_Name>_DataLink.ICC3ReadValue2;
+		}
+        /* Compute frequency only. Duty is null because of %<CH1_edge> edge interrupt configuration */
+        if (%<TIM_Name>_DataLink.ICC3ReadValue3 >= %<TIM_Name>_DataLink.ICC3ReadValue1){
+            %<TIM_Name>_DataLink.ICC3Capture = (%<TIM_Name>_DataLink.ICC3ReadValue3 - %<TIM_Name>_DataLink.ICC3ReadValue1); 
+    	} else {
+       		%<TIM_Name>_DataLink.ICC3Capture = ((0xFFFF - %<TIM_Name>_DataLink.ICC3ReadValue1) + %<TIM_Name>_DataLink.ICC3ReadValue3); 
+		}
+        /* Compute Frequency */ 
+        if(%<TIM_Name>_DataLink.ICC3Capture){
+        %if (%<CH3_div> == 1)
+            %<TIM_Name>_DataLink.ICC3Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC3Capture;	
+        %else
+            %<TIM_Name>_DataLink.ICC3Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC3Capture * %<CH3_div>;	
+        %endif
+        } else {
+			%<TIM_Name>_DataLink.ICC3Freq = 0;
+		}
+        /* Duty is Null */
+        %<TIM_Name>_DataLink.ICC3Duty = 0;
+        /* unlock interrupt */
+        __HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_CC3);
+		%else
+        /* lock interrupt access during process */        
+        __HAL_TIM_DISABLE_IT(&htim%<timNum>, TIM_IT_CC3);
+		if (%<TIM_Name>_DataLink.ICC3CaptureNumber == 2 || %<TIM_Name>_DataLink.ICC3CaptureNumber == 3) {
+			/* Change acquisition order */
+			%<TIM_Name>_DataLink.ICC3ReadValue2 = %<TIM_Name>_DataLink.ICC3ReadValue3;
+			%<TIM_Name>_DataLink.ICC3ReadValue3 = %<TIM_Name>_DataLink.ICC3ReadValue1;
+			%<TIM_Name>_DataLink.ICC3ReadValue1 = %<TIM_Name>_DataLink.ICC3ReadValue2;
+			%<TIM_Name>_DataLink.ICC3ReadValue2 = %<TIM_Name>_DataLink.ICC3ReadValue4;			
+		}		
+        if (%<TIM_Name>_DataLink.ICC3ReadValue3 >= %<TIM_Name>_DataLink.ICC3ReadValue1) {
+            %<TIM_Name>_DataLink.ICC3Capture = (%<TIM_Name>_DataLink.ICC3ReadValue3 - %<TIM_Name>_DataLink.ICC3ReadValue1); 
+        } else {
+       		%<TIM_Name>_DataLink.ICC3Capture = ((0xFFFF - %<TIM_Name>_DataLink.ICC3ReadValue1) + %<TIM_Name>_DataLink.ICC3ReadValue3); 
+        }
+        /*Compute Duty and Frequency */ 
+        if(%<TIM_Name>_DataLink.ICC3Capture){
+        %if (%<CH3_div> == 1)
+            %<TIM_Name>_DataLink.ICC3Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC3Capture;	
+			if (%<TIM_Name>_DataLink.ICC3ReadValue2 >= %<TIM_Name>_DataLink.ICC3ReadValue1){
+                %<TIM_Name>_DataLink.ICC3Duty = (uint32_t)((%<TIM_Name>_DataLink.ICC3ReadValue2 - %<TIM_Name>_DataLink.ICC3ReadValue1) * 100 / %<TIM_Name>_DataLink.ICC3Capture ); 
+			} else { 
+				%<TIM_Name>_DataLink.ICC3Duty = (uint32_t)(((0xFFFF - %<TIM_Name>_DataLink.ICC3ReadValue1) + %<TIM_Name>_DataLink.ICC3ReadValue2) * 100 / %<TIM_Name>_DataLink.ICC3Capture); 
+			}								
+        %else
+            %<TIM_Name>_DataLink.ICC3Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC3Capture * %<CH3_div>;	
+			%<TIM_Name>_DataLink.ICC3Duty = (uint32_t) 0;									
+        %endif
+        } else {
+			%<TIM_Name>_DataLink.ICC3Duty = (uint32_t) 0;									
+			%<TIM_Name>_DataLink.ICC3Freq = (uint32_t) 0;
+		}
+        /* unlock interrupt */
+        __HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_CC3);
+	    %endif
+		%assign y = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1
+        %<y> = %<TIM_Name>_DataLink.ICC3Freq;
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> freq_cc3 y:%<y>"		
+		%assign y = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1
+        %<y> = %<TIM_Name>_DataLink.ICC3Duty;
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> Duty_cc3 y:%<y>"		
+        %endif
+
+        %if ((ISEQUAL(TIM_IRQ,"on")&&ISEQUAL(CH4_enable,"on")&&(ISEQUAL(CH4_type, "Input_Capture")||ISEQUAL(CH4_type, "Input_PWM")))&&ISEQUAL(TIM_IRQ_ONLY,"off"))
+		%if (ISEQUAL(CH4_edge,"Rising")||ISEQUAL(CH4_edge,"Falling"))
+        /* lock interrupt access during process */        
+        __HAL_TIM_DISABLE_IT(&htim%<timNum>, TIM_IT_CC4);
+		if (%<TIM_Name>_DataLink.ICC4CaptureNumber == 3) {
+			/* Change acquisition order */
+			%<TIM_Name>_DataLink.ICC4ReadValue2 = %<TIM_Name>_DataLink.ICC4ReadValue3;
+			%<TIM_Name>_DataLink.ICC4ReadValue3 = %<TIM_Name>_DataLink.ICC4ReadValue1;
+			%<TIM_Name>_DataLink.ICC4ReadValue1 = %<TIM_Name>_DataLink.ICC4ReadValue2;
+		}
+        /* Compute frequency only. Duty is null because of %<CH1_edge> edge interrupt configuration */
+        if (%<TIM_Name>_DataLink.ICC4ReadValue3 >= %<TIM_Name>_DataLink.ICC4ReadValue1){
+            %<TIM_Name>_DataLink.ICC4Capture = (%<TIM_Name>_DataLink.ICC4ReadValue3 - %<TIM_Name>_DataLink.ICC4ReadValue1); 
+    	} else {
+       		%<TIM_Name>_DataLink.ICC4Capture = ((0xFFFF - %<TIM_Name>_DataLink.ICC4ReadValue1) + %<TIM_Name>_DataLink.ICC4ReadValue3); 
+		}
+        /* Compute Frequency */ 
+        if(%<TIM_Name>_DataLink.ICC4Capture){
+        %if (%<CH4_div> == 1)
+            %<TIM_Name>_DataLink.ICC4Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC4Capture;	
+        %else
+            %<TIM_Name>_DataLink.ICC4Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC4Capture * %<CH4_div>;	
+        %endif
+        } else {
+			%<TIM_Name>_DataLink.ICC4Freq = 0;
+		}
+        /* Duty is Null */
+        %<TIM_Name>_DataLink.ICC4Duty = 0;
+        /* unlock interrupt */
+        __HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_CC4);
+		%else
+        /* lock interrupt access during process */        
+        __HAL_TIM_DISABLE_IT(&htim%<timNum>, TIM_IT_CC4);
+		if (%<TIM_Name>_DataLink.ICC4CaptureNumber == 2 || %<TIM_Name>_DataLink.ICC4CaptureNumber == 3) {
+			/* Change acquisition order */
+			%<TIM_Name>_DataLink.ICC4ReadValue2 = %<TIM_Name>_DataLink.ICC4ReadValue3;
+			%<TIM_Name>_DataLink.ICC4ReadValue3 = %<TIM_Name>_DataLink.ICC4ReadValue1;
+			%<TIM_Name>_DataLink.ICC4ReadValue1 = %<TIM_Name>_DataLink.ICC4ReadValue2;
+			%<TIM_Name>_DataLink.ICC4ReadValue2 = %<TIM_Name>_DataLink.ICC4ReadValue4;			
+		}		
+        if (%<TIM_Name>_DataLink.ICC4ReadValue3 >= %<TIM_Name>_DataLink.ICC4ReadValue1) {
+            %<TIM_Name>_DataLink.ICC4Capture = (%<TIM_Name>_DataLink.ICC4ReadValue3 - %<TIM_Name>_DataLink.ICC4ReadValue1); 
+        } else {
+       		%<TIM_Name>_DataLink.ICC4Capture = ((0xFFFF - %<TIM_Name>_DataLink.ICC4ReadValue1) + %<TIM_Name>_DataLink.ICC4ReadValue3); 
+        }
+        /*Compute Duty and Frequency */ 
+        if(%<TIM_Name>_DataLink.ICC4Capture){
+        %if (%<CH4_div> == 1)
+            %<TIM_Name>_DataLink.ICC4Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC4Capture;	
+			if (%<TIM_Name>_DataLink.ICC4ReadValue2 >= %<TIM_Name>_DataLink.ICC4ReadValue1){
+                %<TIM_Name>_DataLink.ICC4Duty = (uint32_t)((%<TIM_Name>_DataLink.ICC4ReadValue2 - %<TIM_Name>_DataLink.ICC4ReadValue1) * 100 / %<TIM_Name>_DataLink.ICC4Capture ); 
+			} else { 
+				%<TIM_Name>_DataLink.ICC4Duty = (uint32_t)(((0xFFFF - %<TIM_Name>_DataLink.ICC4ReadValue1) + %<TIM_Name>_DataLink.ICC4ReadValue2) * 100 / %<TIM_Name>_DataLink.ICC4Capture); 
+			}								
+        %else
+            %<TIM_Name>_DataLink.ICC4Freq = (uint32_t) %<TIM_Name>_DataLink.TIM_APBClock / %<TIM_Name>_DataLink.ICC4Capture * %<CH4_div>;	
+			%<TIM_Name>_DataLink.ICC4Duty = (uint32_t) 0;									
+        %endif
+        } else {
+			%<TIM_Name>_DataLink.ICC4Duty = (uint32_t) 0;									
+			%<TIM_Name>_DataLink.ICC4Freq = (uint32_t) 0;
+		}
+        /* unlock interrupt */
+        __HAL_TIM_ENABLE_IT(&htim%<timNum>, TIM_IT_CC4);
+	    %endif
+		%assign y = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1
+        %<y> = %<TIM_Name>_DataLink.ICC4Freq;
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> freq_cc4 y:%<y>"		
+		%assign y = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1
+        %<y> = %<TIM_Name>_DataLink.ICC4Duty;
+%%warning "---------->TIMER_UPDATE: %<TIM_Name> Duty_cc4 y:%<y>"		
+        %endif
+
+%%        %if (ISEQUAL(TIM_IRQ,"on")&& ...
+        %if (((ISEQUAL(CH1_enable,"on")&&ISEQUAL(CH1_type, "Input_Encoder"))|| ...
+		 (ISEQUAL(CH2_enable,"on")&&ISEQUAL(CH2_type, "Input_Encoder"))|| ...
+		 (ISEQUAL(CH3_enable,"on")&&ISEQUAL(CH3_type, "Input_Encoder"))|| ...
+		 (ISEQUAL(CH4_enable,"on")&&ISEQUAL(CH4_type, "Input_Encoder")))&& ISEQUAL(TIM_IRQ_ONLY,"off"))
+  	    %assign  ResetCpt = LibBlockInputSignal(InputNum, "", "", 0) 
+  	    %assign  InputNum = %<InputNum> + 1
+		%assign CounterValue = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1 
+ 		%assign Dir = LibBlockOutputSignal(OutputNum, "", "", 0) 
+  	    %assign  OutputNum = %<OutputNum> + 1 
+		
+		/* Reset cpt request when Reset CNT is not 0*/
+		if(%<ResetCpt> != 0 ) {
+			(&htim%<timNum>)->Instance->CNT = 0;
+		}
+        %<CounterValue> = (&htim%<timNum>)->Instance->CNT;
+        %<Dir> = __HAL_TIM_DIRECTION_STATUS(&htim%<timNum>);
+		%endif
+
+	%endfunction
+
+%else
+%% ERROR Timers INIT MUST BE CALLED ONCE ONLY 
+   %trace ERROR Timers INIT MUST BE CALLED ONCE ONLY 
+
+%endif 
+		
+%% [EOF] TIMERS_Config.tlc
+
+
+
+
+
+
