@@ -29,6 +29,9 @@ local.properties
 .loadpath
 .recommenders
 .cproject
+.getVersionScript
+.project
+.script
 RemoteSystemsTempFiles
 
 # C
