@@ -7,10 +7,10 @@
  *
  * Code generated for Simulink model :etc_discovery.
  *
- * Model version      : 1.51
+ * Model version      : 1.64
  * Simulink Coder version    : 8.10 (R2016a) 10-Feb-2016
  * TLC version       : 8.10 (Jan 14 2016)
- * C/C++ source code generated on  : Mon Sep 18 21:12:12 2017
+ * C/C++ source code generated on  : Wed Sep 20 18:20:39 2017
  *
  * Target selection: stm32.tlc
  * Embedded hardware selection: STMicroelectronics->STM32 32-bit Cortex-M
@@ -61,11 +61,13 @@ typedef struct tag_RTM RT_MODEL;
 
 /* Block signals and states (auto storage) for system '<Root>' */
 typedef struct {
-    real_T input;                      /* '<Root>/ADC_Read' */
-    real_T TPS;                        /* '<Root>/ADC_Read1' */
+    real_T apps0;                      /* '<Root>/ADC_Read' */
+    real_T tps0;                       /* '<Root>/ADC_Read' */
+    real_T apps1;               /* '<Root>/ADC_Read2' */
+    real_T tps1;               /* '<Root>/ADC_Read2' */
     real_T dutycycle;                  /* '<Root>/Abs' */
     real_T Integrator_DSTATE;          /* '<S2>/Integrator' */
-    real_T Filter_DSTATE;              /* '<S2>/Filter' */
+    real_T UD_DSTATE;                  /* '<S3>/UD' */
     uint8_T Compare;                   /* '<S1>/Compare' */
 } D_Work;
 
@@ -85,6 +87,12 @@ extern void etc_discovery_step(void);
 extern RT_MODEL *const rtM;
 
 /*-
+ * These blocks were eliminated from the model due to optimizations:
+ *
+ * Block '<S3>/DTDup' : Unused code path elimination
+ */
+
+/*-
  * The generated code includes comments that allow you to trace directly
  * back to the appropriate location in the model.  The basic format
  * is <system>/block_name, where system is the system number (uniquely
@@ -101,6 +109,7 @@ extern RT_MODEL *const rtM;
  * '<Root>' : 'etc_discovery'
  * '<S1>'   : 'etc_discovery/Compare To Zero'
  * '<S2>'   : 'etc_discovery/Controller'
+ * '<S3>'   : 'etc_discovery/Controller/Differentiator'
  */
 #endif                                 /* RTW_HEADER_etc_discovery_h_ */
 

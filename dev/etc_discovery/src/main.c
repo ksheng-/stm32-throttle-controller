@@ -58,8 +58,8 @@ TIM_HandleTypeDef htim1;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_ADC2_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_ADC2_Init(void);
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                                 
@@ -120,8 +120,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC1_Init();
-  MX_ADC2_Init();
   MX_TIM1_Init();
+  MX_ADC2_Init();
 
   /* USER CODE BEGIN 2 */
     /* Systick configuration and enable SysTickHandler interrupt */
@@ -307,6 +307,7 @@ static void MX_ADC2_Init(void)
   hadc2.Init.ScanConvMode = ENABLE;
   hadc2.Init.ContinuousConvMode = ENABLE;
   hadc2.Init.DiscontinuousConvMode = DISABLE;
+  // hadc2.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc2.Init.NbrOfConversion = 2;
   hadc2.Init.DMAContinuousRequests = DISABLE;

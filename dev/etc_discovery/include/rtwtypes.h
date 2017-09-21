@@ -7,10 +7,10 @@
  *
  * Code generated for Simulink model :etc_discovery.
  *
- * Model version      : 1.51
+ * Model version      : 1.64
  * Simulink Coder version    : 8.10 (R2016a) 10-Feb-2016
  * TLC version       : 8.10 (Jan 14 2016)
- * C/C++ source code generated on  : Mon Sep 18 21:12:12 2017
+ * C/C++ source code generated on  : Wed Sep 20 18:20:39 2017
  *
  * Target selection: stm32.tlc
  * Embedded hardware selection: STMicroelectronics->STM32 32-bit Cortex-M

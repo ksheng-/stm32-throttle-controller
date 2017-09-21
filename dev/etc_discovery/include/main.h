@@ -60,6 +60,10 @@
 #define OTG_FS_PowerSwitchOn_GPIO_Port GPIOC
 #define PDM_OUT_Pin GPIO_PIN_3
 #define PDM_OUT_GPIO_Port GPIOC
+#define APPS1_Pin GPIO_PIN_0
+#define APPS1_GPIO_Port GPIOA
+#define TPS1_Pin GPIO_PIN_1
+#define TPS1_GPIO_Port GPIOA
 #define I2S3_WS_Pin GPIO_PIN_4
 #define I2S3_WS_GPIO_Port GPIOA
 #define SPI1_SCK_Pin GPIO_PIN_5
@@ -68,6 +72,10 @@
 #define SPI1_MISO_GPIO_Port GPIOA
 #define SPI1_MOSI_Pin GPIO_PIN_7
 #define SPI1_MOSI_GPIO_Port GPIOA
+#define TPS0_Pin GPIO_PIN_4
+#define TPS0_GPIO_Port GPIOC
+#define APPS0_Pin GPIO_PIN_5
+#define APPS0_GPIO_Port GPIOC
 #define BOOT1_Pin GPIO_PIN_2
 #define BOOT1_GPIO_Port GPIOB
 #define CLK_IN_Pin GPIO_PIN_10

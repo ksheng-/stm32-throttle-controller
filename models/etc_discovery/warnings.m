@@ -1,1 +1,0 @@
-warning('off', 'MATLAB:nargchk:deprecated')

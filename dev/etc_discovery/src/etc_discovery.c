@@ -7,10 +7,10 @@
  *
  * Code generated for Simulink model :etc_discovery.
  *
- * Model version      : 1.51
+ * Model version      : 1.64
  * Simulink Coder version    : 8.10 (R2016a) 10-Feb-2016
  * TLC version       : 8.10 (Jan 14 2016)
- * C/C++ source code generated on  : Mon Sep 18 21:12:12 2017
+ * C/C++ source code generated on  : Wed Sep 20 18:20:39 2017
  *
  * Target selection: stm32.tlc
  * Embedded hardware selection: STMicroelectronics->STM32 32-bit Cortex-M
@@ -48,7 +48,7 @@ void etc_discovery_step(void)
 {
     real_T rtb_error;
     real_T rtb_Saturate;
-    real_T rtb_FilterCoefficient;
+    real_T rtb_TSamp;
 
     /* S-Function Block: <Root>/STM32_Config */
 
@@ -61,13 +61,15 @@ void etc_discovery_step(void)
         }
 
     /* Get regular rank1 output value from ADC1 regular value buffer */
-    rtDWork.input = (uint16_t)ADC1_RegularConvertedValue[0];
-    printf("APPS: %f -- ", rtDWork.input/4096.0);
+    rtDWork.apps0 = (uint16_t)ADC1_RegularConvertedValue[0];
+
+    /* Get regular rank2 output value from ADC1 regular value buffer */
+    rtDWork.tps0 = (uint16_t)ADC1_RegularConvertedValue[1];
 
     /* Re-Start ADC1 conversion */
     HAL_ADC_Start(&hadc1);
 
-    /* S-Function Block: <Root>/ADC_Read1 */
+    /* S-Function Block: <Root>/ADC_Read2 */
 
     /* Read regular ADC2 value */
     for (uint16_t i=0;i<2;i++)
@@ -76,29 +78,41 @@ void etc_discovery_step(void)
         }
 
     /* Get regular rank1 output value from ADC2 regular value buffer */
-    rtDWork.TPS = (uint16_t)ADC2_RegularConvertedValue[0];
-    printf("TPS: %f -- ", rtDWork.TPS/4096.0);
+    rtDWork.apps1 = (uint16_t)ADC2_RegularConvertedValue[0];
+
+    /* Get regular rank2 output value from ADC2 regular value buffer */
+    rtDWork.tps1 = (uint16_t)ADC2_RegularConvertedValue[1];
 
     /* Re-Start ADC2 conversion */
     HAL_ADC_Start(&hadc2);
 
-    /* Sum: '<Root>/Sum1' */
-    rtb_error = rtDWork.input - rtDWork.TPS;
-
-    /* Gain: '<S2>/Filter Coefficient' incorporates:
-     *  DiscreteIntegrator: '<S2>/Filter'
-     *  Gain: '<S2>/Derivative Gain'
-     *  Sum: '<S2>/SumD'
+    /* Sum: '<Root>/Sum1' incorporates:
+     *  Gain: '<Root>/Gain'
+     *  Gain: '<Root>/Gain1'
+     *  Sum: '<Root>/Add'
+     *  Sum: '<Root>/Add1'
      */
-    rtb_FilterCoefficient = (0.00390218818507904 * rtb_error -
-        rtDWork.Filter_DSTATE) * 218.373722092741;
+    rtb_error = rtDWork.apps0 - (4096 - rtDWork.tps1);
+
+
+
+    /* SampleTimeMath: '<S3>/TSamp' incorporates:
+     *  Gain: '<S2>/Derivative Gain'
+     *
+     * About '<S3>/TSamp':
+     *  y = u * K where K = 1 / ( w * Ts )
+     */
+    rtb_TSamp = 0.0 * rtb_error * 25.0;
 
     /* Sum: '<S2>/Sum' incorporates:
+     *  Delay: '<S3>/UD'
      *  DiscreteIntegrator: '<S2>/Integrator'
      *  Gain: '<S2>/Proportional Gain'
+     *  Sum: '<S3>/Diff'
      */
-    rtb_Saturate = (0.177533835702716 * rtb_error + rtDWork.Integrator_DSTATE) +
-        rtb_FilterCoefficient;
+    rtb_Saturate = (0.001 * rtb_error + rtDWork.Integrator_DSTATE) + (rtb_TSamp -
+        rtDWork.UD_DSTATE);
+
 
     /* Saturate: '<S2>/Saturate' */
     if (rtb_Saturate > 50.0) {
@@ -116,21 +130,22 @@ void etc_discovery_step(void)
      */
     rtDWork.Compare = (uint8_T)(rtb_Saturate < 0.0);
 
+    printf("APPS: %f %f | TPS: %f %f | u(t): %f | sat: %f | duty: %f | compare: %d\n",
+            rtDWork.apps0, rtDWork.apps1, rtDWork.tps0, rtDWork.tps1, rtb_error, rtb_Saturate, rtDWork.dutycycle, rtDWork.Compare);
     /* S-Function Block: <Root>/GPIO_Write */
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, rtDWork.Compare);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, rtDWork.Compare);
 
     /* Abs: '<Root>/Abs' */
     rtDWork.dutycycle = fabs(rtb_Saturate);
-    printf("DUTY: %f \n", rtDWork.dutycycle);
 
     /* Gain: '<S2>/Integral Gain' */
-    rtb_error *= 1.438435490023;
+    rtb_error *= 0.0;
 
     /* Update for DiscreteIntegrator: '<S2>/Integrator' */
     rtDWork.Integrator_DSTATE += 0.04 * rtb_error;
 
-    /* Update for DiscreteIntegrator: '<S2>/Filter' */
-    rtDWork.Filter_DSTATE += 0.04 * rtb_FilterCoefficient;
+    /* Update for Delay: '<S3>/UD' */
+    rtDWork.UD_DSTATE = rtb_TSamp;
 
     /* Update for S-Function (TIMERS_Config): '<Root>/Timers' */
     if (rtDWork.dutycycle < 0) {
@@ -225,7 +240,7 @@ void etc_discovery_initialize(void)
     /*Store TIM information */
     TIM1_DataLink.TIM_Prescaler = 0;
     TIM1_DataLink.TIM_APBClock = 32000000;
-    TIM1_DataLink.TIM_ARR = 640000 - 1;
+    TIM1_DataLink.TIM_ARR = 1600 - 1;
     TIM1_DataLink.TIM_Clock = 3.2E+7;
     TIM1_DataLink.CH1_type = OUTPUT_PWM;
     TIM1_DataLink.CH2_type = UNKNOWN;
@@ -244,7 +259,7 @@ void etc_discovery_initialize(void)
     (&htim1)->Instance->PSC |= 0;
 
     /*Autoreload: ARR */
-    __HAL_TIM_SetAutoreload(&htim1, 640000 - 1);
+    __HAL_TIM_SetAutoreload(&htim1, 1600 - 1);
 
     /*Set CH1 Pulse value*/
     __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, (uint32_t)(3));
@@ -259,7 +274,7 @@ void etc_discovery_initialize(void)
     ;
     ;
 
-    /* Start for S-Function (ADC_Read): '<Root>/ADC_Read1' */
+    /* Start for S-Function (ADC_Read): '<Root>/ADC_Read2' */
     ;
     ;
 

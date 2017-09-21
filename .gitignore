@@ -34,6 +34,9 @@ local.properties
 .script
 RemoteSystemsTempFiles
 
+models/etc_discovery/
+models/etc_custom/
+
 # C
 # Prerequisites
 *.d

@@ -91,7 +91,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
     PC4     ------> ADC1_IN14
     PC5     ------> ADC1_IN15 
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
+    GPIO_InitStruct.Pin = TPS0_Pin|APPS0_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
@@ -112,7 +112,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
     PA0-WKUP     ------> ADC2_IN0
     PA1     ------> ADC2_IN1 
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
+    GPIO_InitStruct.Pin = APPS1_Pin|TPS1_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -139,7 +139,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
     PC4     ------> ADC1_IN14
     PC5     ------> ADC1_IN15 
     */
-    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_4|GPIO_PIN_5);
+    HAL_GPIO_DeInit(GPIOC, TPS0_Pin|APPS0_Pin);
 
   /* USER CODE BEGIN ADC1_MspDeInit 1 */
 
@@ -157,7 +157,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
     PA0-WKUP     ------> ADC2_IN0
     PA1     ------> ADC2_IN1 
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_0|GPIO_PIN_1);
+    HAL_GPIO_DeInit(GPIOA, APPS1_Pin|TPS1_Pin);
 
   /* USER CODE BEGIN ADC2_MspDeInit 1 */
 
