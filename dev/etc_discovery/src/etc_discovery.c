@@ -102,7 +102,7 @@ void etc_discovery_step(void)
      * About '<S3>/TSamp':
      *  y = u * K where K = 1 / ( w * Ts )
      */
-    rtb_TSamp = 0.0 * rtb_error * 25.0;
+    rtb_TSamp = 0 * rtb_error * 25.0;
 
     /* Sum: '<S2>/Sum' incorporates:
      *  Delay: '<S3>/UD'
@@ -110,16 +110,16 @@ void etc_discovery_step(void)
      *  Gain: '<S2>/Proportional Gain'
      *  Sum: '<S3>/Diff'
      */
-    rtb_Saturate = (0.001 * rtb_error + rtDWork.Integrator_DSTATE) + (rtb_TSamp -
+    rtb_Saturate = (.5 * rtb_error + rtDWork.Integrator_DSTATE) + (rtb_TSamp -
         rtDWork.UD_DSTATE);
 
 
     /* Saturate: '<S2>/Saturate' */
-    if (rtb_Saturate > 50.0) {
-        rtb_Saturate = 50.0;
+    if (rtb_Saturate > 100.0) {
+        rtb_Saturate = 100.0;
     } else {
-        if (rtb_Saturate < -50.0) {
-            rtb_Saturate = -50.0;
+        if (rtb_Saturate < -100.0) {
+            rtb_Saturate = -100.0;
         }
     }
 
@@ -130,8 +130,8 @@ void etc_discovery_step(void)
      */
     rtDWork.Compare = (uint8_T)(rtb_Saturate < 0.0);
 
-    printf("APPS: %f %f | TPS: %f %f | u(t): %f | sat: %f | duty: %f | compare: %d\n",
-            rtDWork.apps0, rtDWork.apps1, rtDWork.tps0, rtDWork.tps1, rtb_error, rtb_Saturate, rtDWork.dutycycle, rtDWork.Compare);
+//    printf("APPS: %f %f | TPS: %f %f | u(t): %f | sat: %f | duty: %f | compare: %d\n",
+//            rtDWork.apps0, rtDWork.apps1, rtDWork.tps0, rtDWork.tps1, rtb_error, rtb_Saturate, rtDWork.dutycycle, rtDWork.Compare);
     /* S-Function Block: <Root>/GPIO_Write */
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, rtDWork.Compare);
 
@@ -239,9 +239,9 @@ void etc_discovery_initialize(void)
 
     /*Store TIM information */
     TIM1_DataLink.TIM_Prescaler = 0;
-    TIM1_DataLink.TIM_APBClock = 32000000;
-    TIM1_DataLink.TIM_ARR = 1600 - 1;
-    TIM1_DataLink.TIM_Clock = 3.2E+7;
+    TIM1_DataLink.TIM_APBClock = 84000000;
+    TIM1_DataLink.TIM_ARR = 4200 - 1;
+    TIM1_DataLink.TIM_Clock = 84000000;
     TIM1_DataLink.CH1_type = OUTPUT_PWM;
     TIM1_DataLink.CH2_type = UNKNOWN;
     TIM1_DataLink.CH3_type = UNKNOWN;
