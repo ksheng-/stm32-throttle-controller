@@ -7,10 +7,10 @@
  *
  * Code generated for Simulink model :etc_discovery.
  *
- * Model version      : 1.64
- * Simulink Coder version    : 8.10 (R2016a) 10-Feb-2016
- * TLC version       : 8.10 (Jan 14 2016)
- * C/C++ source code generated on  : Wed Sep 20 18:20:39 2017
+ * Model version      : 1.80
+ * Simulink Coder version    : 8.12 (R2017a) 16-Feb-2017
+ * TLC version       : 8.12 (Feb 10 2017)
+ * C/C++ source code generated on  : Sun Feb 11 20:02:21 2018
  *
  * Target selection: stm32.tlc
  * Embedded hardware selection: STMicroelectronics->STM32 32-bit Cortex-M
@@ -62,9 +62,9 @@ typedef struct tag_RTM RT_MODEL;
 /* Block signals and states (auto storage) for system '<Root>' */
 typedef struct {
     real_T apps0;                      /* '<Root>/ADC_Read' */
-    real_T tps0;                       /* '<Root>/ADC_Read' */
-    real_T apps1;               /* '<Root>/ADC_Read2' */
-    real_T tps1;               /* '<Root>/ADC_Read2' */
+    real_T apps1;                      /* '<Root>/ADC_Read' */
+    real_T tps0;                       /* '<Root>/ADC_Read2' */
+    real_T tps1;                       /* '<Root>/ADC_Read2' */
     real_T dutycycle;                  /* '<Root>/Abs' */
     real_T Integrator_DSTATE;          /* '<S2>/Integrator' */
     real_T UD_DSTATE;                  /* '<S3>/UD' */

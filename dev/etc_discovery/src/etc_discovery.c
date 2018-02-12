@@ -7,10 +7,10 @@
  *
  * Code generated for Simulink model :etc_discovery.
  *
- * Model version      : 1.64
- * Simulink Coder version    : 8.10 (R2016a) 10-Feb-2016
- * TLC version       : 8.10 (Jan 14 2016)
- * C/C++ source code generated on  : Wed Sep 20 18:20:39 2017
+ * Model version      : 1.80
+ * Simulink Coder version    : 8.12 (R2017a) 16-Feb-2017
+ * TLC version       : 8.12 (Feb 10 2017)
+ * C/C++ source code generated on  : Sun Feb 11 20:02:21 2018
  *
  * Target selection: stm32.tlc
  * Embedded hardware selection: STMicroelectronics->STM32 32-bit Cortex-M
@@ -50,8 +50,10 @@ void etc_discovery_step(void)
     real_T rtb_Saturate;
     real_T rtb_TSamp;
 
+    /* S-Function (STM32_Config): '<Root>/STM32_Config' */
     /* S-Function Block: <Root>/STM32_Config */
 
+    /* S-Function (ADC_Read): '<Root>/ADC_Read' */
     /* S-Function Block: <Root>/ADC_Read */
 
     /* Read regular ADC1 value */
@@ -64,11 +66,12 @@ void etc_discovery_step(void)
     rtDWork.apps0 = (uint16_t)ADC1_RegularConvertedValue[0];
 
     /* Get regular rank2 output value from ADC1 regular value buffer */
-    rtDWork.tps0 = (uint16_t)ADC1_RegularConvertedValue[1];
+    rtDWork.apps1 = (uint16_t)ADC1_RegularConvertedValue[1];
 
     /* Re-Start ADC1 conversion */
     HAL_ADC_Start(&hadc1);
 
+    /* S-Function (ADC_Read): '<Root>/ADC_Read2' */
     /* S-Function Block: <Root>/ADC_Read2 */
 
     /* Read regular ADC2 value */
@@ -78,7 +81,7 @@ void etc_discovery_step(void)
         }
 
     /* Get regular rank1 output value from ADC2 regular value buffer */
-    rtDWork.apps1 = (uint16_t)ADC2_RegularConvertedValue[0];
+    rtDWork.tps0 = (uint16_t)ADC2_RegularConvertedValue[0];
 
     /* Get regular rank2 output value from ADC2 regular value buffer */
     rtDWork.tps1 = (uint16_t)ADC2_RegularConvertedValue[1];
@@ -92,9 +95,8 @@ void etc_discovery_step(void)
      *  Sum: '<Root>/Add'
      *  Sum: '<Root>/Add1'
      */
-    rtb_error = rtDWork.apps0 - (4096 - rtDWork.tps1);
-
-
+    rtb_error = (rtDWork.apps0 + rtDWork.apps1) * 0.5 - (rtDWork.tps0 +
+        rtDWork.tps1) * 0.5;
 
     /* SampleTimeMath: '<S3>/TSamp' incorporates:
      *  Gain: '<S2>/Derivative Gain'
@@ -102,7 +104,7 @@ void etc_discovery_step(void)
      * About '<S3>/TSamp':
      *  y = u * K where K = 1 / ( w * Ts )
      */
-    rtb_TSamp = 0 * rtb_error * 25.0;
+    rtb_TSamp = 0.002 * rtb_error * 25.0;
 
     /* Sum: '<S2>/Sum' incorporates:
      *  Delay: '<S3>/UD'
@@ -110,16 +112,15 @@ void etc_discovery_step(void)
      *  Gain: '<S2>/Proportional Gain'
      *  Sum: '<S3>/Diff'
      */
-    rtb_Saturate = (.5 * rtb_error + rtDWork.Integrator_DSTATE) + (rtb_TSamp -
+    rtb_Saturate = (0.98 * rtb_error + rtDWork.Integrator_DSTATE) + (rtb_TSamp -
         rtDWork.UD_DSTATE);
 
-
     /* Saturate: '<S2>/Saturate' */
-    if (rtb_Saturate > 100.0) {
-        rtb_Saturate = 100.0;
+    if (rtb_Saturate > 50.0) {
+        rtb_Saturate = 50.0;
     } else {
-        if (rtb_Saturate < -100.0) {
-            rtb_Saturate = -100.0;
+        if (rtb_Saturate < -50.0) {
+            rtb_Saturate = -50.0;
         }
     }
 
@@ -130,8 +131,7 @@ void etc_discovery_step(void)
      */
     rtDWork.Compare = (uint8_T)(rtb_Saturate < 0.0);
 
-//    printf("APPS: %f %f | TPS: %f %f | u(t): %f | sat: %f | duty: %f | compare: %d\n",
-//            rtDWork.apps0, rtDWork.apps1, rtDWork.tps0, rtDWork.tps1, rtb_error, rtb_Saturate, rtDWork.dutycycle, rtDWork.Compare);
+    /* S-Function (GPIO_Write): '<Root>/GPIO_Write' */
     /* S-Function Block: <Root>/GPIO_Write */
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, rtDWork.Compare);
 
@@ -152,18 +152,18 @@ void etc_discovery_step(void)
         /* Disable output and complementary output */
         (&htim1)->Instance->BDTR |= TIM_BDTR_MOE;//MOE = 1
         (&htim1)->Instance->BDTR &= ~TIM_BDTR_OSSR;//OSSR = 0
-        (&htim1)->Instance->CCER &= ~TIM_CCER_CC1E;//CC1E = 0
-        (&htim1)->Instance->CCER &= ~TIM_CCER_CC1NE;//CC1NE = 0
-        (&htim1)->Instance->CR2 &= ~TIM_CR2_OIS1;//OIS1 = 0
-        (&htim1)->Instance->CR2 &= ~TIM_CR2_OIS1N;//OIS1N = 0
+        (&htim1)->Instance->CCER &= ~TIM_CCER_CC3E;//CC3E = 0
+        (&htim1)->Instance->CCER &= ~TIM_CCER_CC3NE;//CC3NE = 0
+        (&htim1)->Instance->CR2 &= ~TIM_CR2_OIS3;//OIS3 = 0
+        (&htim1)->Instance->CR2 &= ~TIM_CR2_OIS3N;//OIS3N = 0
     } else {
-        // Enable output and complementary output and update dutyCycle
+        /* Enable output and complementary output and update dutyCycle*/
         (&htim1)->Instance->BDTR |= TIM_BDTR_MOE;//MOE = 1
-        (&htim1)->Instance->CCER |= TIM_CCER_CC1E;//CC1E = 1
-        (&htim1)->Instance->CCER |= TIM_CCER_CC1NE;//CC1NE = 1
+        (&htim1)->Instance->CCER |= TIM_CCER_CC3E;//CC3E = 1
+        (&htim1)->Instance->CCER |= TIM_CCER_CC3NE;//CC3NE = 1
 
-        // Channel1 duty cycle is an input port
-        __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, (uint32_t)(rtDWork.dutycycle
+        /* Channel3 duty cycle is an input port */
+        __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, (uint32_t)(rtDWork.dutycycle
                               * (&htim1)->Instance->ARR / 100));
     }
 }
@@ -241,10 +241,10 @@ void etc_discovery_initialize(void)
     TIM1_DataLink.TIM_Prescaler = 0;
     TIM1_DataLink.TIM_APBClock = 84000000;
     TIM1_DataLink.TIM_ARR = 4200 - 1;
-    TIM1_DataLink.TIM_Clock = 84000000;
+    TIM1_DataLink.TIM_Clock = 8.4E+7;
     TIM1_DataLink.CH1_type = OUTPUT_PWM;
     TIM1_DataLink.CH2_type = UNKNOWN;
-    TIM1_DataLink.CH3_type = UNKNOWN;
+    TIM1_DataLink.CH3_type = OUTPUT_PWM;
     TIM1_DataLink.CH4_type = UNKNOWN;
 
     /* Interrupt vector initialization */
@@ -259,16 +259,16 @@ void etc_discovery_initialize(void)
     (&htim1)->Instance->PSC |= 0;
 
     /*Autoreload: ARR */
-    __HAL_TIM_SetAutoreload(&htim1, 1600 - 1);
+    __HAL_TIM_SetAutoreload(&htim1, 4200 - 1);
 
-    /*Set CH1 Pulse value*/
-    __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, (uint32_t)(3));
+    /*Set CH3 Pulse value*/
+    __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, (uint32_t)(3));
 
     /* Wait for htim1 State READY */
     while ((&htim1)->State == HAL_TIM_STATE_BUSY) {
     }
 
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
 
     /* Start for S-Function (ADC_Read): '<Root>/ADC_Read' */
     ;
